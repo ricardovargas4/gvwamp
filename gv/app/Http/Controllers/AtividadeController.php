@@ -105,7 +105,7 @@ class AtividadeController extends Controller
                             atividades.hora_fim, atividades.data_meta,data_conciliada,ultima_data" ))
            // ->where('users.id','=',$usuario)
             ->where('atividades.hora_inicio','>=',$request->data_inicial)
-            ->where('atividades.hora_fim','<=',$request->data_final)
+            ->where('atividades.hora_fim','<=',$request->data_final." 23:59:59")
             ->orderBy('hora_inicio', 'ASC')
             ->paginate(15);
             $atividades->appends(Input::except('page'));
