@@ -54,7 +54,7 @@
                           @foreach ($resp as $r)
                             <tr>
                                 <td scope="row">{{$r->id}}</td>
-                                <td> {{$r->nome}} </td>
+                                <td> {{$r->procNome}} </td>
                                 <td> {{$r->email}} </td>
                                 <td>
                                     <div class="row">
@@ -67,7 +67,8 @@
                                                     <!--<input type="hidden" name="_method" value="put">-->
                                                     <div class="form-group col s6">
                                                         <label for="id_processo">Nome Processo</label>
-                                                        <select name="id_processo" class="form-control" value="{{{ $r->nome }}}">
+                                                        <select name="id_processo" class="form-control">
+                                                            <option value="{{{ $r->procID }}}" disabled selected>{{{$r->procNome}}}</option>
                                                               @foreach($processos as $p)
                                                                 <option value="{{$p->id}}">{{$p->nome}}</option>
                                                             @endforeach
@@ -76,7 +77,8 @@
 
                                                     <div class="form-group col s6">
                                                         <label for="usuario">Usuários</label>
-                                                        <select name="usuario" class="form-control" value="{{{ $r->email }}}">
+                                                        <select name="usuario" class="form-control">
+                                                            <option value="{{{ $r->userID }}}" disabled selected>{{{$r->email}}}</option>
                                                             @foreach($users as $u)
                                                                 <option value="{{$u->id}}">{{$u->email}}</opt ion>
                                                             @endforeach
