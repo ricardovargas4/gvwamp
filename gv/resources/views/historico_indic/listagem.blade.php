@@ -122,6 +122,14 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                                <div class="form-group col s6">
+                                                    <label for="status">Status</label>
+                                                        <select name="status"  class="form-control">
+                                                            <option value="{{{ $h->status }}}" disabled selected>{{{ $h->status }}}</option>
+                                                            <option value="No Prazo">No Prazo</option>
+                                                            <option value="Em Atraso">Em Atraso</option>
+                                                        </select>
+                                                </div>
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
                                                 </form>
                                             </div>

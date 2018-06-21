@@ -93,17 +93,19 @@
                                                     
                                                     <div class="form-group col s6">
                                                         <label for="tipo">Tipo</label>
-                                                        <select name="tipo" class="form-control" value="{{{ $p->tipo }}}">
+                                                        <select name="tipo" class="form-control">
+                                                            <option value="{{{ $p->tipoID }}}" disabled selected>{{{$p->tipo}}}</option>
                                                             @foreach($tipos as $t)
                                                                 <option value="{{$t->id}}">{{$t->nome}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="form-group col s6">
-                                                        <label for="periodicidade">Tipo</label>
-                                                        <select name="periodicidade" class="form-control" value="{{{ $p->periodicidade }}}">
-                                                            @foreach($periodicidades as $p)
-                                                                <option value="{{$p->id}}">{{$p->nome}}</option>
+                                                        <label for="periodicidade">Periodicidade</label>
+                                                        <select name="periodicidade" class="form-control">
+                                                            <option value="{{{ $p->periodicidadeID }}}" disabled selected>{{{$p->periodicidade}}}</option>
+                                                            @foreach($periodicidades as $per)
+                                                                <option value="{{$per->id}}">{{$per->nome}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -113,7 +115,8 @@
                                                     </div>
                                                     <div class="form-group col s6">
                                                         <label for="coordenacao">Coordenacao</label>
-                                                        <select name="coordenacao" class="form-control" value="{{{ $p->coordenacao }}}">
+                                                        <select name="coordenacao" class="form-control">
+                                                            <option value="{{{ $p->coordenacaoID }}}" disabled selected>{{{$p->coordenacao}}}</option>
                                                             @foreach($coordenacaos as $c)
                                                                 <option value="{{$c->id}}">{{$c->nome}}</option>
                                                             @endforeach

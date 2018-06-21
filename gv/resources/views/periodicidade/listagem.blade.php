@@ -40,6 +40,7 @@
                             <tr>
                                 <th>ID </th>
                                 <th>Nome </th>
+                                <th>Úteis</th>
                                 <td> Alterar/Excluir </td>
                             </tr>
                         </thead>
@@ -48,6 +49,7 @@
                             <tr>
                                 <td scope="row">{{$p->id}}</td>
                                 <td> {{$p->nome}} </td>
+                                <td> {{$p->uteis}} </td>
                                 <td>
                                     <div class="row">
                                         <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$p->id}}">Editar</a>
@@ -67,8 +69,9 @@
                                                     </div>
                                                     <label>Úteis</label> 
                                                     <select name="uteis"  class="form-control" value="{{$p->uteis}}">
-                                                      <option value="S">Sim</option>
-                                                      <option value="N">Não</option>
+                                                        <option value="{{{ $p->uteis }}}" disabled selected>{{{$p->uteis}}}</option>
+                                                        <option value="S">S</option>
+                                                        <option value="N">N</option>
                                                     </select>
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
                                                 </form>
