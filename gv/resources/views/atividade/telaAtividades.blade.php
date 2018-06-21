@@ -54,13 +54,17 @@
                   <button id='P{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="P{{{ $index }}}">
                     <i class="fa fa-pause" aria-hidden="true"></i>
                   </button>
-                  <button id='C{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="C{{{ $index }}}">
-                    <i class="fa fa-stop" aria-hidden="true"></i>
-                  </button>   
-                  <div>
-                    <input type="checkbox" name = "tolerancia[]" id="checkTolerancia" />
-                    <label for="checkTolerancia">Atividade Concluída na Tolerância</label>
-                  </div>
+                  @if($a->tipoId == 3)
+                    <button id='C{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="C{{{ $index }}}">
+                      <i class="fa fa-stop" aria-hidden="true"></i>
+                    </button>
+                    @if(date('H') < 10)
+                      <div>
+                        <input type="checkbox" name = "tolerancia[]" id="checkTolerancia" />
+                        <label for="checkTolerancia">Atividade Concluída na Tolerância</label>
+                      </div>
+                    @endif
+                  @endif
                 </td>
               @else
                 <td>  <button id='{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" <?php if (!$aberta->isEmpty()){ ?> disabled <?php   } ?>  name="submit" value="{{{ $index }}}"> 

@@ -110,7 +110,7 @@ class AtividadeController extends Controller
         ->where('atividades.id_processo','=',$request->id_processo[substr($request->submit,1,10)])
         ->first();
         $opcao = substr($request->submit,0,1);
-        if( ! empty($request['tolerancia'])){
+        if( ! empty($request['tolerancia']) && date('H') < 10){
             $data_conciliacao = DB::table(DB::raw('DUAL'))->select(DB::raw("FLOAT_DIAS_UTEIS(now(),-1) data"))->first([DB::raw(1)]);
             $data_conciliacao = $data_conciliacao->data;
         }else{
