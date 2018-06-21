@@ -11,7 +11,9 @@
     </ul>
   </div>
 @endif
-
+<div> Prazo No Dia {{$percPrazo}} </div>
+<div> Prazo No Mês Corrente {{$percPrazoMes}} </div>
+<div> Prazo No Ano Corrente {{$percPrazoAno}} </div>
 <h1>Atividades</h1>
   @if ($aberta->isEmpty())
     <form name='TabAtividades' action="/atividade/iniciar" method="post"> 
@@ -25,6 +27,7 @@
         <tr>
           <td> Tipo </td>
           <td> Nome Processo </td>
+          <td> Status </td>
           <td> Data Meta </td>
           <td> Data Ultima Atualização </td>
           <td> Data Conciliada </td>
@@ -36,6 +39,13 @@
           <tr>
               <td> {{$a->tipoNome}} <input type="hidden" name="tipoId[]" value="{{{ $a->tipoId }}}" /> </td>
               <td> {{$a->processoNome}} <input type="hidden" name="id_processo[]" value="{{{ $a->processoId }}}" /> </td>
+              @if (($a->ultima_data)<($a->data_meta))
+              <td><span style="color: Red;"> <i class="fa fa-circle fa-lg"></i></span> </td>
+              @elseif (($a->ultima_data)>($a->data_meta))
+                <td><span style="color: Green;"> <i class="fa fa-circle fa-lg"></i></span> </td>
+              @else
+                <td><span style="color: Yellow;"> <i class="fa fa-circle fa-lg"></i></span> </td>
+              @endif
               <td> <input type="date" name="data_meta[]" value="{{{ $a->data_meta }}}" readonly/> </td>
               <td> <input type=date name="ultima_data[]" value="{{{ $a->ultima_data }}}" readonly/> </td>
               <td> <input type=date name="data_conciliada[]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
