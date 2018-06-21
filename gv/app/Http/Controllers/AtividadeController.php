@@ -42,7 +42,12 @@ class AtividadeController extends Controller
             };
             $total ++;
             }
-        $percPrazo = ($prazo/$total*100)."%";
+        if($total<>0) {
+            $percPrazo = ($prazo/$total*100)."%";
+        }else{
+            $percPrazo = 0;
+        }
+       
         $prazoM = $prazo;
         $totalM = $total;
         $PrazoMes = DB::table('historico_indic')
