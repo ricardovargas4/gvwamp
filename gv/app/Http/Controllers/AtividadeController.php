@@ -10,6 +10,7 @@ use gv\Http\Requests\AtividadeRequest;
 use Request;
 use Auth;
 use gv\Atividade;
+use gv\Observacao;
 use gv\User;
 use Carbon\Carbon;
 
@@ -104,6 +105,7 @@ class AtividadeController extends Controller
     }
             
     public function parar(AtividadeRequest $request){
+        //dd($request->id_processo[substr($request->submit,1,10)]."-".$request->observacao);
         $aberta = DB::table('atividades')
         ->where('atividades.usuario','=',Auth::user()->id)
         ->where('atividades.hora_fim','=',null)
@@ -126,6 +128,11 @@ class AtividadeController extends Controller
         $atividade->hora_fim = date('Y-m-d H:i:s');
         
         $atividade->save();
+
+        if(!$request->observacao == null) {
+            Observacao::create(['id_atividade'=>$aberta->id,
+                               'observacao'=>$request->observacao]);
+        }
         
         return redirect()->action('AtividadeController@home');
     }
@@ -143,9 +150,10 @@ class AtividadeController extends Controller
             $atividades = DB::table('atividades')
             ->join('processos', 'processos.id', '=', 'atividades.id_processo')
             ->join('users', 'users.id', '=', 'atividades.usuario')
+            ->leftjoin('observacoes','atividades.id','=','observacoes.id_atividade')
             ->select(DB::raw("atividades.id as id, processos.id as processo_ID, processos.nome as processo_Nome, 
                             users.id as user_Id, users.email as user_Email,atividades.data_conciliacao, atividades.hora_inicio,
-                            atividades.hora_fim, atividades.data_meta,data_conciliada,ultima_data" ))
+                            atividades.hora_fim, atividades.data_meta,data_conciliada,ultima_data, observacoes.id observacao_ID, observacoes.observacao" ))
             ->where('atividades.hora_inicio','>=',$request->data_inicial)
             ->where('atividades.hora_fim','<=',$request->data_final." 23:59:59")
             ->orderBy('hora_inicio', 'ASC')
@@ -173,23 +181,44 @@ class AtividadeController extends Controller
     public function salvaAlt(AtividadeRequest $request){
         
         $id = $request->id;
-        Atividade::whereId($id)->update($request->except('_token','data_inicial','data_final'));
+        Atividade::whereId($id)->update($request->except('_token','data_inicial','data_final','observacao'));
         $filtro = null;
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
         $data=['data_inicial' =>$data_inicial,
                'data_final' => $data_final];
+        
+        $id_obs=Observacao::where('id_atividade','=',$id)->get();
+        if($id_obs->count()>0){
+            if(!$request->observacao == null) {
+                $obs = Observacao::find($id_obs[0]->id);
+                $obs->observacao = $request->observacao;
+                $obs->save();
+            }else{
+                $obs = Observacao::find($id_obs[0]->id);
+                $obs->delete();
+            }    
+        }elseif(!$request->observacao == null){
+            Observacao::create(['id_atividade'=> $id,
+                                'observacao'=>$request->observacao]);
+        }
         return redirect()->route('atividade.filtro',$data);  
     }
 
     public function adiciona(AtividadeRequest $request){
 
-        Atividade::create($request->all());
+        $atividade = Atividade::create($request->all());
         $filtro = null;
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
         $data=['data_inicial' =>$data_inicial,
                'data_final' => $data_final];
+        
+        if(!$request->observacao == null) {
+            Observacao::create(['id_atividade'=>$atividade->id,
+                                'observacao'=>$request->observacao]);
+        }
+
         return redirect()->route('atividade.filtro',$data);  
     }    
 }

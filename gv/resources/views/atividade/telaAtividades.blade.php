@@ -31,7 +31,10 @@
           <td> Data Meta </td>
           <td> Data Ultima Atualização </td>
           <td> Data Conciliada </td>
-          <td> Ação </td>               
+          <td> Ação </td>
+          @if (!$aberta->isEmpty())
+          <td> Obsercação </td>         
+          @endif      
         <tr>
       </thead>
       <tbody>
@@ -66,6 +69,7 @@
                     @endif
                   @endif
                 </td>
+                <td><textarea name="observacao"> </textarea> </td>
               @else
                 <td>  <button id='{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" <?php if (!$aberta->isEmpty()){ ?> disabled <?php   } ?>  name="submit" value="{{{ $index }}}"> 
                         <i class="fa fa-play" aria-hidden="true"></i>

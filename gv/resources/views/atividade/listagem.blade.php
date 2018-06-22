@@ -70,7 +70,11 @@
                                     <div class="form-group col s6">
                                         <label>Última Data Conciliada</label>
                                         <input type = "date" name="ultima_data" class="form-control" placeholder="Última Data Conciliada"/>
-                                    </div>                                         
+                                    </div>  
+                                    <div class="form-group col s6">
+                                        <label>Observação</label> 
+                                        <textarea name="observacao"> </textarea> 
+                                    </div>                                       
                                     <button type="submit" class="btn waves-effect light-green accent-3"> Salvar</button>
                                 </form>
                             </div>
@@ -156,7 +160,11 @@
                                                     <div class="form-group col s6">
                                                         <label>Última Data Conciliada</label>
                                                         <input name="ultima_data" class="form-control" placeholder="Última Data Conciliada" value="{{$a->ultima_data}}"/>
-                                                    </div>                                         
+                                                    </div>      
+                                                    <div class="form-group col s6">
+                                                        <label>Observação</label> 
+                                                        <input name="observacao" value="{{$a->observacao}}"/> 
+                                                    </div>                                        
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
                                                 </form>
                                             </div>
