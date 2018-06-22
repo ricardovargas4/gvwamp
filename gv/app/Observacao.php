@@ -10,7 +10,7 @@ class Observacao extends Model
     public $timestamps = true;
     protected $fillable = array('id_atividade','observacao');
 
-    public function processos(){
+    public function id_atividade(){
         return $this->hasMany('gv\Atividade');
     }
 

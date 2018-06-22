@@ -4,7 +4,7 @@ namespace gv\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TipoRequest extends FormRequest
+class ClassificacaoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,18 +21,20 @@ class TipoRequest extends FormRequest
      *
      * @return array
      */
-     public function rules()
-     {
-         return [
-           
-          /* 'nome' => 'required|max:100',*/
-         ];
-     }
-     
-     public function messages()
-     {
-         return [
-         /*'required' => 'O :attribute é obrigatório',*/
-         ];
-     }
+    public function rules()
+    {
+        return [
+          
+         // 'id_processo' => 'required|max:100',
+         // 'opcao' => 'required|max:100',
+        ];
+    }
+    
+    public function messages()
+    {
+        return [
+       // 'required' => 'O :attribute é obrigatório',
+        ];
+    }
+
 }

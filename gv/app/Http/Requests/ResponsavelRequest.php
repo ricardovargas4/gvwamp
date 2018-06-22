@@ -25,15 +25,15 @@ class ResponsavelRequest extends FormRequest
      {
          return [
            
-           'id_processo' => 'required|max:100',
-           'usuario' => 'required|max:100',
+         /*  'id_processo' => 'required|max:100',
+           'usuario' => 'required|max:100',*/
          ];
      }
      
      public function messages()
      {
          return [
-         'required' => 'O :attribute é obrigatório',
+         /*'required' => 'O :attribute é obrigatório',*/
          ];
      }
  

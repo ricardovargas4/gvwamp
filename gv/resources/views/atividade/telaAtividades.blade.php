@@ -32,8 +32,11 @@
           <td> Data Ultima Atualização </td>
           <td> Data Conciliada </td>
           <td> Ação </td>
+          @if (!$aberta->isEmpty() and !$classificacoes->isEmpty())
+            <td> Classificação </td>         
+          @endif 
           @if (!$aberta->isEmpty())
-          <td> Obsercação </td>         
+            <td> Observação </td>         
           @endif      
         <tr>
       </thead>
@@ -69,6 +72,18 @@
                     @endif
                   @endif
                 </td>
+
+                @if ($aberta[0]->id == $a->processoId and !$classificacoes->isEmpty())
+                  <td>
+                    <div class="form-group col s6">
+                      <select name="classificacao" class="form-control">
+                          @foreach($classificacoes as $c)
+                              <option value="{{$c->id}}">{{$c->opcao}}</option>
+                          @endforeach
+                      </select>
+                    </div>
+                  </td>
+                @endif
                 <td><textarea name="observacao"> </textarea> </td>
               @else
                 <td>  <button id='{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" <?php if (!$aberta->isEmpty()){ ?> disabled <?php   } ?>  name="submit" value="{{{ $index }}}"> 

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use gv\Processo;
 use gv\Conclusao;
+use gv\Classificacao;
 use gv\Http\Requests\AtividadeRequest;
 use Request;
 use Auth;
@@ -19,12 +20,17 @@ class AtividadeController extends Controller
     public function home(){
 
         $aberta = DB::table('atividades')
+        ->join('processos','atividades.id_processo','=','processos.id')
         ->where('atividades.usuario','=',Auth::user()->id)
         ->where('atividades.hora_fim','=',null)
         ->get();
 
-        $usuario_id= Auth::user()->id;
+        if(!$aberta->isEmpty()){
+            $classificacoes =Classificacao::where('id_processo','=',$aberta[0]->id)->get();
+        }
         
+        $usuario_id= Auth::user()->id;
+
         $atividades = DB::table('responsavels')
         ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
         ->join('periodicidades', 'periodicidades.id', '=', 'processos.periodicidade')
@@ -89,7 +95,7 @@ class AtividadeController extends Controller
             $percPrazoAno = 0;
         }
 
-        return view('atividade.telaAtividades',compact('atividades','usuario_id','aberta','percPrazo','percPrazoMes','percPrazoAno'));
+        return view('atividade.telaAtividades',compact('atividades','usuario_id','aberta','percPrazo','percPrazoMes','percPrazoAno','classificacoes'));
 
     }
 
@@ -119,9 +125,13 @@ class AtividadeController extends Controller
             $data_conciliacao = date('Y-m-d H:i:s');
         }
         if($opcao =='C'){
-            Conclusao::create(['id_processo'=>$request->id_processo[substr($request->submit,1,10)],
-                               'data_conciliada'=>$request->data_conciliada[substr($request->submit,1,10)],
-                               'data_conciliacao'=>$data_conciliacao]);
+            $id_conclusao=Conclusao::where('id_processo','=',$request->id_processo[substr($request->submit,1,10)])
+                                   ->where('data_conciliada','=',$request->data_conciliada[substr($request->submit,1,10)])->get();                               
+            if(!$id_conclusao->count()>0){
+                Conclusao::create(['id_processo'=>$request->id_processo[substr($request->submit,1,10)],
+                                   'data_conciliada'=>$request->data_conciliada[substr($request->submit,1,10)],
+                                   'data_conciliacao'=>$data_conciliacao]);
+            }
         }
         $atividade = Atividade::find($aberta->id);
         

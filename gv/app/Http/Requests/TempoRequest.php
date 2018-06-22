@@ -20,15 +20,15 @@ class TempoRequest extends FormRequest
     {
         return [
           
-          'data_inicial' => 'required',
-          'data_final' => 'required',
+         /* 'data_inicial' => 'required',
+          'data_final' => 'required',*/
         ];
     }
     
     public function messages()
     {
         return [
-        'required' => 'O :attribute é obrigatório',
+        /*'required' => 'O :attribute é obrigatório',*/
         ];
     }
 }

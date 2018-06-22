@@ -25,14 +25,14 @@ class CoordenacaoRequest extends FormRequest
      {
          return [
            
-           'nome' => 'required|max:100',
+       /*    'nome' => 'required|max:100',*/
          ];
      }
      
      public function messages()
      {
          return [
-         'required' => 'O :attribute é obrigatório',
+        /* 'required' => 'O :attribute é obrigatório',*/
          ];
      }
 }

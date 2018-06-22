@@ -25,18 +25,18 @@ class ProcessosRequest extends FormRequest
     {
         return [
           
-          'nome' => 'required|max:100',
+        /*  'nome' => 'required|max:100',
           'tipo' => 'required|max:100',
           'periodicidade' => 'required|max:100',
           'pasta' => 'required|max:100',
-          'coordenacao' => 'required|max:100',
+          'coordenacao' => 'required|max:100',*/
         ];
     }
     
     public function messages()
     {
         return [
-        'required' => 'O :attribute é obrigatório',
+        /*'required' => 'O :attribute é obrigatório',*/
         ];
     }
 

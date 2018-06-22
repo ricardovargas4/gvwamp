@@ -25,16 +25,16 @@ class UsuarioRequest extends FormRequest
      {
          return [
            
-           'name' => 'required|max:100',
+         /*  'name' => 'required|max:100',
            'email' => 'required|max:100',
-           'password' => 'required|max:100',
+           'password' => 'required|max:100',*/
          ];
      }
      
      public function messages()
      {
          return [
-         'required' => 'O :attribute é obrigatório',
+        /* 'required' => 'O :attribute é obrigatório',*/
          ];
      }
 }

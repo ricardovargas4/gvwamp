@@ -13,7 +13,7 @@
                                 <i class="fa fa-plus-square-o fa-sm"></i>Adicionar
                             </div>
                             <div class="collapsible-body">
-                                <form action="/responsavel/adiciona" method="post">
+                                <form action="/classificacao/adiciona" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                     
                                     <div class="form-group col s6">
@@ -27,13 +27,9 @@
                                     </div>
 
                                     <div class="form-group col s6">
-                                        <label for="usuario">Usuários</label>
-                                        <select name="usuario" class="form-control">
-                                            <option value="" disabled selected>Selecione o usuário</option>
-                                            @foreach($users as $u)
-                                                <option value="{{$u->id}}">{{$u->email}}</option>
-                                            @endforeach
-                                        </select>
+                                        <label for="opcao">Opção de Classificação</label>
+                                        <input type="text" name="opcao" class="form-control">
+                                        </input>
                                     </div>
 
                                     <button type="submit" class="btn waves-effect light-green accent-3"> Salvar</button>
@@ -46,29 +42,30 @@
                             <tr>
                                 <th> ID </th>
                                 <th> Processo </th>
-                                <th> Usuário </th>
+                                <th> Opção </th>
                                 <td> Alterar/Excluir </td>
                             </tr>
                         </thead>
                           <tbody>
-                          @foreach ($resp as $r)
+                          @foreach ($classificacoes as $c)
                             <tr>
-                                <td scope="row">{{$r->id}}</td>
-                                <td> {{$r->procNome}} </td>
-                                <td> {{$r->email}} </td>
+                                <td scope="row">{{$c->id}}</td>
+                                <td> {{$c->id_processo_FK->nome}} </td>
+                                <td> {{$c->opcao}} </td>
                                 <td>
                                     <div class="row">
-                                        <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$r->id}}">Editar</a>
-                                        <div id="modal1{{$r->id}}" class="modal">
+                                        <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$c->id}}">Editar</a>
+                                        <div id="modal1{{$c->id}}" class="modal">
                                             <div class="modal-content">
-                                                <form action="/responsavel/salvaAlt" method="post">
+                                                <form action="/classificacao/salvaAlt" method="post">
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-                                                <input type="hidden" name="id" value="{{{ $r->id }}}" />
+                                                <input type="hidden" name="id" value="{{{ $c->id }}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
+                                                    
                                                     <div class="form-group col s6">
                                                         <label for="id_processo">Nome Processo</label>
                                                         <select name="id_processo" class="form-control">
-                                                            <option value="{{{ $r->procID }}}" disabled selected>{{{$r->procNome}}}</option>
+                                                            <option value="{{{ $c->id_processo }}}" disabled selected>{{{$c->id_processo_FK->nome}}}</option>
                                                               @foreach($processos as $p)
                                                                 <option value="{{$p->id}}">{{$p->nome}}</option>
                                                             @endforeach
@@ -76,15 +73,10 @@
                                                     </div>
 
                                                     <div class="form-group col s6">
-                                                        <label for="usuario">Usuários</label>
-                                                        <select name="usuario" class="form-control">
-                                                            <option value="{{{ $r->userID }}}" disabled selected>{{{$r->email}}}</option>
-                                                            @foreach($users as $u)
-                                                                <option value="{{$u->id}}">{{$u->email}}</option>
-                                                            @endforeach
-                                                        </select>
+                                                      <label>Opção</label>
+                                                      <input name="opcao"  value="{{$c->opcao}}"/>
                                                     </div>
-                                                                                 
+
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
                                                 </form>
                                             </div>
@@ -92,12 +84,11 @@
                                                 <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
                                             </div>
                                         </div>
-                                        <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('ResponsavelController@remove', $r->id)}}' : false)">Deletar</a>
+                                        <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('ClassificacaoController@remove', $c->id)}}' : false)">Deletar</a>
                                     </div>
                                 </td>
                             </tr>
                             @endforeach
-                            {{ $resp->links() }}
                         </tbody>
                     </table>
                 </div>   

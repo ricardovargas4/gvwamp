@@ -84,6 +84,11 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/historico_indic/salvaAlt','Historico_indicController@salvaAlt');
     Route::get('/historico_indic/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}', 'Historico_indicController@remove');
 
+    Route::get('/classificacao', 'ClassificacaoController@lista');
+    Route::get('/classificacao/remove/{id}', 'ClassificacaoController@remove');
+    Route::post('/classificacao/adiciona','ClassificacaoController@adiciona');
+    Route::post('/classificacao/salvaAlt','ClassificacaoController@salvaAlt');
+
     /*Route::get('/usuario', 'UserController@lista');
     Route::get('/usuario/remove/{id}', 'UserController@remove');
     Route::get('/usuario/novo', 'UserController@novo');
