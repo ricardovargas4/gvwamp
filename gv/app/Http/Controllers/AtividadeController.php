@@ -100,13 +100,25 @@ class AtividadeController extends Controller
     }
 
     public function iniciar(AtividadeRequest $request){
+        //dd($request);
+        //dd(count($request->data_meta)-1);
+        if(count($request->data_meta)-1<$request->submit){
+            $data_metaCalc = null;
+        }else{
+            $data_metaCalc = $request->data_meta[$request->submit];
+        }
+        if(count($request->ultima_data)-1<$request->submit){
+            $ultima_dataCalc = null;
+        }else{
+            $ultima_dataCalc = $request->ultima_data[$request->submit];
+        }
         Atividade::create(['id_processo'=>$request->id_processo[$request->submit],
                             'usuario'=> Auth::user()->id,
                             'data_conciliacao'=>date('Y-m-d H:i:s'),
                             'hora_inicio'=>date('Y-m-d H:i:s'),
-                            'data_meta'=>$request->data_meta[$request->submit],
+                            'data_meta'=>$data_metaCalc,
                             'data_conciliada'=>$request->data_conciliada[$request->submit],
-                            'ultima_data'=>$request->ultima_data[$request->submit]]);
+                            'ultima_data'=>$ultima_dataCalc]);
         return redirect()->action('AtividadeController@home');
     }
             
@@ -139,9 +151,10 @@ class AtividadeController extends Controller
         
         $atividade->save();
 
-        if(!$request->observacao == null) {
+        if(!$request->observacao == null or !$request->classificacao == null) {
             Observacao::create(['id_atividade'=>$aberta->id,
-                               'observacao'=>$request->observacao]);
+                               'observacao'=>$request->observacao,
+                               'classificacao'=>$request->classificacao]);
         }
         
         return redirect()->action('AtividadeController@home');
@@ -157,20 +170,23 @@ class AtividadeController extends Controller
             $usuario =  Auth::user()->id;
             $processos = Processo::all();
             $users = User::all();
+            $classificacoes =Classificacao::all();
             $atividades = DB::table('atividades')
             ->join('processos', 'processos.id', '=', 'atividades.id_processo')
             ->join('users', 'users.id', '=', 'atividades.usuario')
             ->leftjoin('observacoes','atividades.id','=','observacoes.id_atividade')
+            ->leftjoin('classificacoes','observacoes.classificacao','=','classificacoes.id')
             ->select(DB::raw("atividades.id as id, processos.id as processo_ID, processos.nome as processo_Nome, 
                             users.id as user_Id, users.email as user_Email,atividades.data_conciliacao, atividades.hora_inicio,
-                            atividades.hora_fim, atividades.data_meta,data_conciliada,ultima_data, observacoes.id observacao_ID, observacoes.observacao" ))
+                            atividades.hora_fim, atividades.data_meta,data_conciliada,ultima_data, observacoes.id observacao_ID, 
+                            observacoes.observacao, classificacoes.id class_ID, classificacoes.opcao class_Opcao" ))
             ->where('atividades.hora_inicio','>=',$request->data_inicial)
             ->where('atividades.hora_fim','<=',$request->data_final." 23:59:59")
             ->orderBy('hora_inicio', 'ASC')
             ->paginate(15);
             $atividades->appends(Input::except('page'));
             $filtro = count($atividades);
-            return  view('atividade.listagem',compact('atividades','users','processos','usuario','filtro','data_inicial','data_final'));
+            return  view('atividade.listagem',compact('atividades','users','processos','usuario','filtro','data_inicial','data_final','classificacoes'));
         }
         else{
             $filtro = null;
@@ -191,7 +207,7 @@ class AtividadeController extends Controller
     public function salvaAlt(AtividadeRequest $request){
         
         $id = $request->id;
-        Atividade::whereId($id)->update($request->except('_token','data_inicial','data_final','observacao'));
+        Atividade::whereId($id)->update($request->except('_token','data_inicial','data_final','observacao','classificacao'));
         $filtro = null;
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
@@ -200,17 +216,19 @@ class AtividadeController extends Controller
         
         $id_obs=Observacao::where('id_atividade','=',$id)->get();
         if($id_obs->count()>0){
-            if(!$request->observacao == null) {
+            if(!$request->observacao == null or !$request->classificacao ==null) {
                 $obs = Observacao::find($id_obs[0]->id);
                 $obs->observacao = $request->observacao;
+                $obs->classificacao = $request->classificacao;
                 $obs->save();
             }else{
                 $obs = Observacao::find($id_obs[0]->id);
                 $obs->delete();
             }    
-        }elseif(!$request->observacao == null){
+        }elseif(!$request->observacao == null or !$request->classificacao == null){
             Observacao::create(['id_atividade'=> $id,
-                                'observacao'=>$request->observacao]);
+                                'observacao'=>$request->observacao,
+                                'classificacao'=>$request->classificacao]);
         }
         return redirect()->route('atividade.filtro',$data);  
     }
@@ -224,9 +242,11 @@ class AtividadeController extends Controller
         $data=['data_inicial' =>$data_inicial,
                'data_final' => $data_final];
         
-        if(!$request->observacao == null) {
+        if(!$request->observacao == null or !$request->classificacao == null) {
             Observacao::create(['id_atividade'=>$atividade->id,
-                                'observacao'=>$request->observacao]);
+                                'observacao'=>$request->observacao,
+                                'classificacao'=>$request->classificacao
+                                ]);
         }
 
         return redirect()->route('atividade.filtro',$data);  

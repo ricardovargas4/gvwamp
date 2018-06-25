@@ -72,6 +72,14 @@
                                         <input type = "date" name="ultima_data" class="form-control" placeholder="Última Data Conciliada"/>
                                     </div>  
                                     <div class="form-group col s6">
+                                        <label>Classificação</label>
+                                        <select name="classificacao" class="form-control">
+                                                @foreach($classificacoes as $c)
+                                                <option value="{{$c->id}}">{{$c->opcao}}</option>
+                                                @endforeach
+                                        </select>
+                                    </div>      
+                                    <div class="form-group col s6">
                                         <label>Observação</label> 
                                         <textarea name="observacao"> </textarea> 
                                     </div>                                       
@@ -160,6 +168,16 @@
                                                     <div class="form-group col s6">
                                                         <label>Última Data Conciliada</label>
                                                         <input name="ultima_data" class="form-control" placeholder="Última Data Conciliada" value="{{$a->ultima_data}}"/>
+                                                    </div>
+                                                    <div class="form-group col s6">
+                                                        <label>Classificação</label>
+                                                        <select name="classificacao" value="{{ $a->class_ID }}" class="form-control">
+                                                        <option value="{{ $a->class_ID }}" >{{{$a->class_Opcao}}}</option>
+                                                                <option value=""></option>
+                                                                @foreach($classificacoes as $c)
+                                                                    <option value="{{$c->id}}">{{$c->opcao}}</option>
+                                                                @endforeach
+                                                        </select>
                                                     </div>      
                                                     <div class="form-group col s6">
                                                         <label>Observação</label> 
