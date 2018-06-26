@@ -50,7 +50,14 @@
                                                 <option value="{{$c->id}}">{{$c->nome}}</option>
                                             @endforeach
                                         </select>
-                                    </div>                                    
+                                    </div> 
+                                    <div class="form-group col s6">
+                                        <label for="volumetria">Volumetria</label>
+                                        <select name="volumetria" class="form-control">
+                                            <option value=""></option>
+                                            <option value="S">S</option>
+                                        </select>
+                                    </div>                                  
                                     <button type="submit" class="btn waves-effect light-green accent-3"> Salvar</button>
                                 </form>
                             </div>
@@ -65,6 +72,7 @@
                                 <th> Periodicidade </th>
                                 <th> Pasta </th>
                                 <th> Coordenação </th>
+                                <th> Volumetria </th>
                                 <td> Alterar/Excluir </td>
                             </tr>
                         </thead>
@@ -77,6 +85,7 @@
                                 <td> {{$p->periodicidade}} </td>
                                 <td> {{$p->pasta}} </td>
                                 <td> {{$p->coordenacao}} </td>
+                                <td> {{$p->volumetria}} </td>
                                 <td>
                                     <div class="row">
                                         <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$p->id}}">Editar</a>
@@ -121,7 +130,18 @@
                                                                 <option value="{{$c->id}}">{{$c->nome}}</option>
                                                             @endforeach
                                                         </select>
-                                                    </div>                                    
+                                                    </div>
+                                                    <div class="form-group col s6">
+                                                        <label for="volumetria">Volumetria</label>
+                                                        <select name="volumetria" class="form-control">
+                                                            <option value="{{{ $p->volumetria }}}" >{{{$p->volumetria}}}</option>
+                                                            @if (!$p->volumetria == "" )
+                                                                <option value=""></option>
+                                                            @else
+                                                                <option value="S">S</option>
+                                                            @endif
+                                                        </select>
+                                                    </div>                                        
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
                                                 </form>
                                             </div>

@@ -38,6 +38,9 @@
           @if (!$aberta->isEmpty())
             <td> Observação </td>         
           @endif      
+          @if (!$aberta->isEmpty() and !$processosVol->isEmpty())
+            <td> Volumetria </td>         
+          @endif 
         <tr>
       </thead>
       <tbody>
@@ -101,6 +104,9 @@
                   </td>
                 @endif
                 <td><textarea name="observacao"> </textarea> </td>
+                @if (!$aberta->isEmpty() and !$processosVol->isEmpty())
+                  <td>  <input type="number" name = "volumetria[]" /> </td>         
+                @endif 
               @else
                 <td>  <button id='{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" <?php if (!$aberta->isEmpty()){ ?> disabled <?php   } ?>  name="submit" value="{{{ $index }}}"> 
                         <i class="fa fa-play" aria-hidden="true"></i>

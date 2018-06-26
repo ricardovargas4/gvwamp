@@ -11,6 +11,7 @@ use gv\Http\Requests\AtividadeRequest;
 use Request;
 use Auth;
 use gv\Atividade;
+use gv\Volumetria;
 use gv\Observacao;
 use gv\User;
 use Carbon\Carbon;
@@ -28,7 +29,11 @@ class AtividadeController extends Controller
         if(!$aberta->isEmpty()){
             $classificacoes =Classificacao::where('id_processo','=',$aberta[0]->id)->get();
         }
-        
+        $processosVol= 0;
+        if(!$aberta->isEmpty()){
+            $processosVol =Processo::where('id','=',$aberta[0]->id)
+                                    ->where('volumetria','=','S')->get();
+        }
         $usuario_id= Auth::user()->id;
 
         $atividades = DB::table('responsavels')
@@ -95,7 +100,7 @@ class AtividadeController extends Controller
             $percPrazoAno = 0;
         }
 
-        return view('atividade.telaAtividades',compact('atividades','usuario_id','aberta','percPrazo','percPrazoMes','percPrazoAno','classificacoes'));
+        return view('atividade.telaAtividades',compact('atividades','usuario_id','aberta','percPrazo','percPrazoMes','percPrazoAno','classificacoes','processosVol'));
 
     }
 
@@ -156,6 +161,10 @@ class AtividadeController extends Controller
                                'observacao'=>$request->observacao,
                                'classificacao'=>$request->classificacao]);
         }
+        if(!$request->volumetria == null) {
+            Volumetria::create(['id_atividade'=>$aberta->id,
+                               'volumetria'=>$request->volumetria[substr($request->submit,1,10)]]);
+        }
         
         return redirect()->action('AtividadeController@home');
     }
@@ -176,10 +185,11 @@ class AtividadeController extends Controller
             ->join('users', 'users.id', '=', 'atividades.usuario')
             ->leftjoin('observacoes','atividades.id','=','observacoes.id_atividade')
             ->leftjoin('classificacoes','observacoes.classificacao','=','classificacoes.id')
+            ->leftjoin('volumetrias','atividades.id','=','volumetrias.id_atividade')
             ->select(DB::raw("atividades.id as id, processos.id as processo_ID, processos.nome as processo_Nome, 
                             users.id as user_Id, users.email as user_Email,atividades.data_conciliacao, atividades.hora_inicio,
                             atividades.hora_fim, atividades.data_meta,data_conciliada,ultima_data, observacoes.id observacao_ID, 
-                            observacoes.observacao, classificacoes.id class_ID, classificacoes.opcao class_Opcao" ))
+                            observacoes.observacao, classificacoes.id class_ID, classificacoes.opcao class_Opcao, volumetrias.volumetria" ))
             ->where('atividades.hora_inicio','>=',$request->data_inicial)
             ->where('atividades.hora_fim','<=',$request->data_final." 23:59:59")
             ->orderBy('hora_inicio', 'ASC')
@@ -207,7 +217,7 @@ class AtividadeController extends Controller
     public function salvaAlt(AtividadeRequest $request){
         
         $id = $request->id;
-        Atividade::whereId($id)->update($request->except('_token','data_inicial','data_final','observacao','classificacao'));
+        Atividade::whereId($id)->update($request->except('_token','data_inicial','data_final','observacao','classificacao','volumetria'));
         $filtro = null;
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
@@ -230,6 +240,25 @@ class AtividadeController extends Controller
                                 'observacao'=>$request->observacao,
                                 'classificacao'=>$request->classificacao]);
         }
+
+        $id_volumetria=Volumetria::where('id_atividade','=',$id)->get();
+        if($id_volumetria->count()>0){
+            if(!$request->volumetria == null) {
+                //dd(1);
+                $volumetria = Volumetria::find($id_volumetria[0]->id);
+                $volumetria->volumetria = $request->volumetria;
+                $volumetria->save();
+            }else{
+                //dd(2);
+                $volumetria = Volumetria::find($id_volumetria[0]->id);
+                $volumetria->delete();
+            }    
+        }elseif(!$request->volumetria == null){
+            //dd(3);
+            Volumetria::create(['id_atividade'=> $id,
+                                'volumetria'=>$request->volumetria]);
+        }
+        
         return redirect()->route('atividade.filtro',$data);  
     }
 
@@ -247,6 +276,10 @@ class AtividadeController extends Controller
                                 'observacao'=>$request->observacao,
                                 'classificacao'=>$request->classificacao
                                 ]);
+        }
+        if(!$request->volumetria == null) {
+            Volumetria::create(['id_atividade'=>$atividade->id,
+                                'volumetria'=>$request->volumetria]);
         }
 
         return redirect()->route('atividade.filtro',$data);  

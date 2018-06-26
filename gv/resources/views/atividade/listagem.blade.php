@@ -82,6 +82,10 @@
                                     <div class="form-group col s6">
                                         <label>Observação</label> 
                                         <textarea name="observacao"> </textarea> 
+                                    </div>   
+                                    <div class="form-group col s6">
+                                        <label>Volumetria</label> 
+                                        <textarea name="volumetria"> </textarea> 
                                     </div>                                       
                                     <button type="submit" class="btn waves-effect light-green accent-3"> Salvar</button>
                                 </form>
@@ -182,7 +186,11 @@
                                                     <div class="form-group col s6">
                                                         <label>Observação</label> 
                                                         <input name="observacao" value="{{$a->observacao}}"/> 
-                                                    </div>                                        
+                                                    </div>       
+                                                    <div class="form-group col s6">
+                                                        <label>Volumetria</label> 
+                                                        <input name="volumetria" value="{{$a->volumetria}}"/> 
+                                                    </div>                                     
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
                                                 </form>
                                             </div>
