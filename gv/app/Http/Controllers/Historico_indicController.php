@@ -74,7 +74,7 @@ class Historico_indicController extends Controller
 
     public function adiciona(Historico_indicRequest $request){
         //dd($request->data_informada);
-        $usuario_id= Auth::user()->id;
+        //$usuario_id= Auth::user()->id;
         $historicos = DB::table('responsavels')
         ->join ('processos','responsavels.id_processo','=','processos.id')
         ->join ('periodicidades','periodicidades.id','=','processos.periodicidade')
@@ -82,7 +82,7 @@ class Historico_indicController extends Controller
         ->join ('tipos','tipos.id','=', 'processos.tipo')
         ->leftjoin (DB::raw('(select  id_processo, data_conciliada from atividades where hora_fim is null) atividades'),function($join){$join->on('atividades.id_processo', '=', 'processos.id');})
         ->leftjoin (DB::raw("(select id_processo, max(data_conciliada) ultima_data from conclusoes where data_conciliada <= '".$request->data_informada."' group by id_processo) conclusoes"),function($join){$join->on('conclusoes.id_processo','=','processos.id');})
-        ->where('users.id','=',$usuario_id)
+        //->where('users.id','=',$usuario_id)
         ->select(DB::raw("distinct processos.id as processo_id, '$request->data_informada' data_informada, users.id user_id,
         ultima_data, FLOAT_DIAS_UTEIS('$request->data_informada',periodicidades.dias) data_meta,
         periodicidades.id periodicidade_id,

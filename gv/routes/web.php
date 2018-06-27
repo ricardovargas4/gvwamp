@@ -103,6 +103,58 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/hello', 'HomeController@hello');
     Route::get('/dados/tempo', 'HomeController@dadosTempos');
 
-
 });
 
+Route::get('/teste',function(){
+    $exitCode = Artisan::call('schedule:run');
+    return '<h1>Schedule criado</h1>'; 
+});
+
+Route::get('/testeIndic',function(){
+    $exitCode = Artisan::call('ProcIndicador:indicador');
+    return '<h1>Executado Indicador</h1>'; 
+});
+
+Route::get('/cache', function(){
+
+    /*
+    $usuario_id = \Auth::id();
+    $usuario = \App\User::find($usuario_id);
+    if ($usuario->nivel > 1){
+        return redirect()->route('home.index');
+    }
+    */
+
+    //exec('composer dump-autoload');
+    //echo '<h1>Dump Autoload</h1>';
+
+    
+    //Clear Cache facade value:
+    $exitCode = Artisan::call('cache:clear');
+    echo '<h1>Cache facade value cleared</h1>';
+
+    //Reoptimized class loader:
+    $exitCode = Artisan::call('optimize');
+    echo '<h1>Reoptimized class loader</h1>';
+
+    //Route cache:
+    //$exitCode = Artisan::call('route:cache');
+    //echo '<h1>Routes cached</h1>';
+
+    //Clear Route cache:
+    $exitCode = Artisan::call('route:clear');
+    echo '<h1>Route cache cleared</h1>';
+
+    //Clear View cache:
+    $exitCode = Artisan::call('view:clear');
+    echo '<h1>View cache cleared</h1>';
+
+    //Clear Config cache:
+    $exitCode = Artisan::call('config:cache');
+    return '<h1>Clear Config cleared</h1>';
+
+    //Clear View cache:
+    //$exitCode = Artisan::call('schedule:run');
+    //return '<h1>Schedule criado</h1>';
+
+});

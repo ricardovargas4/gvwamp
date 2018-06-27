@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        //'\App\Console\Commands\ProcIndicador',
+        Commands\ProcIndicador::class,
     ];
 
     /**
@@ -26,6 +27,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('ProcIndicador:indicador')
+                 ->withoutOverlapping()
+                 ->weekdays()
+                 ->dailyAt('10:00');
     }
 
     /**
