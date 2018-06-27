@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use gv\Processo;
 use gv\Conclusao;
+use gv\Demanda;
 use gv\Classificacao;
 use gv\Http\Requests\AtividadeRequest;
 use Request;
@@ -19,6 +20,7 @@ use Carbon\Carbon;
 class AtividadeController extends Controller
 {
     public function home(){
+        $usuario_id= Auth::user()->id;
 
         $aberta = DB::table('atividades')
         ->join('processos','atividades.id_processo','=','processos.id')
@@ -31,20 +33,30 @@ class AtividadeController extends Controller
         }
         $processosVol= 0;
         if(!$aberta->isEmpty()){
-            $processosVol =Processo::where('id','=',$aberta[0]->id)
+            $processosVol =Processo::where('id','=',$aberta[0]->id_processo)
                                     ->where('volumetria','=','S')->get();
         }
-        $usuario_id= Auth::user()->id;
-
-        $atividades = DB::table('responsavels')
+        if(!$aberta->isEmpty()){
+            $demanda =Demanda::where('id_processo','=',$aberta[0]->id_processo)
+                              ->where('data_conclusao','=',null)
+                              ->where('id_responsavel','=', $usuario_id)
+                              ->get();
+        }
+        //dd($aberta);
+         $atividades = DB::table('responsavels')
         ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
         ->join('periodicidades', 'periodicidades.id', '=', 'processos.periodicidade')
         ->join('users', 'users.id', '=', 'responsavels.usuario')
         ->join('tipos', 'tipos.id', '=', 'processos.tipo')
         ->leftjoin(DB::raw('(select id_processo, data_conciliada from atividades where hora_fim is null) atividades'), function($join) {$join->on('atividades.id_processo', '=', 'processos.id'); })
         ->leftjoin(DB::raw('(select id_processo, max(data_conciliada) ultima_data from conclusoes group by id_processo) conclusoes'), function($join) {$join->on('conclusoes.id_processo', '=', 'processos.id'); })
+        ->leftjoin(DB::raw('(select id, id_processo, data_final, id_responsavel from demandas where data_conclusao is null) demandas'), function($join) {$join->on('demandas.id_processo', '=', 'processos.id');$join->on('users.id', '=', 'demandas.id_responsavel'); })
         ->where('users.id','=',$usuario_id)
-        ->select(DB::raw("distinct processos.id as processoId, processos.nome as processoNome, tipos.id as tipoId, tipos.nome as tipoNome, atividades.data_conciliada,FLOAT_DIAS_UTEIS(now(),periodicidades.dias) data_meta, (CASE WHEN atividades.id_processo is not null then 'aberta' else '' end) as hora_fim, conclusoes.ultima_data"))
+        ->select(DB::raw("distinct processos.id as processoId, processos.nome as processoNome, tipos.id as tipoId, 
+                          tipos.nome as tipoNome, atividades.data_conciliada,
+                          FLOAT_DIAS_UTEIS(now(),periodicidades.dias) data_meta, 
+                          (CASE WHEN atividades.id_processo is not null then 'aberta' else '' end) as hora_fim, 
+                          conclusoes.ultima_data,data_final,demandas.id as demandaID"))
         ->get();
         $total=0;
         $prazo=0;
@@ -100,7 +112,7 @@ class AtividadeController extends Controller
             $percPrazoAno = 0;
         }
 
-        return view('atividade.telaAtividades',compact('atividades','usuario_id','aberta','percPrazo','percPrazoMes','percPrazoAno','classificacoes','processosVol'));
+        return view('atividade.telaAtividades',compact('atividades','usuario_id','aberta','percPrazo','percPrazoMes','percPrazoAno','classificacoes','processosVol','demanda'));
 
     }
 

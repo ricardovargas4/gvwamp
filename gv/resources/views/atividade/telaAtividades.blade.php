@@ -57,11 +57,21 @@
                   @else
                     <span style="color: Yellow;"> <i class="fa fa-circle fa-lg"></i></span>
                   @endif
+                @elseif($a->tipoId == 4)
+                  @if (($a->data_final)<(date('Y-m-d')))
+                    <span style="color: Red;"> <i class="fa fa-circle fa-lg"></i></span> 
+                    @elseif (($a->data_final)>(date('Y-m-d')))
+                    <span style="color: Green;"> <i class="fa fa-circle fa-lg"></i></span>
+                  @else
+                    <span style="color: Yellow;"> <i class="fa fa-circle fa-lg"></i></span>
+                  @endif
                 @endif
               </td>
               <td> 
                 @if($a->tipoId == 3)
                   <input type="date" name="data_meta[]" value="{{{ $a->data_meta }}}" readonly/> 
+                @elseif($a->tipoId == 4)
+                  <input type="date" name="data_meta[]" value="{{{ $a->data_final }}}" readonly/> 
                 @else
                   <input type="hidden" name="data_meta[]" value="" readonly/>   
                 @endif
@@ -73,8 +83,13 @@
                   <input type="hidden" name="ultima_data[]" value="" readonly/>   
                 @endif
               </td>
-              <td> <input type=date name="data_conciliada[]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
-              @if (($a->hora_fim)=="aberta")
+              @if($a->tipoId==4)
+                <td> <input type="hidden" name="data_conciliada[]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
+              @else
+                <td> <input type=date name="data_conciliada[]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
+              @endif
+              
+              @if (($a->hora_fim)=="aberta" and ($a->tipoId==4 ? $a->data_final : $a->data_meta) == $aberta[0]->data_meta)
                 <td>  
                   <button id='P{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="P{{{ $index }}}">
                     <i class="fa fa-pause" aria-hidden="true"></i>

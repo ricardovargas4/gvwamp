@@ -28,4 +28,7 @@ class processo extends Model
     public function historico_indic(){
         return $this->hasMany('gv\historico_indic');
     }
+    public function demandaFK(){
+        return $this->hasMany('gv\Demanda');
+    }
 }

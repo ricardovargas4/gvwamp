@@ -89,6 +89,11 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/classificacao/adiciona','ClassificacaoController@adiciona');
     Route::post('/classificacao/salvaAlt','ClassificacaoController@salvaAlt');
 
+    Route::get('/demanda', 'DemandaController@lista');
+    Route::get('/demanda/remove/{id}', 'DemandaController@remove');
+    Route::post('/demanda/adiciona','DemandaController@adiciona');
+    Route::post('/demanda/salvaAlt','DemandaController@salvaAlt');
+
     /*Route::get('/usuario', 'UserController@lista');
     Route::get('/usuario/remove/{id}', 'UserController@remove');
     Route::get('/usuario/novo', 'UserController@novo');
