@@ -88,17 +88,16 @@
               @else
                 <td> <input type=date name="data_conciliada[]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
               @endif
-              
-              @if (($a->hora_fim)=="aberta" and ($a->tipoId==4 ? $a->data_final : $a->data_meta) == $aberta[0]->data_meta)
+              @if (($a->aberta)==1)
                 <td>  
                   <button id='P{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="P{{{ $index }}}">
                     <i class="fa fa-pause" aria-hidden="true"></i>
                   </button>
-                  @if($a->tipoId == 3)
+                  @if($a->tipoId == 3 or $a->tipoId == 4)
                     <button id='C{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="C{{{ $index }}}">
                       <i class="fa fa-stop" aria-hidden="true"></i>
                     </button>
-                    @if(date('H') < 10)
+                    @if(date('H') < 10 and $a->tipoId == 3)
                       <div>
                         <input type="checkbox" name = "tolerancia[]" id="checkTolerancia" />
                         <label for="checkTolerancia">Atividade Concluída na Tolerância</label>

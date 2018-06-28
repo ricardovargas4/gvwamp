@@ -27,7 +27,6 @@ class AtividadeController extends Controller
         ->where('atividades.usuario','=',Auth::user()->id)
         ->where('atividades.hora_fim','=',null)
         ->get();
-
         if(!$aberta->isEmpty()){
             $classificacoes =Classificacao::where('id_processo','=',$aberta[0]->id)->get();
         }
@@ -42,7 +41,6 @@ class AtividadeController extends Controller
                               ->where('id_responsavel','=', $usuario_id)
                               ->get();
         }
-        //dd($aberta);
          $atividades = DB::table('responsavels')
         ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
         ->join('periodicidades', 'periodicidades.id', '=', 'processos.periodicidade')
@@ -52,12 +50,38 @@ class AtividadeController extends Controller
         ->leftjoin(DB::raw('(select id_processo, max(data_conciliada) ultima_data from conclusoes group by id_processo) conclusoes'), function($join) {$join->on('conclusoes.id_processo', '=', 'processos.id'); })
         ->leftjoin(DB::raw('(select id, id_processo, data_final, id_responsavel from demandas where data_conclusao is null) demandas'), function($join) {$join->on('demandas.id_processo', '=', 'processos.id');$join->on('users.id', '=', 'demandas.id_responsavel'); })
         ->where('users.id','=',$usuario_id)
+
+        ->where(function ($query) {
+            $query->where(function ($query) {
+                $query->where('tipos.id','=', '4' )
+                    ->where('data_final','<>', null);
+            })->orWhere('tipos.id','<>', '4');
+        })
         ->select(DB::raw("distinct processos.id as processoId, processos.nome as processoNome, tipos.id as tipoId, 
                           tipos.nome as tipoNome, atividades.data_conciliada,
                           FLOAT_DIAS_UTEIS(now(),periodicidades.dias) data_meta, 
                           (CASE WHEN atividades.id_processo is not null then 'aberta' else '' end) as hora_fim, 
                           conclusoes.ultima_data,data_final,demandas.id as demandaID"))
+        ->orderByDesc('hora_fim')                          
         ->get();
+        
+        foreach($atividades as $a){
+            $a->aberta=0;
+            if(!$aberta->isEmpty()){     
+                if($a->tipoId==4 && $aberta[0]->id==$a->processoId){
+                    foreach($demanda as $d){
+                        if($d->data_final==$aberta[0]->data_meta and $d->id==$a->demandaID){
+                            $a->aberta=1;
+                        }
+                    }
+                }else{
+                    if($aberta[0]->id==$a->processoId){
+                        $a->aberta=1;
+                    }
+                }
+            }
+        }
+        $atividades = $atividades->sortByDesc('aberta');
         $total=0;
         $prazo=0;
         foreach ($atividades as $atividade) {
@@ -111,14 +135,12 @@ class AtividadeController extends Controller
         }else{
             $percPrazoAno = 0;
         }
-
         return view('atividade.telaAtividades',compact('atividades','usuario_id','aberta','percPrazo','percPrazoMes','percPrazoAno','classificacoes','processosVol','demanda'));
 
     }
 
     public function iniciar(AtividadeRequest $request){
-        //dd($request);
-        //dd(count($request->data_meta)-1);
+
         if(count($request->data_meta)-1<$request->submit){
             $data_metaCalc = null;
         }else{
@@ -140,7 +162,6 @@ class AtividadeController extends Controller
     }
             
     public function parar(AtividadeRequest $request){
-        //dd($request->id_processo[substr($request->submit,1,10)]."-".$request->observacao);
         $aberta = DB::table('atividades')
         ->where('atividades.usuario','=',Auth::user()->id)
         ->where('atividades.hora_fim','=',null)
@@ -154,12 +175,25 @@ class AtividadeController extends Controller
             $data_conciliacao = date('Y-m-d H:i:s');
         }
         if($opcao =='C'){
-            $id_conclusao=Conclusao::where('id_processo','=',$request->id_processo[substr($request->submit,1,10)])
-                                   ->where('data_conciliada','=',$request->data_conciliada[substr($request->submit,1,10)])->get();                               
-            if(!$id_conclusao->count()>0){
-                Conclusao::create(['id_processo'=>$request->id_processo[substr($request->submit,1,10)],
-                                   'data_conciliada'=>$request->data_conciliada[substr($request->submit,1,10)],
-                                   'data_conciliacao'=>$data_conciliacao]);
+            if($request->tipoId[substr($request->submit,1,10)]==3){
+                $id_conclusao=Conclusao::where('id_processo','=',$request->id_processo[substr($request->submit,1,10)])
+                                       ->where('data_conciliada','=',$request->data_conciliada[substr($request->submit,1,10)])->get();                               
+
+                if(!$id_conclusao->count()>0){
+                    Conclusao::create(['id_processo'=>$request->id_processo[substr($request->submit,1,10)],
+                                       'data_conciliada'=>$request->data_conciliada[substr($request->submit,1,10)],
+                                       'data_conciliacao'=>$data_conciliacao]);
+                }
+
+            }
+            if($request->tipoId[substr($request->submit,1,10)]==4){
+                $id_demanda=Demanda::where('id_processo','=',$request->id_processo[substr($request->submit,1,10)])
+                                    ->where('data_final','=',$request->data_meta[substr($request->submit,1,10)])
+                                    ->where('data_conclusao','=',null)
+                                    ->first(); 
+                $demandaSave = Demanda::find($id_demanda->id);
+                $demandaSave->data_conclusao = date('Y-m-d H:i:s');
+                $demandaSave->save();
             }
         }
         $atividade = Atividade::find($aberta->id);
@@ -175,7 +209,7 @@ class AtividadeController extends Controller
         }
         if(!$request->volumetria == null) {
             Volumetria::create(['id_atividade'=>$aberta->id,
-                               'volumetria'=>$request->volumetria[substr($request->submit,1,10)]]);
+                               'volumetria'=>$request->volumetria[0]]);
         }
         
         return redirect()->action('AtividadeController@home');
@@ -256,17 +290,14 @@ class AtividadeController extends Controller
         $id_volumetria=Volumetria::where('id_atividade','=',$id)->get();
         if($id_volumetria->count()>0){
             if(!$request->volumetria == null) {
-                //dd(1);
                 $volumetria = Volumetria::find($id_volumetria[0]->id);
                 $volumetria->volumetria = $request->volumetria;
                 $volumetria->save();
             }else{
-                //dd(2);
                 $volumetria = Volumetria::find($id_volumetria[0]->id);
                 $volumetria->delete();
             }    
         }elseif(!$request->volumetria == null){
-            //dd(3);
             Volumetria::create(['id_atividade'=> $id,
                                 'volumetria'=>$request->volumetria]);
         }

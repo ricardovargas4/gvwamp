@@ -48,7 +48,6 @@ class Historico_indicController extends Controller
     }
 
     public function remove($id,$data_inicial=null,$data_final=null){
-        dd($data_inicial);
         $historico = historico_indic::find($id);
         $historico->delete();
         //return redirect()->action('Historico_indicController@filtro');
