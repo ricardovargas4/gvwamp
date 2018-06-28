@@ -106,7 +106,7 @@
                   @endif
                 </td>
 
-                @if ($aberta[0]->id == $a->processoId and !$classificacoes->isEmpty())
+                @if ($a->aberta)==1 and !$classificacoes->isEmpty())
                   <td>
                     <div class="form-group col s6">
                       <select name="classificacao" class="form-control">

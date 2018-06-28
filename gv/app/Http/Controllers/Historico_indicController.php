@@ -20,14 +20,12 @@ class Historico_indicController extends Controller
         return  view('historico_indic.listagem',compact('filtro'));
     }
     public function filtro(Historico_indicRequest $request,$data=null){
-        //dd($request);
         if(!is_null($request->data_inicial)){
             $data_inicial = $request->data_inicial;
             $data_final = $request->data_final;
             $periodicidades = Periodicidade::all();
             $users = User::all();
             $processos = Processo::all();
-            //$historicos = historico_indic::all();
             $historicos = DB::table('historico_indic')
             ->join('users', 'users.id', '=', 'historico_indic.user_id')
             ->join('periodicidades', 'periodicidades.id', '=', 'historico_indic.periodicidade_id')
@@ -50,7 +48,6 @@ class Historico_indicController extends Controller
     public function remove($id,$data_inicial=null,$data_final=null){
         $historico = historico_indic::find($id);
         $historico->delete();
-        //return redirect()->action('Historico_indicController@filtro');
         $data=['data_inicial' =>$data_inicial,
                'data_final' => $data_final];
         return redirect()->route('hist.filtro',$data);
@@ -59,21 +56,16 @@ class Historico_indicController extends Controller
     public function salvaAlt(Historico_indicRequest $request){
         $id = $request->id;
         historico_indic::whereId($id)->update($request->except('_token','data_inicial','data_final'));
-        //return redirect()->action('Historico_indicController@lista')->withInput(Request::only('nome'));
         $filtro = null;
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
-        //return  view('historico_indic.listagem',compact('filtro','data_inicial','data_final'));
-        //return redirect()->action('Historico_indicController@lista')->withInput(Request::only('nome'));
         $data=['data_inicial' =>$data_inicial,
                'data_final' => $data_final];
         return redirect()->route('hist.filtro',$data);
-        //return redirect()->action('Historico_indicController@lista')->with($data); //->withInput(Request::only('nome'/*,'filtro','data_inicial','data_final'*/));
     }
 
     public function adiciona(Historico_indicRequest $request){
-        //dd($request->data_informada);
-        //$usuario_id= Auth::user()->id;
+        /*Alterar Criacao de Historico por Schedule*/
         $historicos = DB::table('responsavels')
         ->join ('processos','responsavels.id_processo','=','processos.id')
         ->join ('periodicidades','periodicidades.id','=','processos.periodicidade')
@@ -81,14 +73,12 @@ class Historico_indicController extends Controller
         ->join ('tipos','tipos.id','=', 'processos.tipo')
         ->leftjoin (DB::raw('(select  id_processo, data_conciliada from atividades where hora_fim is null) atividades'),function($join){$join->on('atividades.id_processo', '=', 'processos.id');})
         ->leftjoin (DB::raw("(select id_processo, max(data_conciliada) ultima_data from conclusoes where data_conciliada <= '".$request->data_informada."' group by id_processo) conclusoes"),function($join){$join->on('conclusoes.id_processo','=','processos.id');})
-        //->where('users.id','=',$usuario_id)
         ->select(DB::raw("distinct processos.id as processo_id, '$request->data_informada' data_informada, users.id user_id,
         ultima_data, FLOAT_DIAS_UTEIS('$request->data_informada',periodicidades.dias) data_meta,
         periodicidades.id periodicidade_id,
         (CASE WHEN ultima_data >= FLOAT_DIAS_UTEIS('$request->data_informada',periodicidades.dias) then 'No Prazo' else 'Em Atraso' end) as status
         "))
         ->get();
-        //dd($historicos);
         foreach ($historicos as $historicos2) {
             historico_indic::create([
                 'processo_id' => $historicos2->processo_id,
@@ -100,18 +90,12 @@ class Historico_indicController extends Controller
                 'status' => $historicos2->status,
             ]);
          }
-            //dd($historicos);
-            //return  view('historico_indic.listagem',compact('filtro'));
             $filtro = null;
             $data_inicial = $request->data_inicial;
             $data_final = $request->data_final;
-            //return  view('historico_indic.listagem',compact('filtro','data_inicial','data_final'));
-            //return redirect()->action('Historico_indicController@lista')->withInput(Request::only('nome'));
             $data=['data_inicial' =>$data_inicial,
                    'data_final' => $data_final];
-            //dd($data);
             return redirect()->route('hist.filtro',$data);
-        //return redirect()->action('Historico_indicController@lista');
     }
 
 }

@@ -50,7 +50,6 @@ class AtividadeController extends Controller
         ->leftjoin(DB::raw('(select id_processo, max(data_conciliada) ultima_data from conclusoes group by id_processo) conclusoes'), function($join) {$join->on('conclusoes.id_processo', '=', 'processos.id'); })
         ->leftjoin(DB::raw('(select id, id_processo, data_final, id_responsavel from demandas where data_conclusao is null) demandas'), function($join) {$join->on('demandas.id_processo', '=', 'processos.id');$join->on('users.id', '=', 'demandas.id_responsavel'); })
         ->where('users.id','=',$usuario_id)
-
         ->where(function ($query) {
             $query->where(function ($query) {
                 $query->where('tipos.id','=', '4' )
