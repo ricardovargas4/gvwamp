@@ -6,15 +6,6 @@
     <link href="/css/font-awesome.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
-    <script src="/js/Chart.js"></script>
-    <!--<script src="/js/moment.min.js"></script>
-    <script src="/js/moment-with-locales.js"></script>-->
-    <script src="/js/Chart.min.js"></script>
-    <script type="text/javascript" src="\lib\jquery\dist\jquery.min.js"></script>           
-    <script src="\lib\materialize\dist\js\materialize.min.js"></script> 
-    <script src="\js\init.js"></script>
-    <script src="/js/validacao.js"></script>  
-
 
     <title>Gestão à Vista</title>
 </head>
@@ -90,6 +81,11 @@
   </div>
 -->
 
-
+    <script src="/js/Chart.js"></script>
+    <script src="/js/Chart.min.js"></script>
+    <script type="text/javascript" src="\lib\jquery\dist\jquery.min.js"></script>           
+    <script src="\lib\materialize\dist\js\materialize.min.js"></script> 
+    <script src="\js\init.js"></script>
+    <script src="/js/validacao.js"></script>  
 
 </html>

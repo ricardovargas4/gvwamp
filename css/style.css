@@ -46,7 +46,7 @@ canvas {
     -webkit-user-select: none;
     -ms-user-select: none;
 }
-
+/*
 .notificacao{
   margin-left:10px;
 }
@@ -60,7 +60,7 @@ canvas {
     text-align: left;
     padding-left: 20%;
   }
-
+*/
 .logo{
   max-width: 10%;
   height:auto;
@@ -120,6 +120,12 @@ label {
 
 #nome_usuario, #data {
   text-align: center;
+
+}
+
+.prazos {
+  text-align: center;
+  position:relative;
 
 }
 
