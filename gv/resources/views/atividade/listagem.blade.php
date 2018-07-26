@@ -113,12 +113,12 @@
                                 <td scope="row">{{$a->id}}</td>
                                 <td> {{$a->processo_Nome}} </td>
                                 <td> {{$a->user_Email}} </td>
-                                <td> {{$a->data_conciliacao}} </td>
-                                <td> {{$a->hora_inicio}} </td>
-                                <td> {{$a->hora_fim}} </td>
-                                <td> {{$a->data_meta}} </td>
-                                <td> {{$a->data_conciliada}} </td>
-                                <td> {{$a->ultima_data}} </td>
+                                <td> @if(isset($a->data_conciliacao)) {{date('d-m-Y', strtotime($a->data_conciliacao))}} @else {{$a->data_conciliacao}} @endif</td>
+                                <td> @if(isset($a->hora_inicio)) {{date('d-m-Y H:i:s', strtotime($a->hora_inicio))}} @else {{$a->hora_inicio}} @endif</td>
+                                <td> @if(isset($a->hora_fim)) {{date('d-m-Y H:i:s', strtotime($a->hora_fim))}} @else {{$a->hora_fim}} @endif </td>
+                                <td> @if(isset($a->data_meta)) {{date('d-m-Y', strtotime($a->data_meta))}} @else {{$a->data_meta}} @endif </td>
+                                <td> @if(isset($a->data_conciliada)) {{date('d-m-Y', strtotime($a->data_conciliada))}} @else {{$a->data_conciliada}} @endif </td>
+                                <td> @if(isset($a->ultima_data)) {{date('d-m-Y', strtotime($a->ultima_data))}}  @else {{$a->ultima_data}} @endif</td>
                                 <td>
                                     <div class="row">
                                         <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$a->id}}">Editar</a>
