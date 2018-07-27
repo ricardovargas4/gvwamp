@@ -65,10 +65,10 @@
                             <tr>
                                 <td scope="row">{{$h->id}}</td>
                                 <td> {{$h->processo_nome}} </td>
-                                <td> {{$h->data_informada}} </td>
+                                <td> @if(isset($h->data_informada)) {{date('d/m/Y', strtotime($h->data_informada))}} @else {{$h->data_informada}} @endif</td>
                                 <td> {{$h->user_id}} </td>
-                                <td> {{$h->ultima_data}} </td>
-                                <td> {{$h->data_meta}} </td>
+                                <td> @if(isset($h->ultima_data)) {{date('d/m/Y', strtotime($h->ultima_data))}} @else {{$h->ultima_data}} @endif</td>
+                                <td> @if(isset($h->data_meta)) {{date('d/m/Y', strtotime($h->data_meta))}} @else {{$h->data_meta}} @endif</td>
                                 <td> {{$h->periodicidade_id}} </td>
                                 <td> {{$h->status}} </td>
                                 <td>
@@ -106,12 +106,12 @@
                                                 
                                                 <div class="form-group col s6">
                                                     <label>Última Data</label>
-                                                    <input name="ultima_data" class="form-control" placeholder="Última Data" value="{{$h->ultima_data}}"/>
+                                                    <input type="date" name="ultima_data" class="form-control" placeholder="dd/mm/aaaa" value="{{$h->ultima_data}}"/>
                                                 </div>       
 
                                                 <div class="form-group col s6">
                                                     <label>Data Meta</label>
-                                                    <input name="data_meta" class="form-control" placeholder="Data Meta" value="{{$h->data_meta}}"/>
+                                                    <input type="date" name="data_meta" class="form-control" placeholder="dd/mm/aaaa" value="{{$h->data_meta}}"/>
                                                 </div>       
 
                                                 <div class="form-group col s6">

@@ -113,12 +113,12 @@
                                 <td scope="row">{{$a->id}}</td>
                                 <td> {{$a->processo_Nome}} </td>
                                 <td> {{$a->user_Email}} </td>
-                                <td> @if(isset($a->data_conciliacao)) {{date('d-m-Y', strtotime($a->data_conciliacao))}} @else {{$a->data_conciliacao}} @endif</td>
-                                <td> @if(isset($a->hora_inicio)) {{date('d-m-Y H:i:s', strtotime($a->hora_inicio))}} @else {{$a->hora_inicio}} @endif</td>
-                                <td> @if(isset($a->hora_fim)) {{date('d-m-Y H:i:s', strtotime($a->hora_fim))}} @else {{$a->hora_fim}} @endif </td>
-                                <td> @if(isset($a->data_meta)) {{date('d-m-Y', strtotime($a->data_meta))}} @else {{$a->data_meta}} @endif </td>
-                                <td> @if(isset($a->data_conciliada)) {{date('d-m-Y', strtotime($a->data_conciliada))}} @else {{$a->data_conciliada}} @endif </td>
-                                <td> @if(isset($a->ultima_data)) {{date('d-m-Y', strtotime($a->ultima_data))}}  @else {{$a->ultima_data}} @endif</td>
+                                <td> @if(isset($a->data_conciliacao)) {{date('d/m/Y', strtotime($a->data_conciliacao))}} @else {{$a->data_conciliacao}} @endif</td>
+                                <td> @if(isset($a->hora_inicio)) {{date('d/m/Y H:i:s', strtotime($a->hora_inicio))}} @else {{$a->hora_inicio}} @endif</td>
+                                <td> @if(isset($a->hora_fim)) {{date('d/m/Y H:i:s', strtotime($a->hora_fim))}} @else {{$a->hora_fim}} @endif </td>
+                                <td> @if(isset($a->data_meta)) {{date('d/m/Y', strtotime($a->data_meta))}} @else {{$a->data_meta}} @endif </td>
+                                <td> @if(isset($a->data_conciliada)) {{date('d/m/Y', strtotime($a->data_conciliada))}} @else {{$a->data_conciliada}} @endif </td>
+                                <td> @if(isset($a->ultima_data)) {{date('d/m/Y', strtotime($a->ultima_data))}}  @else {{$a->ultima_data}} @endif</td>
                                 <td>
                                     <div class="row">
                                         <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$a->id}}">Editar</a>
@@ -162,16 +162,16 @@
                                                         <input name="hora_fim" class="form-control" placeholder="Horário Final" value="{{$a->hora_fim}}"/>
                                                     </div>                  
                                                     <div class="form-group col s6">
-                                                        <label>Data Meta</label>
-                                                        <input name="data_meta" class="form-control" placeholder="Data Meta" value="{{$a->data_meta}}"/>
+                                                        <label>Data Meta </label>
+                                                        <input type="date" name="data_meta" class="form-control" placeholder="dd/mm/aaaa" value="{{$a->data_meta}}"/>
                                                     </div>                  
                                                     <div class="form-group col s6">
                                                         <label>Data Conciliada</label>
-                                                        <input name="data_conciliada" class="form-control" placeholder="Data Conciliada" value="{{$a->data_conciliada}}"/>
+                                                        <input type="date" name="data_conciliada" class="form-control" placeholder="dd/mm/aaaa" value="{{$a->data_conciliada}}"/>
                                                     </div>     
                                                     <div class="form-group col s6">
                                                         <label>Última Data Conciliada</label>
-                                                        <input name="ultima_data" class="form-control" placeholder="Última Data Conciliada" value="{{$a->ultima_data}}"/>
+                                                        <input type="date" name="ultima_data" class="form-control" placeholder="dd/mm/aaaa" value="{{$a->ultima_data}}"/>
                                                     </div>
                                                     <div class="form-group col s6">
                                                         <label>Classificação</label>
