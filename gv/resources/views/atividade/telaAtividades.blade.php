@@ -11,9 +11,11 @@
     </ul>
   </div>
 @endif
-<div class= "prazos"> Prazo No Dia {{$percPrazo}} </div>
-<div class= "prazos"> Prazo No Mês Corrente {{$percPrazoMes}} </div>
-<div class= "prazos"> Prazo No Ano Corrente {{$percPrazoAno}} </div>
+<div class="prazos">
+  <div class= "box"> Prazo No Dia {{$percPrazo}} </div>
+  <div class= "box"> Prazo No Mês Corrente {{$percPrazoMes}} </div>
+  <div class= "box"> Prazo No Ano Corrente {{$percPrazoAno}} </div>
+</div>
 <h1>Atividades</h1>
   @if ($aberta->isEmpty())
     <form name='TabAtividades' action="/atividade/iniciar" method="post"> 
