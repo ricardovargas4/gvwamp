@@ -1,7 +1,6 @@
 html {
   height: 100%;
   box-sizing: border-box;
-  /*font-size: .6rem;  */
 }
 *,
 *:before,
@@ -46,21 +45,7 @@ canvas {
     -webkit-user-select: none;
     -ms-user-select: none;
 }
-/*
-.notificacao{
-  margin-left:10px;
-}
 
-.notificacaoTitulo{
-  margin-left:10px;
-  color: white;
-}
-
-  .statusProcessos{
-    text-align: left;
-    padding-left: 20%;
-  }
-*/
 .logo{
   max-width: 10%;
   height:auto;
@@ -106,16 +91,11 @@ label {
 .canvas-container{
   position: relative;
 }
-/*  width: 500px;
-  height: 500px;
-}*/
-
 
 #button {
   position:relative;
   left:10%;
   top:92%;
-  /*visibility: hidden;*/
 }
 
 #nome_usuario, #data {
@@ -138,24 +118,6 @@ label {
   padding: 0px;
 }
 
-/*
-#chart {
-  height: 440px;
-  width: 100%;
-}
-
-#chart.pointer-on-bars .dxc-series rect {
-  cursor: pointer;
-}
-
-.button-container {
-  text-align: center;
-  height: 40px;
-  position: absolute;
-  top: 7px;
-  left: 0px;
-  
-}*/
 .containerFiltro{
   height: 80px;
   position: relative;
@@ -180,4 +142,12 @@ label {
   top: 20%;
   left: 45%;
   font-size: 18px;
+}
+
+td {
+  padding-right: 30px;
+}
+
+th {
+  padding-right: 30px;
 }
