@@ -57,7 +57,7 @@
                                 <th>Data Meta</th>
                                 <th>Periodicidade</th>
                                 <th>Status</th>
-                                <th> Excluir </th>
+                                <th>Alterar/Excluir </th>
                             </tr>
                         </thead>
                           <tbody>

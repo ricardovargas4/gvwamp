@@ -47,7 +47,7 @@
                                 <th> ID </th>
                                 <th> Processo </th>
                                 <th> Usuário </th>
-                                <td> Alterar/Excluir </td>
+                                <th> Alterar/Excluir </th>
                             </tr>
                         </thead>
                           <tbody>

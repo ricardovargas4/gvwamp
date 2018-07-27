@@ -30,7 +30,7 @@
                             <tr>
                                 <th>ID </th>
                                 <th>Nome </th>
-                                <td> Alterar/Excluir </td>
+                                <th> Alterar/Excluir </th>
                             </tr>
                         </thead>
                           <tbody>

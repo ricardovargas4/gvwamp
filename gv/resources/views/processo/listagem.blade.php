@@ -73,7 +73,7 @@
                                 <th> Pasta </th>
                                 <th> Coordenação </th>
                                 <th> Volumetria </th>
-                                <td> Alterar/Excluir </td>
+                                <th> Alterar/Excluir </th>
                             </tr>
                         </thead>
                           <tbody>

@@ -102,9 +102,9 @@
                                 <th> Inicio </th>
                                 <th> Fim </th>
                                 <th> Data Meta </th>
-                                <td> Data Conciliada </td>
-                                <td> Ultima Data </td>
-                                <td> Alterar/Excluir </td>
+                                <th> Data Conciliada </th>
+                                <th> Ultima Data </th>
+                                <th> Alterar/Excluir </th>
                             </tr>
                         </thead>
                           <tbody>

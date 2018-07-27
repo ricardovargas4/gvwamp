@@ -41,7 +41,7 @@
                                 <th>ID </th>
                                 <th>Nome </th>
                                 <th>Úteis</th>
-                                <td> Alterar/Excluir </td>
+                                <th> Alterar/Excluir </th>
                             </tr>
                         </thead>
                           <tbody>
