@@ -27,21 +27,21 @@
     <table class="table table-striped table-bordered table-hover">
       <thead>
         <tr>
-          <td> Tipo </td>
-          <td> Nome Processo </td>
-          <td> Status </td>
-          <td> Data Meta </td>
-          <td> Data Ultima Atualização </td>
-          <td> Data Conciliada </td>
-          <td> Ação </td>
+          <th> Tipo </th>
+          <th> Nome Processo </th>
+          <th> Status </th>
+          <th> Data Meta </th>
+          <th> Data Ultima Atualização </th>
+          <th> Data Conciliada </th>
+          <th> Ação </th>
           @if (!$aberta->isEmpty() and !$classificacoes->isEmpty())
-            <td> Classificação </td>         
+            <th> Classificação </th>         
           @endif 
           @if (!$aberta->isEmpty())
-            <td> Observação </td>         
+            <th> Observação </th>         
           @endif      
           @if (!$aberta->isEmpty() and !$processosVol->isEmpty())
-            <td> Volumetria </td>         
+            <th> Volumetria </th>         
           @endif 
         <tr>
       </thead>
@@ -108,7 +108,7 @@
                   @endif
                 </td>
 
-                @if ($a->aberta)==1 and !$classificacoes->isEmpty())
+                @if (($a->aberta)==1 and !$classificacoes->isEmpty())
                   <td>
                     <div class="form-group col s6">
                       <select name="classificacao" class="form-control">

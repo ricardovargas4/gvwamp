@@ -206,7 +206,7 @@ class AtividadeController extends Controller
                                'observacao'=>$request->observacao,
                                'classificacao'=>$request->classificacao]);
         }
-        if(!$request->volumetria == null) {
+        if(!$request->volumetria[0] == null) {
             Volumetria::create(['id_atividade'=>$aberta->id,
                                'volumetria'=>$request->volumetria[0]]);
         }
