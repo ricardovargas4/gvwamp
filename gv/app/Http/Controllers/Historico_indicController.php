@@ -80,15 +80,20 @@ class Historico_indicController extends Controller
         "))
         ->get();
         foreach ($historicos as $historicos2) {
-            historico_indic::create([
-                'processo_id' => $historicos2->processo_id,
-                'data_informada' => $historicos2->data_informada,
-                'user_id' => $historicos2->user_id,
-                'ultima_data' => $historicos2->ultima_data,
-                'data_meta' => $historicos2->data_meta,
-                'periodicidade_id' => $historicos2->periodicidade_id,
-                'status' => $historicos2->status,
-            ]);
+            
+            $id_hist=historico_indic::where('processo_id','=',$historicos2->processo_id)
+                                    ->where('data_informada','=',$historicos2->data_informada)->get();   
+            if(!$id_hist->count()>0){
+                historico_indic::create([
+                    'processo_id' => $historicos2->processo_id,
+                    'data_informada' => $historicos2->data_informada,
+                    'user_id' => $historicos2->user_id,
+                    'ultima_data' => $historicos2->ultima_data,
+                    'data_meta' => $historicos2->data_meta,
+                    'periodicidade_id' => $historicos2->periodicidade_id,
+                    'status' => $historicos2->status,
+                ]);
+            }
          }
             $filtro = null;
             $data_inicial = $request->data_inicial;
