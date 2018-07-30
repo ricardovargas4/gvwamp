@@ -95,28 +95,28 @@ class AtividadeController extends Controller
             $percPrazo = 0;
         }
        
-        $prazoM = $prazo;
-        $totalM = $total;
+        $prazoM = 0;
+        $totalM = 0;
         $PrazoMes = DB::table('historico_indic')
         ->where('historico_indic.user_id','=',$usuario_id)
         ->whereMonth('data_informada','=',date('m'))
         ->select('status')
         ->get();
-
         foreach ($PrazoMes as $atividade) {
             if(($atividade->status)=='No Prazo') {
                 $prazoM ++;
             };
             $totalM ++;
             }
+  
         if($totalM<>0) {
             $percPrazoMes = round($prazoM/$totalM*100,2)."%";
         }else{
             $percPrazoMes = 0;
         }
 
-        $prazoA = $prazo;
-        $totalA = $total;
+        $prazoA = 0;
+        $totalA = 0;
         $PrazoAno = DB::table('historico_indic')
         ->where('historico_indic.user_id','=',$usuario_id)
         ->whereYear('data_informada','=',date('Y'))
