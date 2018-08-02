@@ -164,7 +164,9 @@ a:hover {
   overflow-y: auto;
 }
 
-.modal-content{
-  /*max-height: 300px;*/
-  
+.waves-effect.waves-light.btn.green.accent-3.modal-trigger{
+  width: 100px;
+}
+.waves-effect.waves-light.btn.red.accent-4{
+  width: 100px;
 }
