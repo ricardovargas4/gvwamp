@@ -51,10 +51,8 @@
                                                       <input name="nome" class="form-control" value="{{$t->nome}}"/>
                                                     </div>
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
+                                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
                                                 </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancelar</a>
                                             </div>
                                         </div>
                                         <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('TipoController@remove', $t->id)}}' : false)">Deletar</a>
