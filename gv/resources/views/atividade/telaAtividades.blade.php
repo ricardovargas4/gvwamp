@@ -86,17 +86,17 @@
                 @endif
               </td>
               @if($a->tipoId==4)
-                <td> <input type="hidden" name="data_conciliada[]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
+                <td> <input type="hidden" id='DtConc{{{ $a->processoId }}}' name="data_conciliada[]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
               @else
-                <td> <input type=date name="data_conciliada[]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
+                <td> <input type=date id='DtConc{{{ $a->processoId }}}' name="data_conciliada[]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
               @endif
               @if (($a->aberta)==1)
                 <td>  
-                  <button id='P{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="P{{{ $index }}}">
+                  <button id='BtnP{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="P{{{ $index }}}">
                     <i class="fa fa-pause" aria-hidden="true"></i>
                   </button>
                   @if($a->tipoId == 3 or $a->tipoId == 4)
-                    <button id='C{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="C{{{ $index }}}">
+                    <button id='BtnC{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="C{{{ $index }}}">
                       <i class="fa fa-stop" aria-hidden="true"></i>
                     </button>
                     @if(date('H') < 10 and $a->tipoId == 3)
@@ -124,7 +124,7 @@
                   <td>  <input type="number" name = "volumetria[]" /> </td>         
                 @endif 
               @else
-                <td>  <button id='{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" <?php if (!$aberta->isEmpty()){ ?> disabled <?php   } ?>  name="submit" value="{{{ $index }}}"> 
+                <td>  <button id='BtnI{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" <?php if (!$aberta->isEmpty()){ ?> disabled <?php   } ?>  name="submit" value="{{{ $index }}}"> 
                         <i class="fa fa-play" aria-hidden="true"></i>
                       </button> </td>
               @endif

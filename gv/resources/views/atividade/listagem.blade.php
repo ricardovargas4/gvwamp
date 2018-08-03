@@ -80,6 +80,7 @@
                                     <div class="form-group">
                                         <label>Classificação</label>
                                         <select name="classificacao" class="form-control">
+                                                <option value=""></option>
                                                 @foreach($classificacoes as $c)
                                                 <option value="{{$c->id}}">{{$c->opcao}}</option>
                                                 @endforeach
@@ -91,7 +92,7 @@
                                     </div>   
                                     <div class="form-group">
                                         <label>Volumetria</label> 
-                                        <textarea name="volumetria"> </textarea> 
+                                        <input type = "number" name="volumetria" class="form-control"/>
                                     </div>                                       
                                     <button type="submit" class="btn waves-effect light-green accent-3"> Salvar</button>
                                 </form>
@@ -195,7 +196,7 @@
                                                     </div>       
                                                     <div class="form-group">
                                                         <label>Volumetria</label> 
-                                                        <input name="volumetria" value="{{$a->volumetria}}"/> 
+                                                        <input type = "number" name="volumetria" value="{{$a->volumetria}}" class="form-control"/> 
                                                     </div>    
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
                                                     <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>    
@@ -207,7 +208,6 @@
                                 </td>
                             </tr>
                             @endforeach
-            
                         </tbody>
                     </table>
                     {{ $atividades->links() }}
