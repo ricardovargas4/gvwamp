@@ -3,7 +3,7 @@
 @section('conteudo')
 <br>
 <div class="containerFiltro">
-    <div class="form-group col s6">
+    <div class="form-group">
     <form action="/historico_indic/filtro" method="post">
     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
     <div class="dataIni">       
@@ -43,7 +43,7 @@
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                     <input type="hidden" name="data_inicial" value="{{{$data_inicial}}}" />
                                     <input type="hidden" name="data_final" value="{{{$data_final}}}" />
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="data_informada">Data Informada</label>
                                         <input type = "date" name="data_informada" class="form-control"/>
                                     </div>
@@ -88,7 +88,7 @@
                                                 
                                                 <input type="hidden" name="data_inicial" value="{{{$data_inicial}}}" />
                                                 <input type="hidden" name="data_final" value="{{{$data_final}}}" />
-                                                <div class="form-group col s6">
+                                                <div class="form-group">
                                                     <label for="processo_id">Nome Processo</label>
                                                     <select name="processo_id" class="form-control">
                                                         <option value="{{{ $h->processo_id }}}" disabled selected>{{{$h->processo_nome}}}</option>
@@ -97,11 +97,11 @@
                                                             @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="form-group col s6">
+                                                <div class="form-group">
                                                     <label>Data Informada</label>
                                                     <input type="date" name="data_informada" class="form-control" placeholder="dd/mm/aaaa" value="{{$h->data_informada}}"/>
                                                 </div>
-                                                <div class="form-group col s6">
+                                                <div class="form-group">
                                                     <label for="user_id">Usuários</label>
                                                     <select name="user_id" class="form-control" value="{{{ $h->user_id }}}">
                                                         @foreach($users as $u)
@@ -110,17 +110,17 @@
                                                     </select>
                                                 </div>
                                                 
-                                                <div class="form-group col s6">
+                                                <div class="form-group">
                                                     <label>Última Data</label>
                                                     <input type="date" name="ultima_data" class="form-control" placeholder="dd/mm/aaaa" value="{{$h->ultima_data}}"/>
                                                 </div>       
 
-                                                <div class="form-group col s6">
+                                                <div class="form-group">
                                                     <label>Data Meta</label>
                                                     <input type="date" name="data_meta" class="form-control" placeholder="dd/mm/aaaa" value="{{$h->data_meta}}"/>
                                                 </div>       
 
-                                                <div class="form-group col s6">
+                                                <div class="form-group">
                                                         <label for="periodicidade_id">Tipo</label>
                                                         <select name="periodicidade_id" class="form-control" value="{{{ $h->periodicidade_id }}}">
                                                         @foreach($periodicidades as $p)
@@ -128,7 +128,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="form-group col s6">
+                                                <div class="form-group">
                                                     <label for="status">Status</label>
                                                         <select name="status"  class="form-control">
                                                             <option value="{{{ $h->status }}}" disabled selected>{{{ $h->status }}}</option>

@@ -16,7 +16,7 @@
                                 <form action="/coordenacao/adiciona" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="nome">Nome</label>
                                         <input name="nome" class="form-control"/>
                                     </div>
@@ -47,7 +47,7 @@
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                 <input type="hidden" name="id" value="{{{ $c->id }}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                       <label for="nome">Nome</label>
                                                       <input name="nome" class="form-control" value="{{$c->nome}}"/>
                                                     </div>

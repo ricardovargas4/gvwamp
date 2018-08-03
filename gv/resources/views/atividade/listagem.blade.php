@@ -3,7 +3,7 @@
 @section('conteudo')
 <br>
 <div class="containerFiltro">
-    <div class="form-group col s6">
+    <div class="form-group">
     <form action="/atividade/filtro" method="post">
     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
         <div class="dataIni">    
@@ -43,7 +43,7 @@
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                     <input type="hidden" name="usuario" value="{{$usuario}}" />
 
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="id_processo">Processo</label>
                                         <select name="id_processo" class="form-control">
                                             <option value="" disabled selected>Selecione o Processo</option>
@@ -52,32 +52,32 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label>Data Conciliação</label>
                                         <input type="date" name="data_conciliacao" class="form-control" placeholder="dd/mm/aaaa"/>
                                     </div>
   
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label>Horário de Início</label>
                                         <input type="datetime-local" step="1" name="hora_inicio" class="form-control" placeholder="dd/mm/aaaa hh:mm:ss"/>
                                     </div>
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label>Horário Final</label>
                                         <input type="datetime-local" step="1" name="hora_fim" class="form-control" placeholder="dd/mm/aaaa hh:mm:ss"/>
                                     </div>                  
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label>Data Meta</label>
                                         <input type = "date" name="data_meta" class="form-control" placeholder="Data Meta"/>
                                     </div>                  
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label>Data Conciliada</label>
                                         <input type = "date" name="data_conciliada" class="form-control" placeholder="Data Conciliada"/>
                                     </div>     
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label>Última Data Conciliada</label>
                                         <input type = "date" name="ultima_data" class="form-control" placeholder="Última Data Conciliada"/>
                                     </div>  
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label>Classificação</label>
                                         <select name="classificacao" class="form-control">
                                                 @foreach($classificacoes as $c)
@@ -85,11 +85,11 @@
                                                 @endforeach
                                         </select>
                                     </div>      
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label>Observação</label> 
                                         <textarea name="observacao"> </textarea> 
                                     </div>   
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label>Volumetria</label> 
                                         <textarea name="volumetria"> </textarea> 
                                     </div>                                       
@@ -136,7 +136,7 @@
                                                     <!--<input type="hidden" name="_method" value="put">-->
                                                 <input type="hidden" name="data_inicial" value="{{{$data_inicial}}}" />
                                                 <input type="hidden" name="data_final" value="{{{$data_final}}}" />    
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="id_processo">Processo</label>
                                                         <select name="id_processo" class="form-control">
                                                             <option value="{{{ $a->processo_ID }}}" disabled selected>{{{$a->processo_Nome }}}</option>
@@ -145,7 +145,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                     <label>Usuário</label>
                                                       <select name="usuario" value="{{$a->user_Id}}" class="form-control">
                                                       <option value="{{{ $a->user_Id }}}" disabled selected>{{{$a->user_Email }}}</option>
@@ -154,32 +154,32 @@
                                                             @endforeach
                                                        </select>
                                                     </div>
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label>Data Conciliação</label>
                                                         <input type="date" name="data_conciliacao" class="form-control" placeholder="dd/mm/aaaa" value="{{$a->data_conciliacao}}"/>
                                                      </div>
   
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label>Horário de Início</label>
                                                         <input name="hora_inicio" class="form-control" placeholder="Horário de Início" value="{{$a->hora_inicio}}" />
                                                     </div>
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label>Horário Final</label>
                                                         <input name="hora_fim" class="form-control" placeholder="Horário Final" value="{{$a->hora_fim}}"/>
                                                     </div>                  
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label>Data Meta </label>
                                                         <input type="date" name="data_meta" class="form-control" placeholder="dd/mm/aaaa" value="{{$a->data_meta}}"/>
                                                     </div>                  
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label>Data Conciliada</label>
                                                         <input type="date" name="data_conciliada" class="form-control" placeholder="dd/mm/aaaa" value="{{$a->data_conciliada}}"/>
                                                     </div>     
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label>Última Data Conciliada</label>
                                                         <input type="date" name="ultima_data" class="form-control" placeholder="dd/mm/aaaa" value="{{$a->ultima_data}}"/>
                                                     </div>
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label>Classificação</label>
                                                         <select name="classificacao" value="{{ $a->class_ID }}" class="form-control">
                                                         <option value="{{ $a->class_ID }}" >{{{$a->class_Opcao}}}</option>
@@ -189,11 +189,11 @@
                                                                 @endforeach
                                                         </select>
                                                     </div>      
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label>Observação</label> 
                                                         <input name="observacao" value="{{$a->observacao}}"/> 
                                                     </div>       
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label>Volumetria</label> 
                                                         <input name="volumetria" value="{{$a->volumetria}}"/> 
                                                     </div>    

@@ -16,7 +16,7 @@
                                 <form action="/responsavel/adiciona" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                     
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="id_processo">Nome Processo</label>
                                         <select name="id_processo" class="form-control">
                                             <option value="" disabled selected>Selecione o Processo</option>
@@ -26,7 +26,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="usuario">Usuários</label>
                                         <select name="usuario" class="form-control">
                                             <option value="" disabled selected>Selecione o usuário</option>
@@ -65,7 +65,7 @@
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                 <input type="hidden" name="id" value="{{{ $r->id }}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="id_processo">Nome Processo</label>
                                                         <select name="id_processo" class="form-control">
                                                             <option value="{{{ $r->procID }}}" disabled selected>{{{$r->procNome}}}</option>
@@ -75,7 +75,7 @@
                                                         </select>
                                                     </div>
 
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="usuario">Usuários</label>
                                                         <select name="usuario" class="form-control">
                                                             <option value="{{{ $r->userID }}}" disabled selected>{{{$r->email}}}</option>

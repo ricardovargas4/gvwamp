@@ -16,7 +16,7 @@
                                 <form action="/demanda/adiciona" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="id_processo">Nome Processo</label>
                                         <select name="id_processo" class="form-control">
                                             <option value="" disabled selected>Selecione o Processo</option>
@@ -25,7 +25,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="id_responsavel">Nome Responsável</label>
                                         <select name="id_responsavel" class="form-control">
                                             <option value="" disabled selected>Selecione o Responsável</option>
@@ -35,11 +35,11 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="data_final">Prazo</label>
                                         <input type = "date" name="data_final" class="form-control"/>
                                     </div>
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="data_conclusao">Data Conclusão</label>
                                         <input type = "date" name="data_conclusao" class="form-control"/>
                                     </div>
@@ -77,7 +77,7 @@
                                                 <input type="hidden" name="id" value="{{{ $d->id }}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
                                                     
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="id_processo">Nome Processo</label>
                                                         <select name="id_processo" class="form-control">
                                                             <option value="{{{ $d->procID }}}" disabled selected>{{{$d->procNome}}}</option>
@@ -86,7 +86,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="id_responsavel">Responsável</label>
                                                         <select name="id_responsavel" class="form-control">
                                                             <option value="{{{ $d->userID }}}" disabled selected>{{{$d->email}}}</option>
@@ -96,11 +96,11 @@
                                                         </select>
                                                     </div>
 
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="data_final">Nome</label>
                                                         <input type = "date" name="data_final" value="{{ $d->data_final }}" class="form-control"/>
                                                     </div>
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="data_conclusao">Data Conclusão</label>
                                                         <input type = "date" name="data_conclusao" value="{{ $d->data_conclusao }}" class="form-control"/>
                                                     </div>

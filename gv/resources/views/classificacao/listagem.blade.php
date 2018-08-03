@@ -16,7 +16,7 @@
                                 <form action="/classificacao/adiciona" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                     
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="id_processo">Nome Processo</label>
                                         <select name="id_processo" class="form-control">
                                             <option value="" disabled selected>Selecione o Processo</option>
@@ -26,7 +26,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="opcao">Opção de Classificação</label>
                                         <input type="text" name="opcao" class="form-control">
                                         </input>
@@ -62,7 +62,7 @@
                                                 <input type="hidden" name="id" value="{{{ $c->id }}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
                                                     
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="id_processo">Nome Processo</label>
                                                         <select name="id_processo" class="form-control">
                                                             <option value="{{{ $c->id_processo }}}" disabled selected>{{{$c->id_processo_FK->nome}}}</option>
@@ -72,7 +72,7 @@
                                                         </select>
                                                     </div>
 
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                       <label>Opção</label>
                                                       <input name="opcao"  value="{{$c->opcao}}"/>
                                                     </div>

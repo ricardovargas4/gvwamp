@@ -16,7 +16,7 @@
                                 <form action="/tipo/adiciona" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="nome">Nome</label>
                                         <input name="nome" class="form-control"/>
                                     </div>
@@ -46,7 +46,7 @@
                                                 <form action="/tipo/salvaAlt" method="post">
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                 <input type="hidden" name="id" value="{{{ $t->id }}}" />
-                                                                                                        <div class="form-group col s6">
+                                                                                                        <div class="form-group">
                                                       <label for="nome">Nome</label>
                                                       <input name="nome" class="form-control" value="{{$t->nome}}"/>
                                                     </div>

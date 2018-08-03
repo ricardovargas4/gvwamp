@@ -16,11 +16,11 @@
                                 <form action="/periodicidade/adiciona" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="nome">Nome</label>
                                         <input name="nome" class="form-control"/>
                                     </div>
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="dias">Nº Dias</label>
                                         <input type = "number" name="dias" class="form-control"/>
                                     </div>
@@ -59,11 +59,11 @@
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                 <input type="hidden" name="id" value="{{{ $p->id }}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                       <label for="nome">Nome</label>
                                                       <input name="nome" class="form-control" value="{{$p->nome}}"/>
                                                     </div>
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                       <label for="dias">Nº Dias</label>
                                                       <input type = "number" name="dias" class="form-control"  value="{{$p->dias}}"/>
                                                     </div>

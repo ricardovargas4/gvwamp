@@ -15,12 +15,12 @@
                             <div class="collapsible-body">
                                 <form action="/processo/adiciona" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="nome">Nome</label>
                                         <input name="nome" class="form-control"/>
                                     </div>
                                     
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="tipo">Tipo</label>
                                         <select name="tipo" class="form-control">
                                             <option value="" disabled selected>Selecione o Processo</option>
@@ -29,7 +29,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="periodicidade">Tipo</label>
                                         <select name="periodicidade" class="form-control">
                                             <option value="" disabled selected>Selecione a Periodicidade</option>
@@ -38,11 +38,11 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="pasta">Pasta</label>
                                         <input name="pasta" class="form-control"/>
                                     </div>
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="coordenacao">Coordenacao</label>
                                         <select name="coordenacao" class="form-control">
                                             <option value="" disabled selected>Selecione a Coordenacao</option>
@@ -51,7 +51,7 @@
                                             @endforeach
                                         </select>
                                     </div> 
-                                    <div class="form-group col s6">
+                                    <div class="form-group">
                                         <label for="volumetria">Volumetria</label>
                                         <select name="volumetria" class="form-control">
                                             <option value=""></option>
@@ -95,12 +95,12 @@
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                 <input type="hidden" name="id" value="{{{ $p->id }}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="nome">Nome</label>
                                                         <input name="nome" class="form-control" value="{{{ $p->nome }}}"/>
                                                     </div>
                                                     
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="tipo">Tipo</label>
                                                         <select name="tipo" class="form-control">
                                                             <option value="{{{ $p->tipoID }}}" disabled selected>{{{$p->tipo}}}</option>
@@ -109,7 +109,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="periodicidade">Periodicidade</label>
                                                         <select name="periodicidade" class="form-control">
                                                             <option value="{{{ $p->periodicidadeID }}}" disabled selected>{{{$p->periodicidade}}}</option>
@@ -118,11 +118,11 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="pasta">Pasta</label>
                                                         <input name="pasta" class="form-control" value="{{{ $p->pasta }}}"/>
                                                     </div>
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="coordenacao">Coordenacao</label>
                                                         <select name="coordenacao" class="form-control">
                                                             <option value="{{{ $p->coordenacaoID }}}" disabled selected>{{{$p->coordenacao}}}</option>
@@ -131,7 +131,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="form-group col s6">
+                                                    <div class="form-group">
                                                         <label for="volumetria">Volumetria</label>
                                                         <select name="volumetria" class="form-control">
                                                             <option value="{{{ $p->volumetria }}}" >{{{$p->volumetria}}}</option>
