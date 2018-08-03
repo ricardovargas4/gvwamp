@@ -8,7 +8,7 @@ class processo extends Model
 {
     protected $table = 'processos';
     public $timestamps = true;
-    protected $fillable = array('nome', 'tipo', 'periodicidade', 'pasta', 'coordenacao','volumetria');
+    protected $fillable = array('nome', 'tipo', 'periodicidade', 'coordenacao','volumetria');
 
     public function tipo(){
         return $this->belongsTo('gv\Tipo');

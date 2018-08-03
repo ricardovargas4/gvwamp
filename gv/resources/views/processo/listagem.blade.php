@@ -39,10 +39,6 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="pasta">Pasta</label>
-                                        <input name="pasta" class="form-control"/>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="coordenacao">Coordenacao</label>
                                         <select name="coordenacao" class="form-control">
                                             <option value="" disabled selected>Selecione a Coordenacao</option>
@@ -70,7 +66,6 @@
                                 <th> Nome </th>
                                 <th> Tipo </th>
                                 <th> Periodicidade </th>
-                                <th> Pasta </th>
                                 <th> Coordenação </th>
                                 <th> Volumetria </th>
                                 <th> Alterar/Excluir </th>
@@ -83,7 +78,6 @@
                                 <td> {{$p->nome}} </td>
                                 <td> {{$p->tipo}} </td>
                                 <td> {{$p->periodicidade}} </td>
-                                <td> {{$p->pasta}} </td>
                                 <td> {{$p->coordenacao}} </td>
                                 <td> {{$p->volumetria}} </td>
                                 <td>
@@ -117,10 +111,6 @@
                                                                 <option value="{{$per->id}}">{{$per->nome}}</option>
                                                             @endforeach
                                                         </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="pasta">Pasta</label>
-                                                        <input name="pasta" class="form-control" value="{{{ $p->pasta }}}"/>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="coordenacao">Coordenacao</label>

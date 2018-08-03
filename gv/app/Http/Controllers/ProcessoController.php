@@ -20,7 +20,7 @@ class ProcessoController extends Controller {
         ->join('periodicidades', 'periodicidades.id', '=', 'processos.periodicidade')
         ->join('coordenacaos', 'coordenacaos.id', '=', 'processos.coordenacao')        
         ->select(DB::raw("processos.id as id, processos.nome as nome, tipos.nome as tipo, tipos.id as tipoID,
-                          periodicidades.nome as periodicidade, periodicidades.id as periodicidadeID, processos.pasta, 
+                          periodicidades.nome as periodicidade, periodicidades.id as periodicidadeID,  
                           coordenacaos.nome as coordenacao, coordenacaos.id as coordenacaoID, volumetria" ))
         ->paginate(15);
         //return($atividades);
