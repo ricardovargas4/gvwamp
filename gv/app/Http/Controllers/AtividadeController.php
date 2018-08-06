@@ -215,7 +215,9 @@ class AtividadeController extends Controller
     }
     public function lista(){
         $filtro = null;
-        return  view('atividade.listagem',compact('filtro'));
+        $classificacoes =Classificacao::all();
+        $processos = Processo::all();
+        return  view('atividade.listagem',compact('filtro','classificacoes','processos'));
     }
     public function filtro(AtividadeRequest $request,$data=null){
         if(!is_null($request->data_inicial)){
@@ -245,7 +247,9 @@ class AtividadeController extends Controller
         }
         else{
             $filtro = null;
-            return  view('atividade.listagem',compact('filtro'));
+            $classificacoes =Classificacao::all();
+            $processos = Processo::all();
+            return  view('atividade.listagem',compact('filtro','classificacoes','processos'));
         }
        
     }

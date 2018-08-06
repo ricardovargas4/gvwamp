@@ -20,15 +20,7 @@
     </form>
     </div>
 </div>
-@if (!isset($filtro))
-<div class="container">
-    Selecione uma range de datas.
-</div>    
-@elseif($filtro==0)
-<div class="container">
-    Sem dados para o período selecionado.
-</div>
-@else
+
 <div class="card demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid cad_card">
         <div class="card-content">
             <div class="row">
@@ -41,7 +33,7 @@
                             <div class="collapsible-body">
                                 <form action="/atividade/adiciona" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-                                    <input type="hidden" name="usuario" value="{{$usuario}}" />
+                                    <input type="hidden" name="usuario" value="{{Auth::user()->id}}" />
 
                                     <div class="form-group">
                                         <label for="id_processo">Processo</label>
@@ -99,6 +91,15 @@
                             </div>
                         </li>
                     </ul>
+                    @if (!isset($filtro))
+                    <div class="container">
+                        Selecione uma range de datas.
+                    </div>    
+                    @elseif($filtro==0)
+                    <div class="container">
+                        Sem dados para o período selecionado.
+                    </div>
+                    @else
                     <table class="bordered">
                         <thead>
                             <tr>
@@ -211,10 +212,11 @@
                         </tbody>
                     </table>
                     {{ $atividades->links() }}
+                    @endif
                 </div>   
             </div>
         </div>
     </div>
 </div>
-@endif
+
 @stop

@@ -20,15 +20,7 @@
     </form>
     </div>
 </div>
-@if (!isset($filtro))
-<div class="container">
-    Selecione uma range de datas.
-</div>    
-@elseif($filtro==0)
-<div class="container">
-    Sem dados para o período selecionado.
-</div>
-@else
+
 <div class="card demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid cad_card">
         <div class="card-content">
             <div class="row">
@@ -41,8 +33,8 @@
                             <div class="collapsible-body">
                                 <form action="/historico_indic/adiciona" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-                                    <input type="hidden" name="data_inicial" value="{{{$data_inicial}}}" />
-                                    <input type="hidden" name="data_final" value="{{{$data_final}}}" />
+                                    <input type="hidden" name="data_inicial" @if(isset($data_inicial)) value="{{{$data_inicial}}}" @else value = "{{{date('Y-m-d', strtotime('-15 day', strtotime(date('Y-m-d'))))}}}" @endif />
+                                    <input type="hidden" name="data_final" @if(isset($data_final)) value="{{{$data_final}}}" @else value = "{{{date('Y-m-d')}}}" @endif />
                                     <div class="form-group">
                                         <label for="data_informada">Data Informada</label>
                                         <input type = "date" name="data_informada" class="form-control"/>
@@ -52,6 +44,15 @@
                             </div>
                         </li>
                     </ul>
+                    @if (!isset($filtro))
+                    <div class="container">
+                        Selecione uma range de datas.
+                    </div>    
+                    @elseif($filtro==0)
+                    <div class="container">
+                        Sem dados para o período selecionado.
+                    </div>
+                    @else
                     <table class="bordered">
                         <thead>
                             <tr>
@@ -150,10 +151,11 @@
                         </tbody>
                     </table>
                     {{ $historicos->links() }}
+                    @endif
                 </div>   
             </div>
         </div>
     </div>
 </div>
-@endif
+
 @stop
