@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <?php $AppVersion = "1.0.0"; ?>
+
     <link href="/lib/materialize/dist/css/materialize.css" rel="stylesheet">
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/font-awesome.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/style.css?v=<?php echo $AppVersion; ?>" rel="stylesheet">
 
     <title>Gestão à Vista</title>
 </head>
@@ -86,6 +88,6 @@
     <script type="text/javascript" src="\lib\jquery\dist\jquery.min.js"></script>           
     <script src="\lib\materialize\dist\js\materialize.min.js"></script> 
     <script src="\js\init.js"></script>
-    <script src="/js/validacao.js"></script>  
+    <script src="/js/validacao.js?v=<?php echo $AppVersion; ?>"></script>  
 
 </html>
