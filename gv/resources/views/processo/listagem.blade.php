@@ -30,7 +30,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="periodicidade">Tipo</label>
+                                        <label for="periodicidade">Periodicidade</label>
                                         <select name="periodicidade" class="form-control">
                                             <option value="" disabled selected>Selecione a Periodicidade</option>
                                             @foreach($periodicidades as $p)
