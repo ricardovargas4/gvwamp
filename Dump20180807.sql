@@ -45,7 +45,7 @@ CREATE TABLE `atividades` (
   KEY `fk_atividades_usuario` (`usuario`),
   CONSTRAINT `fk_atividades_id_processo` FOREIGN KEY (`id_processo`) REFERENCES `processos` (`id`),
   CONSTRAINT `fk_atividades_usuario` FOREIGN KEY (`usuario`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,6 +54,7 @@ CREATE TABLE `atividades` (
 
 LOCK TABLES `atividades` WRITE;
 /*!40000 ALTER TABLE `atividades` DISABLE KEYS */;
+INSERT INTO `atividades` VALUES (62113,526,1,'2018-08-01','2018-08-01 11:00:00','2018-08-01 12:00:00','2018-02-02','2018-02-02',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:30:24','2018-08-06 14:30:24'),(62114,526,1,'2018-08-01','2018-08-01 11:00:00','2018-08-01 12:00:00','2018-02-02','2018-02-02',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:32:17','2018-08-06 14:32:17'),(62115,526,1,'2018-08-08','2018-08-08 11:08:08','2018-08-08 11:08:09','2018-08-08','2018-08-08',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:33:31','2018-08-06 14:33:31');
 /*!40000 ALTER TABLE `atividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -102,7 +103,7 @@ CREATE TABLE `conclusoes` (
   PRIMARY KEY (`id`),
   KEY `id_processo_FK_idx` (`id_processo`),
   CONSTRAINT `fk_conclusoes_id_processo` FOREIGN KEY (`id_processo`) REFERENCES `processos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,6 +112,7 @@ CREATE TABLE `conclusoes` (
 
 LOCK TABLES `conclusoes` WRITE;
 /*!40000 ALTER TABLE `conclusoes` DISABLE KEYS */;
+INSERT INTO `conclusoes` VALUES (68,526,'2018-08-06','2018-08-01','2018-08-06 14:25:52','2018-08-06 14:25:52'),(69,526,'2018-08-06','2018-08-02','2018-08-06 14:26:09','2018-08-06 14:26:09');
 /*!40000 ALTER TABLE `conclusoes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -222,7 +224,7 @@ CREATE TABLE `historico_indic` (
   KEY `id_user_idx` (`user_id`),
   CONSTRAINT `fk_processo_id` FOREIGN KEY (`processo_id`) REFERENCES `processos` (`id`),
   CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,6 +233,7 @@ CREATE TABLE `historico_indic` (
 
 LOCK TABLES `historico_indic` WRITE;
 /*!40000 ALTER TABLE `historico_indic` DISABLE KEYS */;
+INSERT INTO `historico_indic` VALUES (74,526,'2018-08-02',1,'2018-08-02','2018-07-31',1,'2018-08-06 16:40:12','2018-08-06 16:40:12','No Prazo');
 /*!40000 ALTER TABLE `historico_indic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -242,7 +245,7 @@ DROP TABLE IF EXISTS `logs_responsavels`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `logs_responsavels` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ID_PROCESSO` int(10) unsigned NOT NULL,
   `USUARIO` int(10) unsigned NOT NULL,
   `DATA_ALTERACAO` timestamp NOT NULL,
@@ -252,7 +255,7 @@ CREATE TABLE `logs_responsavels` (
   KEY `fk_logs_responsavels_ID_PROCESSO` (`ID_PROCESSO`),
   CONSTRAINT `fk_logs_responsavels_ID_PROCESSO` FOREIGN KEY (`ID_PROCESSO`) REFERENCES `processos` (`id`),
   CONSTRAINT `fk_logs_responsavels_usuario` FOREIGN KEY (`USUARIO`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -261,6 +264,7 @@ CREATE TABLE `logs_responsavels` (
 
 LOCK TABLES `logs_responsavels` WRITE;
 /*!40000 ALTER TABLE `logs_responsavels` DISABLE KEYS */;
+INSERT INTO `logs_responsavels` VALUES (1,526,1,'2018-08-06 14:15:30','INCLUSAO'),(2,526,1,'2018-08-06 14:22:30','EXCLUSAO'),(3,526,1,'2018-08-06 14:23:20','INCLUSAO');
 /*!40000 ALTER TABLE `logs_responsavels` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -395,7 +399,7 @@ CREATE TABLE `processos` (
   CONSTRAINT `fk_processos_coordenacao` FOREIGN KEY (`coordenacao`) REFERENCES `coordenacaos` (`id`),
   CONSTRAINT `fk_processos_periodicidade` FOREIGN KEY (`periodicidade`) REFERENCES `periodicidades` (`id`),
   CONSTRAINT `fk_processos_tipo` FOREIGN KEY (`tipo`) REFERENCES `tipos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=526 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=527 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -404,6 +408,7 @@ CREATE TABLE `processos` (
 
 LOCK TABLES `processos` WRITE;
 /*!40000 ALTER TABLE `processos` DISABLE KEYS */;
+INSERT INTO `processos` VALUES (526,'TESTE',3,1,3,'2018-08-06 13:54:00','2018-08-06 13:54:00',NULL);
 /*!40000 ALTER TABLE `processos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -421,9 +426,9 @@ CREATE TABLE `responsavels` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_responsavels_id_processo` (`id_processo`),
-  CONSTRAINT `fk_responsavels_id_processo` FOREIGN KEY (`id_processo`) REFERENCES `responsavels` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `fk_responsavels_id_processo_idx` (`id_processo`),
+  CONSTRAINT `fk_responsavels_id_processo` FOREIGN KEY (`id_processo`) REFERENCES `processos` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -432,6 +437,7 @@ CREATE TABLE `responsavels` (
 
 LOCK TABLES `responsavels` WRITE;
 /*!40000 ALTER TABLE `responsavels` DISABLE KEYS */;
+INSERT INTO `responsavels` VALUES (6,526,'1','2018-08-06 14:23:20','2018-08-06 14:23:20');
 /*!40000 ALTER TABLE `responsavels` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -704,4 +710,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-03 18:15:17
+-- Dump completed on 2018-08-07 13:27:07
