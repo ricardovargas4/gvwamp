@@ -1,6 +1,7 @@
 @extends('layout.principal')
 
 @section('conteudo')
+<script type="text/javascript" src="\lib\jquery\dist\jquery.min.js"></script>    
 <script src="/js/graficoTempo.js"></script>  
 
 <div class = "container">
