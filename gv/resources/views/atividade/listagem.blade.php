@@ -163,11 +163,11 @@
   
                                                     <div class="form-group">
                                                         <label>Horário de Início</label>
-                                                        <input name="hora_inicio" class="form-control" placeholder="Horário de Início" value="{{$a->hora_inicio}}" />
+                                                        <input type="datetime-local" step="1" name="hora_inicio" class="form-control" placeholder="dd/mm/aaaa hh:mm:ss" value= {{date('Y-m-d', strtotime($a->hora_inicio))."T".date('H:i:s', strtotime($a->hora_inicio))}} /> 
                                                     </div>
                                                     <div class="form-group">
                                                         <label>Horário Final</label>
-                                                        <input name="hora_fim" class="form-control" placeholder="Horário Final" value="{{$a->hora_fim}}"/>
+                                                        <input type="datetime-local" step="1" name="hora_fim" class="form-control" placeholder="dd/mm/aaaa hh:mm:ss"  value= {{date('Y-m-d', strtotime($a->hora_fim))."T".date('H:i:s', strtotime($a->hora_fim))}} />
                                                     </div>                  
                                                     <div class="form-group">
                                                         <label>Data Meta </label>
