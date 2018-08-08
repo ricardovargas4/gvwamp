@@ -4,13 +4,15 @@ use Illuminate\Support\Facades\DB;
 use gv\Http\Requests\CoordenacaoRequest;
 use Request;
 use gv\Coordenacao;
+use gv\User;
 
 class CoordenacaoController extends Controller {
 
     public function lista(){
        // $coordenacaos = Coordenacao::all();
-        $coordenacaos = DB::table('coordenacaos')->paginate(15);
-        return view('coordenacao.listagem')->with('coordenacaos', $coordenacaos);
+        $users = User::all();
+        $coordenacaos = Coordenacao::all();
+        return view('coordenacao.listagem',compact('coordenacaos','users'));
     }
 
     public function remove($id){

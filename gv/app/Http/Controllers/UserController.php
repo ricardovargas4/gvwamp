@@ -20,25 +20,15 @@ class UserController extends Controller
         return redirect()->action('UserController@lista');
     }
 
-    public function altera($id){
-        $usuario = User::find($id);
-        return view('usuario.formulario_alteracao',compact('usuario'));
-    }
-    
     public function salvaAlt(UsuarioRequest $request){
-        
+        $request->offsetSet('password',bcrypt($request->password));
         $id = $request->id;
         User::whereId($id)->update($request->except('_token'));
         return redirect()->action('UserController@lista')->withInput(Request::only('nome'));
     }
 
-
-    public function novo(){
-        return view('usuario.formulario');
-    }   
-
     public function adiciona(UsuarioRequest $request){
-
+        $request->offsetSet('password',bcrypt($request->password));
         User::create($request->all());
         return redirect()->action('UserController@lista')->withInput(Request::only('nome'));
     }

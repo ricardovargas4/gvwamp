@@ -4,7 +4,7 @@ USE `gvdb`;
 --
 -- Host: localhost    Database: gvdb
 -- ------------------------------------------------------
--- Server version	5.7.14
+-- Server version	5.5.5-10.2.8-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -45,7 +45,7 @@ CREATE TABLE `atividades` (
   KEY `fk_atividades_usuario` (`usuario`),
   CONSTRAINT `fk_atividades_id_processo` FOREIGN KEY (`id_processo`) REFERENCES `processos` (`id`),
   CONSTRAINT `fk_atividades_usuario` FOREIGN KEY (`usuario`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62119 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,7 +54,7 @@ CREATE TABLE `atividades` (
 
 LOCK TABLES `atividades` WRITE;
 /*!40000 ALTER TABLE `atividades` DISABLE KEYS */;
-INSERT INTO `atividades` VALUES (62113,526,1,'2018-08-01','2018-08-01 11:00:00','2018-08-01 12:00:00','2018-02-02','2018-02-02',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:30:24','2018-08-06 14:30:24'),(62114,526,1,'2018-08-01','2018-08-01 11:00:00','2018-08-01 12:00:00','2018-02-02','2018-02-02',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:32:17','2018-08-06 14:32:17'),(62115,526,1,'2018-08-08','2018-08-08 11:08:08','2018-08-08 11:08:09','2018-08-08','2018-08-08',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:33:31','2018-08-06 14:33:31');
+INSERT INTO `atividades` VALUES (62113,526,1,'2018-08-01','2018-08-01 11:02:08','2018-08-01 12:00:00','2018-02-02','2018-02-02',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:30:24','2018-08-07 20:23:05'),(62114,526,1,'2018-08-01','2018-08-01 11:02:06','2018-08-01 12:00:00','2018-02-02','2018-02-02',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:32:17','2018-08-07 20:23:12'),(62115,526,1,'2018-08-08','2018-08-08 11:08:08','2018-08-08 11:08:09','2018-08-08','2018-08-08',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:33:31','2018-08-06 14:33:31'),(62118,526,1,'2018-08-07','2018-08-07 19:03:44','2018-08-07 19:03:46','2018-08-03','2018-08-06','2018-08-02',NULL,NULL,NULL,NULL,'2018-08-07 19:03:44','2018-08-07 19:03:46');
 /*!40000 ALTER TABLE `atividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,15 +66,15 @@ DROP TABLE IF EXISTS `classificacoes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `classificacoes` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_processo` int(10) unsigned NOT NULL,
   `opcao` varchar(150) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `id_processo_fk` (`id_processo`),
-  CONSTRAINT `id_processo_fk` FOREIGN KEY (`id_processo`) REFERENCES `processos` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_classificacoes_id_processo_idx` (`id_processo`),
+  CONSTRAINT `fk_classificacoes_id_processo` FOREIGN KEY (`id_processo`) REFERENCES `processos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -83,6 +83,7 @@ CREATE TABLE `classificacoes` (
 
 LOCK TABLES `classificacoes` WRITE;
 /*!40000 ALTER TABLE `classificacoes` DISABLE KEYS */;
+INSERT INTO `classificacoes` VALUES (1,526,'testeClassDB',NULL,NULL),(2,526,'TESTECLASSAPP','2018-08-08 17:08:05','2018-08-08 17:08:05');
 /*!40000 ALTER TABLE `classificacoes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,7 +104,7 @@ CREATE TABLE `conclusoes` (
   PRIMARY KEY (`id`),
   KEY `id_processo_FK_idx` (`id_processo`),
   CONSTRAINT `fk_conclusoes_id_processo` FOREIGN KEY (`id_processo`) REFERENCES `processos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +113,7 @@ CREATE TABLE `conclusoes` (
 
 LOCK TABLES `conclusoes` WRITE;
 /*!40000 ALTER TABLE `conclusoes` DISABLE KEYS */;
-INSERT INTO `conclusoes` VALUES (68,526,'2018-08-06','2018-08-01','2018-08-06 14:25:52','2018-08-06 14:25:52'),(69,526,'2018-08-06','2018-08-02','2018-08-06 14:26:09','2018-08-06 14:26:09');
+INSERT INTO `conclusoes` VALUES (68,526,'2018-08-06','2018-08-01','2018-08-06 14:25:52','2018-08-06 14:25:52'),(69,526,'2018-08-06','2018-08-02','2018-08-06 14:26:09','2018-08-06 14:26:09'),(70,526,'2018-08-07','2018-08-06','2018-08-07 19:03:46','2018-08-07 19:03:46');
 /*!40000 ALTER TABLE `conclusoes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,8 +129,11 @@ CREATE TABLE `coordenacaos` (
   `nome` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_gestor` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_coordenacaos_id_users_gestor_idx` (`id_gestor`),
+  CONSTRAINT `fk_coordenacaos_id_gestor` FOREIGN KEY (`id_gestor`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +142,7 @@ CREATE TABLE `coordenacaos` (
 
 LOCK TABLES `coordenacaos` WRITE;
 /*!40000 ALTER TABLE `coordenacaos` DISABLE KEYS */;
-INSERT INTO `coordenacaos` VALUES (1,'Demais Contas','2017-09-19 00:40:52','2018-06-22 20:20:00'),(2,'GCT Legado','2018-03-08 00:01:39','2018-04-05 00:42:52'),(3,'Atendimento e Encerramento Contábil','2018-04-05 00:43:12','2018-04-05 00:43:12'),(4,'GCT Empresas Centralizadoras','2018-04-05 00:43:21','2018-04-05 00:43:21'),(5,'Especialistas/Excelência','2018-04-05 00:43:29','2018-04-05 00:43:29');
+INSERT INTO `coordenacaos` VALUES (1,'Demais Contas','2017-09-19 00:40:52','2018-06-22 20:20:00',1),(2,'GCT Legado','2018-03-08 00:01:39','2018-04-05 00:42:52',1),(3,'Atendimento e Encerramento Contábil','2018-04-05 00:43:12','2018-04-05 00:43:12',1),(4,'GCT Empresas Centralizadoras','2018-04-05 00:43:21','2018-04-05 00:43:21',1),(5,'Especialistas/Excelência','2018-04-05 00:43:29','2018-04-05 00:43:29',1);
 /*!40000 ALTER TABLE `coordenacaos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -172,6 +176,37 @@ CREATE TABLE `demandas` (
 LOCK TABLES `demandas` WRITE;
 /*!40000 ALTER TABLE `demandas` DISABLE KEYS */;
 /*!40000 ALTER TABLE `demandas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `expurgo_indicador`
+--
+
+DROP TABLE IF EXISTS `expurgo_indicador`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `expurgo_indicador` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_historico_indic` int(10) unsigned NOT NULL,
+  `STATUS` int(10) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `comentario` varchar(255) DEFAULT NULL,
+  `id_usuario_aprovador` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_historico_indic_idx` (`id_historico_indic`),
+  KEY `fk_id_usuario_aprovador_idx` (`id_usuario_aprovador`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `expurgo_indicador`
+--
+
+LOCK TABLES `expurgo_indicador` WRITE;
+/*!40000 ALTER TABLE `expurgo_indicador` DISABLE KEYS */;
+INSERT INTO `expurgo_indicador` VALUES (2,74,1,NULL,NULL,'A',1);
+/*!40000 ALTER TABLE `expurgo_indicador` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -215,13 +250,15 @@ CREATE TABLE `historico_indic` (
   `user_id` int(10) unsigned NOT NULL,
   `ultima_data` date DEFAULT NULL,
   `data_meta` date NOT NULL,
-  `periodicidade_id` int(11) DEFAULT NULL,
+  `periodicidade_id` int(10) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_processo_FK_idx` (`processo_id`),
   KEY `id_user_idx` (`user_id`),
+  KEY `fk_historico_indic_periodicidade_id` (`periodicidade_id`),
+  CONSTRAINT `fk_historico_indic_periodicidade_id` FOREIGN KEY (`periodicidade_id`) REFERENCES `periodicidades` (`id`),
   CONSTRAINT `fk_processo_id` FOREIGN KEY (`processo_id`) REFERENCES `processos` (`id`),
   CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -248,14 +285,14 @@ CREATE TABLE `logs_responsavels` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ID_PROCESSO` int(10) unsigned NOT NULL,
   `USUARIO` int(10) unsigned NOT NULL,
-  `DATA_ALTERACAO` timestamp NOT NULL,
+  `DATA_ALTERACAO` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `TIPO` varchar(150) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_logs_responsavels_usuario` (`USUARIO`),
   KEY `fk_logs_responsavels_ID_PROCESSO` (`ID_PROCESSO`),
   CONSTRAINT `fk_logs_responsavels_ID_PROCESSO` FOREIGN KEY (`ID_PROCESSO`) REFERENCES `processos` (`id`),
   CONSTRAINT `fk_logs_responsavels_usuario` FOREIGN KEY (`USUARIO`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +301,7 @@ CREATE TABLE `logs_responsavels` (
 
 LOCK TABLES `logs_responsavels` WRITE;
 /*!40000 ALTER TABLE `logs_responsavels` DISABLE KEYS */;
-INSERT INTO `logs_responsavels` VALUES (1,526,1,'2018-08-06 14:15:30','INCLUSAO'),(2,526,1,'2018-08-06 14:22:30','EXCLUSAO'),(3,526,1,'2018-08-06 14:23:20','INCLUSAO');
+INSERT INTO `logs_responsavels` VALUES (1,526,1,'2018-08-06 14:15:30','INCLUSAO'),(2,526,1,'2018-08-06 14:22:30','EXCLUSAO'),(3,526,1,'2018-08-06 14:23:20','INCLUSAO'),(4,526,1,'2018-08-07 19:01:17','INCLUSAO'),(5,526,1,'2018-08-07 19:01:23','EXCLUSAO');
 /*!40000 ALTER TABLE `logs_responsavels` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -309,9 +346,9 @@ CREATE TABLE `observacoes` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_observacoes_ID_atividade` (`id_atividade`),
-  KEY `fk_observacoes_classificacao` (`classificacao`),
+  KEY `fk_observacoes_ID_classificacao_idx` (`classificacao`),
   CONSTRAINT `fk_observacoes_ID_atividade` FOREIGN KEY (`id_atividade`) REFERENCES `atividades` (`id`),
-  CONSTRAINT `fk_observacoes_classificacao` FOREIGN KEY (`classificacao`) REFERENCES `classificacoes` (`id`)
+  CONSTRAINT `fk_observacoes_ID_classificacao` FOREIGN KEY (`classificacao`) REFERENCES `classificacoes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -421,14 +458,16 @@ DROP TABLE IF EXISTS `responsavels`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `responsavels` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `id_processo` int(10) unsigned DEFAULT NULL,
-  `usuario` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_processo` int(10) unsigned NOT NULL,
+  `usuario` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_responsavels_id_processo_idx` (`id_processo`),
-  CONSTRAINT `fk_responsavels_id_processo` FOREIGN KEY (`id_processo`) REFERENCES `processos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `fk_responsavels_usuario` (`usuario`),
+  CONSTRAINT `fk_responsavels_id_processo` FOREIGN KEY (`id_processo`) REFERENCES `processos` (`id`),
+  CONSTRAINT `fk_responsavels_usuario` FOREIGN KEY (`usuario`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -437,7 +476,7 @@ CREATE TABLE `responsavels` (
 
 LOCK TABLES `responsavels` WRITE;
 /*!40000 ALTER TABLE `responsavels` DISABLE KEYS */;
-INSERT INTO `responsavels` VALUES (6,526,'1','2018-08-06 14:23:20','2018-08-06 14:23:20');
+INSERT INTO `responsavels` VALUES (6,526,1,'2018-08-06 14:23:20','2018-08-06 14:23:20');
 /*!40000 ALTER TABLE `responsavels` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -449,23 +488,23 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER LOG_AFTER_INSERT
-AFTER INSERT
-   ON responsavels FOR EACH ROW
-
-BEGIN
-
-   INSERT INTO LOGS_RESPONSAVELS
-   ( ID_PROCESSO,
-     USUARIO,
-     DATA_ALTERACAO,
-     TIPO)
-   VALUES
-   ( NEW.ID_PROCESSO,
-	 NEW.USUARIO,
-     SYSDATE(),
-     'INCLUSAO' );
-
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER LOG_AFTER_INSERT
+AFTER INSERT
+   ON responsavels FOR EACH ROW
+
+BEGIN
+
+   INSERT INTO LOGS_RESPONSAVELS
+   ( ID_PROCESSO,
+     USUARIO,
+     DATA_ALTERACAO,
+     TIPO)
+   VALUES
+   ( NEW.ID_PROCESSO,
+	 NEW.USUARIO,
+     SYSDATE(),
+     'INCLUSAO' );
+
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -481,31 +520,31 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `gvdb`.`responsavels_AFTER_UPDATE` AFTER UPDATE ON `responsavels` FOR EACH ROW
-BEGIN
-
-	INSERT INTO LOGS_RESPONSAVELS
-   ( ID_PROCESSO,
-     USUARIO,
-     DATA_ALTERACAO,
-     TIPO)
-   VALUES
-   ( OLD.ID_PROCESSO,
-	 OLD.USUARIO,
-     SYSDATE(),
-     'EXCLUSAO' );
-
-   INSERT INTO LOGS_RESPONSAVELS
-   ( ID_PROCESSO,
-     USUARIO,
-     DATA_ALTERACAO,
-     TIPO)
-   VALUES
-   ( NEW.ID_PROCESSO,
-	 NEW.USUARIO,
-     SYSDATE(),
-     'INCLUSAO' );
-
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `gvdb`.`responsavels_AFTER_UPDATE` AFTER UPDATE ON `responsavels` FOR EACH ROW
+BEGIN
+
+	INSERT INTO LOGS_RESPONSAVELS
+   ( ID_PROCESSO,
+     USUARIO,
+     DATA_ALTERACAO,
+     TIPO)
+   VALUES
+   ( OLD.ID_PROCESSO,
+	 OLD.USUARIO,
+     SYSDATE(),
+     'EXCLUSAO' );
+
+   INSERT INTO LOGS_RESPONSAVELS
+   ( ID_PROCESSO,
+     USUARIO,
+     DATA_ALTERACAO,
+     TIPO)
+   VALUES
+   ( NEW.ID_PROCESSO,
+	 NEW.USUARIO,
+     SYSDATE(),
+     'INCLUSAO' );
+
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -521,20 +560,20 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `gvdb`.`responsavels_AFTER_DELETE` AFTER DELETE ON `responsavels` FOR EACH ROW
-BEGIN
-
-	INSERT INTO LOGS_RESPONSAVELS
-   ( ID_PROCESSO,
-     USUARIO,
-     DATA_ALTERACAO,
-     TIPO)
-   VALUES
-   ( OLD.ID_PROCESSO,
-	 OLD.USUARIO,
-     SYSDATE(),
-     'EXCLUSAO' );
-
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `gvdb`.`responsavels_AFTER_DELETE` AFTER DELETE ON `responsavels` FOR EACH ROW
+BEGIN
+
+	INSERT INTO LOGS_RESPONSAVELS
+   ( ID_PROCESSO,
+     USUARIO,
+     DATA_ALTERACAO,
+     TIPO)
+   VALUES
+   ( OLD.ID_PROCESSO,
+	 OLD.USUARIO,
+     SYSDATE(),
+     'EXCLUSAO' );
+
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -583,9 +622,10 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `nivel` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -594,7 +634,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ricardo','ricardo_vargas','$2a$06$rgXkfRONoUcPKRQgattwk.hKpz71XlgkIACdowjFGIt.DDwImDRuS','p3gTeOAf8r9mBBWxnTKqnhebg0g854fZKphwwWVv5OEJDizv2OvRofPQv7xg',NULL,NULL);
+INSERT INTO `users` VALUES (1,'ricardo','ricardo_vargas','$2a$06$rgXkfRONoUcPKRQgattwk.hKpz71XlgkIACdowjFGIt.DDwImDRuS','Vt5IPp3UdzWk1TtO5ME3BVMoYEdiVErobwgIEQRW78y6HXiMuicOAvCyIxgC',NULL,NULL,1),(167,'Luiz','luiz_geraldo','$2y$10$HkTWP2xxMapC5gz77VqMxuRwWJoleB41/I2FPz.uud5llNb1dd0bm',NULL,'2018-08-08 19:48:43','2018-08-08 20:05:36',2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -612,8 +652,9 @@ CREATE TABLE `volumetrias` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_volumetrias_id_atividade` (`id_atividade`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+  KEY `fk_volumetrias_id_atividade` (`id_atividade`),
+  CONSTRAINT `fk_volumetrias_id_atividade` FOREIGN KEY (`id_atividade`) REFERENCES `atividades` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -640,60 +681,115 @@ UNLOCK TABLES;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` FUNCTION `FLOAT_DIAS_UTEIS`( DATA_INFORMADA DATE,DIAS_FLOAT INTEGER) RETURNS date
 BEGIN
+
 	DECLARE DIA_SEMANA CHAR(20);
+
     DECLARE FERIADO CHAR(20);
 
+
+
 WHILE  (DIAS_FLOAT >= 0) DO  
+
     SELECT FERIADO_DATA INTO FERIADO FROM (SELECT FERIADO_DATA FROM (SELECT DATA_INFORMADA DATA FROM DUAL) A LEFT JOIN feriados B ON A.DATA = B.FERIADO_DATA)C ; 
+
     SELECT weekday(DATA_INFORMADA) INTO DIA_SEMANA FROM DUAL;
+
      
+
     WHILE (DIA_SEMANA = '5' OR DIA_SEMANA = '6' OR FERIADO IS NOT NULL) DO
+
 		SET DATA_INFORMADA:=DATE_ADD(DATA_INFORMADA, INTERVAL 1 DAY);
+
 		SELECT FERIADO_DATA INTO FERIADO FROM (SELECT FERIADO_DATA FROM (SELECT DATA_INFORMADA DATA FROM DUAL) A LEFT JOIN feriados B ON A.DATA = B.FERIADO_DATA )C ; 
+
 		SELECT weekday(DATA_INFORMADA) INTO DIA_SEMANA FROM DUAL;
+
     END WHILE;
+
     
+
 	SET DATA_INFORMADA:=DATE_ADD(DATA_INFORMADA, INTERVAL 1 DAY);
+
   
+
 	SELECT FERIADO_DATA INTO FERIADO FROM (SELECT FERIADO_DATA FROM (SELECT DATA_INFORMADA DATA FROM DUAL) A LEFT JOIN feriados B ON A.DATA = B.FERIADO_DATA )C ; 
+
 	SELECT weekday(DATA_INFORMADA) INTO DIA_SEMANA FROM DUAL;
+
    
+
 	WHILE (DIA_SEMANA = '5' OR DIA_SEMANA = '6' OR FERIADO IS NOT NULL) DO
+
 		SET DATA_INFORMADA:=DATE_ADD(DATA_INFORMADA, INTERVAL 1 DAY);
+
 		SELECT FERIADO_DATA INTO FERIADO FROM (SELECT FERIADO_DATA FROM (SELECT DATA_INFORMADA DATA FROM DUAL) A LEFT JOIN feriados B ON A.DATA = B.FERIADO_DATA )C ; 
+
 		SELECT weekday(DATA_INFORMADA) INTO DIA_SEMANA FROM DUAL;
+
 	END WHILE;
+
   
+
   
+
 	SET DIAS_FLOAT := DIAS_FLOAT - 1;
+
 END WHILE;
+
+
 
 WHILE ( DIAS_FLOAT < 0)  DO
+
     SELECT FERIADO_DATA INTO FERIADO FROM (SELECT FERIADO_DATA FROM (SELECT DATA_INFORMADA DATA FROM DUAL) A LEFT JOIN feriados B ON A.DATA = B.FERIADO_DATA)C ; 
+
     SELECT weekday(DATA_INFORMADA) INTO DIA_SEMANA FROM DUAL;
+
      
+
     WHILE (DIA_SEMANA = '5' OR DIA_SEMANA = '6' OR FERIADO IS NOT NULL) DO
+
 		SET DATA_INFORMADA:=DATE_SUB(DATA_INFORMADA, INTERVAL 1 DAY);
+
 		SELECT FERIADO_DATA INTO FERIADO FROM (SELECT FERIADO_DATA FROM (SELECT DATA_INFORMADA DATA FROM DUAL) A LEFT JOIN feriados B ON A.DATA = B.FERIADO_DATA )C ; 
+
 		SELECT weekday(DATA_INFORMADA) INTO DIA_SEMANA FROM DUAL;
+
     END WHILE;
+
     
+
 	SET DATA_INFORMADA:= DATE_SUB(DATA_INFORMADA, INTERVAL 1 DAY);
+
   
+
 	SELECT FERIADO_DATA INTO FERIADO FROM (SELECT FERIADO_DATA FROM (SELECT DATA_INFORMADA DATA FROM DUAL) A LEFT JOIN feriados B ON A.DATA = B.FERIADO_DATA )C ; 
+
 	SELECT weekday(DATA_INFORMADA) INTO DIA_SEMANA FROM DUAL;
+
    
+
 	WHILE (DIA_SEMANA = '5' OR DIA_SEMANA = '6' OR FERIADO IS NOT NULL) DO
+
 		SET DATA_INFORMADA:=DATE_SUB(DATA_INFORMADA, INTERVAL 1 DAY);
+
 		SELECT FERIADO_DATA INTO FERIADO FROM (SELECT FERIADO_DATA FROM (SELECT DATA_INFORMADA DATA FROM DUAL) A LEFT JOIN feriados B ON A.DATA = B.FERIADO_DATA )C ; 
+
 		SELECT weekday(DATA_INFORMADA) INTO DIA_SEMANA FROM DUAL;
+
 	END WHILE;
+
   
+
   
+
 	SET DIAS_FLOAT := DIAS_FLOAT + 1;
+
 END WHILE;
 
+
+
 RETURN DATA_INFORMADA;
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -710,4 +806,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-07 13:27:07
+-- Dump completed on 2018-08-08 17:08:10

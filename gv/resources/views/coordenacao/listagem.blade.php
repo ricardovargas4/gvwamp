@@ -20,6 +20,15 @@
                                         <label for="nome">Nome</label>
                                         <input name="nome" class="form-control"/>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="id_gestor">Gestor</label>
+                                        <select name="id_gestor" class="form-control">
+                                            <option value="" disabled selected></option>
+                                            @foreach($users as $u)
+                                                <option value="{{$u->id}}">{{$u->email}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <button type="submit" class="btn waves-effect light-green accent-3"> Salvar</button>
                                 </form>
                             </div>
@@ -30,6 +39,7 @@
                             <tr>
                                 <th>ID </th>
                                 <th>Nome </th>
+                                <th>Gestor </th>
                                 <th> Alterar/Excluir </th>
                             </tr>
                         </thead>
@@ -38,6 +48,7 @@
                             <tr>
                                 <td scope="row">{{$c->id}}</td>
                                 <td> {{$c->nome}} </td>
+                                <td>{{$c->id_gestor_FK->email}}</td>
                                 <td>
                                     <div class="row">
                                         <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$c->id}}">Editar</a>
@@ -50,6 +61,15 @@
                                                     <div class="form-group">
                                                       <label for="nome">Nome</label>
                                                       <input name="nome" class="form-control" value="{{$c->nome}}"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="id_gestor">Usuários</label>
+                                                        <select name="id_gestor" class="form-control">
+                                                            <option value="{{{$c->id_gestor}}}" disabled selected>{{$c->id_gestor_FK->email}}</option>
+                                                            @foreach($users as $u)
+                                                                <option value="{{$u->id}}">{{$u->email}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
                                                     <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
@@ -64,7 +84,6 @@
             
                         </tbody>
                     </table>
-                    {{ $coordenacaos->links() }}
                 </div>   
             </div>
         </div>

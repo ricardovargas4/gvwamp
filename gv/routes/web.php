@@ -94,13 +94,14 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/demanda/adiciona','DemandaController@adiciona');
     Route::post('/demanda/salvaAlt','DemandaController@salvaAlt');
 
-    /*Route::get('/usuario', 'UserController@lista');
+    Route::get('/expurgo_indicador/lista', 'Expurgo_IndicadorController@lista');
+    Route::get('/expurgo_indicador/lista/remove/{id}', 'Expurgo_IndicadorController@remove');
+
+    Route::get('/usuario', 'UserController@lista');
     Route::get('/usuario/remove/{id}', 'UserController@remove');
-    Route::get('/usuario/novo', 'UserController@novo');
     Route::post('/usuario/adiciona','UserController@adiciona');
-    Route::get('/usuario/altera/{id}','UserController@altera');
     Route::post('/usuario/salvaAlt','UserController@salvaAlt');
-    */
+    
 
     Route::post('/relatorio/tempo', 'Controller@tempo');
 
