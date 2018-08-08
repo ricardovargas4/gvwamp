@@ -24,7 +24,6 @@ class Expurgo_IndicadorController extends Controller
         return redirect()->action('Expurgo_IndicadorController@lista')->withInput(Request::only('usuario'));
     }
     public function adiciona(Expurgo_IndicadorRequest $request){
-        //dd($request);
         $request->request->set('STATUS', 1);
         Expurgo_Indicador::create($request->except('_token'));
         return redirect()->action('Expurgo_IndicadorController@lista')->withInput(Request::only('usuario'));
