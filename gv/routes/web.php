@@ -96,6 +96,7 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::get('/expurgo_indicador/lista', 'Expurgo_IndicadorController@lista');
     Route::get('/expurgo_indicador/lista/remove/{id}', 'Expurgo_IndicadorController@remove');
+    Route::post('/expurgo_indicador/adiciona', 'Expurgo_IndicadorController@adiciona');
 
     Route::get('/usuario', 'UserController@lista');
     Route::get('/usuario/remove/{id}', 'UserController@remove');

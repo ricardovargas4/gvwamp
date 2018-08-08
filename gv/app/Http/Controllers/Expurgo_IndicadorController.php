@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use gv\Expurgo_Indicador;
-use gv\Http\Requests\ExpurgoIndicadorRequest;
+use gv\Http\Requests\Expurgo_IndicadorRequest;
 use Request;
 
 class Expurgo_IndicadorController extends Controller
@@ -24,7 +24,9 @@ class Expurgo_IndicadorController extends Controller
         return redirect()->action('Expurgo_IndicadorController@lista')->withInput(Request::only('usuario'));
     }
     public function adiciona(Expurgo_IndicadorRequest $request){
-        Expurgo_Indicador::create($request->all());
+        //dd($request);
+        $request->request->set('STATUS', 1);
+        Expurgo_Indicador::create($request->except('_token'));
         return redirect()->action('Expurgo_IndicadorController@lista')->withInput(Request::only('usuario'));
     }
 
