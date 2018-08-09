@@ -13,8 +13,8 @@ class historico_indic extends Model
     public function periodiciade_id(){
         return $this->belongsTo('gv\Periodicidade');
     }
-    public function processo_id(){
-        return $this->belongsTo('gv\processo');
+    public function processo_id_FK(){
+        return $this->belongsTo('gv\processo','processo_id');
     }
     public function user_id(){
         return $this->belongsTo('gv\User');

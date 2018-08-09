@@ -36,7 +36,8 @@
               <li><a href="/coordenacao/">Coordenações</a></li>
               <li><a href="/historico_indic/">Histórico Indicadores</a></li>
               <li><a href="/usuario/">Usuários</a></li>
-              <li><a href="/expurgo_indicador/lista">Expurgo Indicador</a></li>
+              <li><a href="/expurgo_indicador/tela">Expurgo Indicador</a></li>
+              <li><a href="/expurgo_indicador">Expurgo Indicador Lista</a></li>
               <!--<li class="divider"></li>-->
             </ul>
 

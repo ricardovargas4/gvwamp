@@ -79,26 +79,30 @@
                                 <td> @if(isset($h->data_meta)) {{date('d/m/Y', strtotime($h->data_meta))}} @else {{$h->data_meta}} @endif</td>
                                 <td> {{$h->periodicidade_id}} </td>
                                 <td> {{$h->status}} </td>
-                                <td>
-                                    <div class="row">
-                                        <a class="waves-effect waves-light btn grey accent-3  modal-trigger" href="#modal1{{$h->id}}">Expurgar</a>
-                                        <div id="modal1{{$h->id}}" class="modal">
-                                            <div class="modal-content">
-                                                <form action="/expurgo_indicador/adiciona" method="post">
-                                                <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-                                                <input type="hidden" name="id_historico_indic" value="{{{ $h->id }}}" />
-                                                
-                                                <div class="form-group">
-                                                    <label for="justificativa">Justificativa</label>
-                                                    <textarea class="materialize-textarea" name="comentario"></textarea>
+                                @if($h->status!="No Prazo")
+                                    <td>
+                                        <div class="row">
+                                            <a class="waves-effect waves-light btn grey accent-3  modal-trigger" href="#modalJ1{{$h->id}}">Expurgar</a>
+                                            <div id="modalJ1{{$h->id}}" class="modal">
+                                                <div class="modal-content">
+                                                    <form action="/expurgo_indicador/adiciona" method="post">
+                                                    <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+                                                    <input type="hidden" name="id_historico_indic" value="{{{ $h->id }}}" />
+                                                    
+                                                    <div class="form-group">
+                                                        <label for="justificativa">Justificativa</label>
+                                                        <textarea class="materialize-textarea" name="comentario"></textarea>
+                                                    </div>
+                                                        <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
+                                                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
+                                                    </form>
                                                 </div>
-                                                    <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
-                                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
-                                                </form>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
+                                    </td>
+                                @else
+                                    <td></td>
+                                @endif
                                 <td>
                                     <div class="row">
                                         <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$h->id}}">Editar</a>

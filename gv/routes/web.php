@@ -94,9 +94,12 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/demanda/adiciona','DemandaController@adiciona');
     Route::post('/demanda/salvaAlt','DemandaController@salvaAlt');
 
-    Route::get('/expurgo_indicador/lista', 'Expurgo_IndicadorController@lista');
+    Route::get('/expurgo_indicador/tela', 'Expurgo_IndicadorController@tela');
     Route::get('/expurgo_indicador/lista/remove/{id}', 'Expurgo_IndicadorController@remove');
     Route::post('/expurgo_indicador/adiciona', 'Expurgo_IndicadorController@adiciona');
+    Route::post('/expurgo_indicador/aprovar','Expurgo_IndicadorController@aprovar');
+    Route::post('/expurgo_indicador/reprovar','Expurgo_IndicadorController@reprovar');
+    Route::get('/expurgo_indicador', 'Expurgo_IndicadorController@lista');
 
     Route::get('/usuario', 'UserController@lista');
     Route::get('/usuario/remove/{id}', 'UserController@remove');
