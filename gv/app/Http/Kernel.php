@@ -18,6 +18,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \gv\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+
     ];
 
     /**
@@ -40,6 +41,13 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+        'Verifica.Gestor' => [
+            //\Illuminate\Auth\Middleware\Authenticate::class,
+            \gv\Http\Middleware\VerificaGestor::class,
+        ],
+        'Verifica.Desenvolvedor' => [
+            \gv\Http\Middleware\VerificaDesenvolvedor::class,
+        ],
     ];
 
     /**
@@ -56,5 +64,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \gv\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'Verifica.Gestor' => \gv\Http\Middleware\VerificaGestor::class,
+        'Verifica.Desenvolvedor' => \gv\Http\Middleware\VerificaDesenvolvedor::class,
     ];
 }
