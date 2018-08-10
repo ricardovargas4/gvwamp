@@ -68,7 +68,7 @@
                                 <th> Periodicidade </th>
                                 <th> Coordenação </th>
                                 <th> Volumetria </th>
-                                <th> Alterar/Excluir </th>
+                                <th> Alterar </th>
                             </tr>
                         </thead>
                           <tbody>
@@ -137,7 +137,9 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('ProcessoController@remove', $p->id)}}' : false)">Deletar</a>
+                                        @can('checkDev')
+                                            <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('ProcessoController@remove', $p->id)}}' : false)">Deletar</a>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

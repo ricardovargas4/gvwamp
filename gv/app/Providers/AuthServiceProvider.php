@@ -25,6 +25,21 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::define('checkGestor',function($user){
+            if($user->nivel<3){
+                return true;
+            }
+            return false;
+
+        });
+        Gate::define('checkDev',function($user){
+            if($user->nivel<2){
+                return true;
+            }
+            return false;
+
+        });
+
         //
     }
 }

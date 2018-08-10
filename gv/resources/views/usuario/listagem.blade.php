@@ -39,7 +39,9 @@
                                         <label for="nivel">Nível</label>
                                         <select name="nivel" class="form-control">
                                             <option value="" disabled selected></option>
-                                                <option value="1">Desenvolvedor</option>
+                                                @can('checkDev')
+                                                    <option value="1">Desenvolvedor</option>
+                                                @endcan
                                                 <option value="2">Gestor</option>
                                                 <option value="3">Analista</option>
                                         </select>
@@ -103,7 +105,9 @@
                                                                     Analista
                                                                 @endif
                                                             </option>
-                                                                <option value="1">Desenvolvedor</option>
+                                                                @can('checkDev')    
+                                                                    <option value="1">Desenvolvedor</option>
+                                                                @endcan
                                                                 <option value="2">Gestor</option>
                                                                 <option value="3">Analista</option>
                                                         </select>
@@ -120,7 +124,9 @@
                                                         </div>
                                                     </div>
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
-                                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
+                                                    @can('checkDev')
+                                                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
+                                                    @endcan
                                                 </form>
                                             </div>
                                         </div>

@@ -34,14 +34,6 @@ Route::group(['middleware'=>'auth'],function(){
     //Route::post('/login','LoginController@Login');
     Route::get('/logout','LoginController@Logout');
 
-    //Processo
-    Route::get('/processo', 'ProcessoController@lista');
-    //Tipo
-    Route::get('/tipo', 'TipoController@lista');
-    //Coordenacao
-    Route::get('/coordenacao', 'CoordenacaoController@lista');
-    //Periodicidade
-    Route::get('/periodicidade', 'PeriodicidadeController@lista');
     //Responsavel
     Route::get('/responsavel', 'ResponsavelController@lista');
 
@@ -61,9 +53,6 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/historico_indic', 'Historico_indicController@filtro');
     Route::match(array('GET', 'POST'),'/historico_indic/filtro',['uses'=>'Historico_indicController@filtro','as'=>'hist.filtro']);
     
-    //Classificacao
-    Route::get('/classificacao', 'ClassificacaoController@lista');
-    
     //Demanda
     Route::get('/demanda', 'DemandaController@lista');
 
@@ -72,26 +61,32 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/expurgo_indicador/tela', 'Expurgo_IndicadorController@tela');
     Route::post('/expurgo_indicador/adiciona', 'Expurgo_IndicadorController@adiciona');
 
-    //Usuario
-    Route::get('/usuario', 'UserController@lista');
+    
 });
 
 
 Route::group(['middleware'=>'Verifica.Gestor'],function(){
 //Gestor
-//Processo
+   
+    //Tipo
+    Route::get('/tipo', 'TipoController@lista');
+
+    //Processo
+    Route::get('/processo', 'ProcessoController@lista');
     Route::get('/processo/novo', 'ProcessoController@novo');
     Route::post('/processo/adiciona','ProcessoController@adiciona');
     Route::get('/processo/altera/{id}','ProcessoController@altera');
     Route::post('/processo/salvaAlt','ProcessoController@salvaAlt');
     
     //Coordenacao
+    Route::get('/coordenacao', 'CoordenacaoController@lista');
     Route::get('/coordenacao/novo', 'CoordenacaoController@novo');
     Route::post('/coordenacao/adiciona','CoordenacaoController@adiciona');
     Route::get('/coordenacao/altera/{id}','CoordenacaoController@altera');
     Route::post('/coordenacao/salvaAlt','CoordenacaoController@salvaAlt');
 
     //Periodicidade
+    Route::get('/periodicidade', 'PeriodicidadeController@lista');
     Route::get('/periodicidade/novo', 'PeriodicidadeController@novo');
     Route::post('/periodicidade/adiciona','PeriodicidadeController@adiciona');
     Route::get('/periodicidade/altera/{id}','PeriodicidadeController@altera');
@@ -110,6 +105,7 @@ Route::group(['middleware'=>'Verifica.Gestor'],function(){
     Route::get('/historico_indic/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}', 'Historico_indicController@remove');
 
     //Classificacao
+    Route::get('/classificacao', 'ClassificacaoController@lista');
     Route::get('/classificacao/remove/{id}', 'ClassificacaoController@remove');
     Route::post('/classificacao/adiciona','ClassificacaoController@adiciona');
     Route::post('/classificacao/salvaAlt','ClassificacaoController@salvaAlt');
@@ -127,6 +123,7 @@ Route::group(['middleware'=>'Verifica.Gestor'],function(){
     Route::get('/usuario/remove/{id}', 'UserController@remove');
     Route::post('/usuario/adiciona','UserController@adiciona');
     Route::post('/usuario/salvaAlt','UserController@salvaAlt');
+    Route::get('/usuario', 'UserController@lista');
 });
 
 

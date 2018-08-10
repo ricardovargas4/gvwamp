@@ -28,16 +28,20 @@
           @endif
             <!-- Dropdown Trigger -->
             <ul id="dropdown1" class="dropdown-content">
-              <li><a href="/processo/">Processos</a></li>
               <li><a href="/atividade/">Atividades</a></li>
-              <li><a href="/tipo/">Tipos</a></li>
-              <li><a href="/periodicidade/">Periodicidades</a></li>
               <li><a href="/responsavel/">Responsaveis</a></li>
-              <li><a href="/coordenacao/">Coordenações</a></li>
               <li><a href="/historico_indic/">Histórico Indicadores</a></li>
-              <li><a href="/usuario/">Usuários</a></li>
               <li><a href="/expurgo_indicador/tela">Expurgo Indicador</a></li>
               <li><a href="/expurgo_indicador">Expurgo Indicador Lista</a></li>
+              <li><a href="/demanda">Demandas</a></li>
+              @can('checkGestor')
+                <li><a href="/processo/">Processos</a></li>
+                <li><a href="/tipo/">Tipos</a></li>
+                <li><a href="/periodicidade/">Periodicidades</a></li>
+                <li><a href="/coordenacao/">Coordenações</a></li>
+                <li><a href="/classificacao/">Classificações</a></li>
+                <li><a href="/usuario/">Usuários</a></li>
+              @endcan
               <!--<li class="divider"></li>-->
             </ul>
 
