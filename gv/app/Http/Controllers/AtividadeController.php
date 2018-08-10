@@ -220,6 +220,7 @@ class AtividadeController extends Controller
         return  view('atividade.listagem',compact('filtro','classificacoes','processos'));
     }
     public function filtro(AtividadeRequest $request,$data=null){
+        $user = Auth::user();
         if(!is_null($request->data_inicial)){
             $data_inicial = $request->data_inicial;
             $data_final = $request->data_final;
@@ -227,6 +228,11 @@ class AtividadeController extends Controller
             $processos = Processo::all();
             $users = User::all();
             $classificacoes =Classificacao::all();
+            if($user->can('checkGestor')){
+                $userFiltro = '%';
+            }else{
+                $userFiltro = $usuario;
+            }
             $atividades = DB::table('atividades')
             ->join('processos', 'processos.id', '=', 'atividades.id_processo')
             ->join('users', 'users.id', '=', 'atividades.usuario')
@@ -239,6 +245,7 @@ class AtividadeController extends Controller
                             observacoes.observacao, classificacoes.id class_ID, classificacoes.opcao class_Opcao, volumetrias.volumetria" ))
             ->where('atividades.hora_inicio','>=',$request->data_inicial)
             ->where('atividades.hora_fim','<=',$request->data_final." 23:59:59")
+            ->where('atividades.usuario','like',$userFiltro)
             ->orderBy('hora_inicio', 'ASC')
             ->paginate(15);
             $atividades->appends(Input::except('page'));

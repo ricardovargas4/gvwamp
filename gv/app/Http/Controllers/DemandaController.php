@@ -6,6 +6,7 @@ use gv\Http\Requests\DemandaRequest;
 use Request;
 use gv\Demanda;
 use gv\User;
+use Auth;
 
 
 class DemandaController extends Controller
@@ -13,11 +14,20 @@ class DemandaController extends Controller
 
     public function lista(){
 
+        $user = Auth::user();
+        $usuario =  Auth::user()->id;
+        if($user->can('checkGestor')){
+            $userFiltro = '%';
+        }else{
+            $userFiltro = $usuario;
+        }
+
         $processos = Processo::all();
         $usuarios = User::all();
         $demandas = DB::table('demandas')
         ->join('processos', 'demandas.id_processo', '=', 'processos.id')
         ->join('users', 'demandas.id_responsavel', '=', 'users.id')
+        ->where('id_responsavel','like',$userFiltro)
         ->select('demandas.id','processos.nome as procNome', 'processos.id as procID', 'demandas.data_final',
                  'users.id as userID', 'users.email','data_conclusao')
         ->paginate(15);;

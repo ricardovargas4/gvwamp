@@ -69,8 +69,8 @@
                                 <td scope="row">{{$d->id}}</td>
                                 <td> {{$d->procNome}} </td>
                                 <td> {{$d->email}} </td>
-                                <td> {{$d->data_final}} </td>
-                                <td> {{$d->data_conclusao}} </td>
+                                <td> @if(isset($d->data_final)) {{date('d/m/Y', strtotime($d->data_final))}} @else {{$d->data_final}} @endif</td>
+                                <td> @if(isset($d->data_conclusao)) {{date('d/m/Y', strtotime($d->data_conclusao))}} @else {{$d->data_conclusao}} @endif</td>
                                 @can('checkGestor')
                                     <td>
                                         <div class="row">

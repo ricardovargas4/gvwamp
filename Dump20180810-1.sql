@@ -45,7 +45,7 @@ CREATE TABLE `atividades` (
   KEY `fk_atividades_usuario` (`usuario`),
   CONSTRAINT `fk_atividades_id_processo` FOREIGN KEY (`id_processo`) REFERENCES `processos` (`id`),
   CONSTRAINT `fk_atividades_usuario` FOREIGN KEY (`usuario`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=62123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -54,7 +54,7 @@ CREATE TABLE `atividades` (
 
 LOCK TABLES `atividades` WRITE;
 /*!40000 ALTER TABLE `atividades` DISABLE KEYS */;
-INSERT INTO `atividades` VALUES (62113,526,1,'2018-08-01','2018-08-01 11:02:08','2018-08-01 12:00:00','2018-02-02','2018-02-02',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:30:24','2018-08-07 20:23:05'),(62114,526,1,'2018-08-01','2018-08-01 11:02:06','2018-08-01 12:00:00','2018-02-02','2018-02-02',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:32:17','2018-08-07 20:23:12'),(62115,526,1,'2018-08-08','2018-08-08 11:08:08','2018-08-08 11:08:09','2018-08-08','2018-08-08',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:33:31','2018-08-06 14:33:31'),(62118,526,1,'2018-08-07','2018-08-07 19:03:44','2018-08-07 19:03:46','2018-08-03','2018-08-06','2018-08-02',NULL,NULL,NULL,NULL,'2018-08-07 19:03:44','2018-08-07 19:03:46'),(62119,526,1,'2018-08-10','2018-08-10 12:24:43','2018-08-10 12:24:46','2018-08-08','2018-08-03','2018-08-06',NULL,NULL,NULL,NULL,'2018-08-10 12:24:43','2018-08-10 12:24:46');
+INSERT INTO `atividades` VALUES (62113,526,1,'2018-08-01','2018-08-01 11:02:08','2018-08-01 12:00:00','2018-02-02','2018-02-02',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:30:24','2018-08-07 20:23:05'),(62114,526,1,'2018-08-01','2018-08-01 11:02:06','2018-08-01 12:00:00','2018-02-02','2018-02-02',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:32:17','2018-08-07 20:23:12'),(62115,526,1,'2018-08-08','2018-08-08 11:08:08','2018-08-08 11:08:09','2018-08-08','2018-08-08',NULL,NULL,NULL,NULL,NULL,'2018-08-06 14:33:31','2018-08-06 14:33:31'),(62118,526,1,'2018-08-07','2018-08-07 19:03:44','2018-08-07 19:03:46','2018-08-03','2018-08-06','2018-08-02',NULL,NULL,NULL,NULL,'2018-08-07 19:03:44','2018-08-07 19:03:46'),(62119,526,1,'2018-08-10','2018-08-10 12:24:43','2018-08-10 12:24:46','2018-08-08','2018-08-03','2018-08-06',NULL,NULL,NULL,NULL,'2018-08-10 12:24:43','2018-08-10 12:24:46'),(62120,526,1,'2018-08-10','2018-08-10 20:37:13','2018-08-10 20:37:23','2018-08-08','2018-08-08','2018-08-06',NULL,NULL,NULL,NULL,'2018-08-10 20:37:13','2018-08-10 20:37:23'),(62121,526,1,'2018-08-10','2018-08-10 20:37:32','2018-08-10 20:52:22','2018-08-08','2018-08-08','2018-08-08',NULL,NULL,NULL,NULL,'2018-08-10 20:37:32','2018-08-10 20:52:22'),(62122,527,170,'2018-08-10','2018-08-10 20:44:00','2018-08-10 20:44:04','2018-08-08','2018-08-01',NULL,NULL,NULL,NULL,NULL,'2018-08-10 20:44:00','2018-08-10 20:44:04');
 /*!40000 ALTER TABLE `atividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -104,7 +104,7 @@ CREATE TABLE `conclusoes` (
   PRIMARY KEY (`id`),
   KEY `id_processo_FK_idx` (`id_processo`),
   CONSTRAINT `fk_conclusoes_id_processo` FOREIGN KEY (`id_processo`) REFERENCES `processos` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -113,7 +113,7 @@ CREATE TABLE `conclusoes` (
 
 LOCK TABLES `conclusoes` WRITE;
 /*!40000 ALTER TABLE `conclusoes` DISABLE KEYS */;
-INSERT INTO `conclusoes` VALUES (68,526,'2018-08-06','2018-08-01','2018-08-06 14:25:52','2018-08-06 14:25:52'),(69,526,'2018-08-06','2018-08-02','2018-08-06 14:26:09','2018-08-06 14:26:09'),(70,526,'2018-08-07','2018-08-06','2018-08-07 19:03:46','2018-08-07 19:03:46'),(71,526,'2018-08-10','2018-08-03','2018-08-10 12:24:46','2018-08-10 12:24:46');
+INSERT INTO `conclusoes` VALUES (68,526,'2018-08-06','2018-08-01','2018-08-06 14:25:52','2018-08-06 14:25:52'),(69,526,'2018-08-06','2018-08-02','2018-08-06 14:26:09','2018-08-06 14:26:09'),(70,526,'2018-08-07','2018-08-06','2018-08-07 19:03:46','2018-08-07 19:03:46'),(71,526,'2018-08-10','2018-08-03','2018-08-10 12:24:46','2018-08-10 12:24:46'),(72,526,'2018-08-10','2018-08-08','2018-08-10 20:37:22','2018-08-10 20:37:22');
 /*!40000 ALTER TABLE `conclusoes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,7 +268,7 @@ CREATE TABLE `historico_indic` (
   CONSTRAINT `fk_historico_indic_periodicidade_id` FOREIGN KEY (`periodicidade_id`) REFERENCES `periodicidades` (`id`),
   CONSTRAINT `fk_processo_id` FOREIGN KEY (`processo_id`) REFERENCES `processos` (`id`),
   CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -277,7 +277,7 @@ CREATE TABLE `historico_indic` (
 
 LOCK TABLES `historico_indic` WRITE;
 /*!40000 ALTER TABLE `historico_indic` DISABLE KEYS */;
-INSERT INTO `historico_indic` VALUES (74,526,'2018-08-02',1,'2018-08-02','2018-07-31',1,'2018-08-06 16:40:12','2018-08-06 16:40:12','No Prazo'),(75,526,'2018-08-01',1,'2018-08-01','2018-07-30',1,'2018-08-09 14:20:33','2018-08-09 14:20:33','No Prazo'),(76,526,'2018-08-09',1,'2018-08-06','2018-08-07',1,'2018-08-09 14:20:48','2018-08-10 13:16:46','Em Atraso'),(77,527,'2018-08-09',170,NULL,'2018-08-07',1,'2018-08-10 14:37:25','2018-08-10 14:37:25','Em Atraso');
+INSERT INTO `historico_indic` VALUES (74,526,'2018-08-02',1,'2018-08-02','2018-07-31',1,'2018-08-06 16:40:12','2018-08-06 16:40:12','No Prazo'),(75,526,'2018-08-01',1,'2018-08-01','2018-07-30',1,'2018-08-09 14:20:33','2018-08-09 14:20:33','No Prazo'),(76,526,'2018-08-09',1,'2018-08-06','2018-08-07',1,'2018-08-09 14:20:48','2018-08-10 13:16:46','Em Atraso'),(77,527,'2018-08-09',170,NULL,'2018-08-07',1,'2018-08-10 14:37:25','2018-08-10 14:37:25','Em Atraso'),(78,526,'2018-08-07',1,'2018-08-06','2018-08-03',1,'2018-08-10 21:16:56','2018-08-10 21:16:56','No Prazo'),(79,527,'2018-08-07',170,NULL,'2018-08-03',1,'2018-08-10 21:16:56','2018-08-10 21:16:56','Em Atraso');
 /*!40000 ALTER TABLE `historico_indic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -345,7 +345,7 @@ DROP TABLE IF EXISTS `observacoes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `observacoes` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_atividade` int(10) unsigned NOT NULL,
   `observacao` varchar(300) DEFAULT NULL,
   `classificacao` int(10) unsigned DEFAULT NULL,
@@ -356,7 +356,7 @@ CREATE TABLE `observacoes` (
   KEY `fk_observacoes_ID_classificacao_idx` (`classificacao`),
   CONSTRAINT `fk_observacoes_ID_atividade` FOREIGN KEY (`id_atividade`) REFERENCES `atividades` (`id`),
   CONSTRAINT `fk_observacoes_ID_classificacao` FOREIGN KEY (`classificacao`) REFERENCES `classificacoes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -365,6 +365,7 @@ CREATE TABLE `observacoes` (
 
 LOCK TABLES `observacoes` WRITE;
 /*!40000 ALTER TABLE `observacoes` DISABLE KEYS */;
+INSERT INTO `observacoes` VALUES (1,62122,'A',NULL,'2018-08-10 20:44:05','2018-08-10 20:44:05'),(2,62121,NULL,2,'2018-08-10 20:52:22','2018-08-10 20:52:22');
 /*!40000 ALTER TABLE `observacoes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -641,7 +642,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'ricardo','ricardo_vargas','$2y$10$FlIwxhSJqDlLqC43OuOXPOByNIUaIHeAIFczDRS75kmNY7e/vWZXW','Vt5IPp3UdzWk1TtO5ME3BVMoYEdiVErobwgIEQRW78y6HXiMuicOAvCyIxgC',NULL,'2018-08-10 13:57:28',1),(167,'Luiz','luiz_geraldo','$2y$10$HkTWP2xxMapC5gz77VqMxuRwWJoleB41/I2FPz.uud5llNb1dd0bm',NULL,'2018-08-08 19:48:43','2018-08-08 20:05:36',2),(170,'ricardo_analista','ricardo_analista','$2y$10$MxbewMlfb..SOnXIOWSUZOV1kLgeY9cdsDrPVEsJq6eGvBABEGbO2',NULL,'2018-08-09 21:18:20','2018-08-09 21:18:20',3),(171,'ricardo_gestor','ricardo_gestor','$2y$10$AwMiuAADhyAa/9xHwAYiFuBFEJx4MV/nuvIlBryjlOCd5/an2AFui',NULL,'2018-08-10 13:57:19','2018-08-10 13:57:19',2);
+INSERT INTO `users` VALUES (1,'ricardo','ricardo_vargas','$2y$10$FlIwxhSJqDlLqC43OuOXPOByNIUaIHeAIFczDRS75kmNY7e/vWZXW','Vt5IPp3UdzWk1TtO5ME3BVMoYEdiVErobwgIEQRW78y6HXiMuicOAvCyIxgC',NULL,'2018-08-10 13:57:28',1),(167,'Luiz','luiz_geraldo','$2y$10$HkTWP2xxMapC5gz77VqMxuRwWJoleB41/I2FPz.uud5llNb1dd0bm',NULL,'2018-08-08 19:48:43','2018-08-08 20:05:36',2),(170,'ricardo_analista1','ricardo_analista','$2y$10$o/TfLiTQ75JxIckLnHw.K.rNbq7RNbA43qwTK7wP6OCxWIn5fgPgq',NULL,'2018-08-09 21:18:20','2018-08-10 20:44:25',3),(171,'ricardo_gestor','ricardo_gestor','$2y$10$AwMiuAADhyAa/9xHwAYiFuBFEJx4MV/nuvIlBryjlOCd5/an2AFui',NULL,'2018-08-10 13:57:19','2018-08-10 13:57:19',2);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -653,7 +654,7 @@ DROP TABLE IF EXISTS `volumetrias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `volumetrias` (
-  `id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_atividade` int(10) unsigned NOT NULL,
   `volumetria` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -813,4 +814,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-10 16:44:07
+-- Dump completed on 2018-08-10 18:23:21

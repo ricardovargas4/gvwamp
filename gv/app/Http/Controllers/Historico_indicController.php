@@ -20,12 +20,19 @@ class Historico_indicController extends Controller
         return  view('historico_indic.listagem',compact('filtro'));
     }
     public function filtro(Historico_indicRequest $request,$data=null){
+        $user = Auth::user();
         if(!is_null($request->data_inicial)){
             $data_inicial = $request->data_inicial;
             $data_final = $request->data_final;
             $periodicidades = Periodicidade::all();
             $users = User::all();
             $processos = Processo::all();
+            $usuario =  Auth::user()->id;
+            if($user->can('checkGestor')){
+                $userFiltro = '%';
+            }else{
+                $userFiltro = $usuario;
+            }
             $historicos = DB::table('historico_indic')
             ->join('users', 'users.id', '=', 'historico_indic.user_id')
             ->join('periodicidades', 'periodicidades.id', '=', 'historico_indic.periodicidade_id')
@@ -35,6 +42,7 @@ class Historico_indicController extends Controller
                             periodicidades.nome as periodicidade_id, historico_indic.status as status" ))
             ->where('historico_indic.data_informada','>=',date('Y-m-d', strtotime($request->data_inicial)))
             ->where('historico_indic.data_informada','<=',date('Y-m-d', strtotime($request->data_final)))
+            ->where('historico_indic.user_id','like',$userFiltro)
             ->paginate(15);
             $historicos->appends(Input::except('page'));
             $filtro = count($historicos);

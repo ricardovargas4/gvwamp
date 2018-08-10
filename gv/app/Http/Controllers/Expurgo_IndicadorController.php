@@ -34,8 +34,16 @@ class Expurgo_IndicadorController extends Controller
 
     public function lista(){
         //$nivel = Auth::user()->nivel;
-        
+        $user = Auth::user();
+        $usuario =  Auth::user()->id;
+        if($user->can('checkGestor')){
+            $userFiltro = '%';
+        }else{
+            $userFiltro = $usuario;
+        }
+
         $expurgos = Expurgo_Indicador::orderBy('id')
+        ->where('id_usuario_solicitante','like',$userFiltro)
         ->paginate(15);
        // $atividades->appends(Input::except('page'));
 
