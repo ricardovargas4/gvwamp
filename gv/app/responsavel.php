@@ -10,11 +10,11 @@ class responsavel extends Model
     public $timestamps = true;
     protected $fillable = array('id', 'id_processo', 'usuario');
 
-    public function id_processo(){
-        return $this->belongsTo('gv\processo');
+    public function id_processo_FK(){
+        return $this->belongsTo('gv\processo','id_processo');
     }
-    public function usuario(){
-        return $this->belongsTo('gv\User');
+    public function usuario_FK(){
+        return $this->belongsTo('gv\User','usuario');
     }
     
 }

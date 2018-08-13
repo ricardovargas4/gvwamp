@@ -15,12 +15,12 @@ class ResponsavelController extends Controller
         //$responsavels = Responsavel::all();
         $users = User::all();
         $processos = Processo::all();
-        $resp = DB::table('responsavels')
+        /*$resp = DB::table('responsavels')
         ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
         ->join('users', 'users.id', '=', 'responsavels.usuario')
         ->select('responsavels.id','processos.nome as procNome', 'processos.id as procID', 'users.email', 'users.id as userID')
-        ->paginate(15);;
-        //return view('responsavel.listagem',compact('responsavels'));
+        ->paginate(15);*/
+        $resp=responsavel::paginate(15);
         return view('responsavel.listagem',compact('resp','users','processos'));
     }
 
