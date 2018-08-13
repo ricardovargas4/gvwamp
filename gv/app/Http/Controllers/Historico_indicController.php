@@ -33,22 +33,10 @@ class Historico_indicController extends Controller
             }else{
                 $userFiltro = $usuario;
             }
-            /*$historicos = DB::table('historico_indic')
-            ->join('users', 'users.id', '=', 'historico_indic.user_id')
-            ->join('periodicidades', 'periodicidades.id', '=', 'historico_indic.periodicidade_id')
-            ->join('processos', 'processos.id', '=', 'historico_indic.processo_id')
-            ->select(DB::raw("historico_indic.id as id, processos.id as processo_id,processos.nome as processo_nome,historico_indic.data_informada as data_informada,
-                            users.email as user_id, historico_indic.ultima_data as ultima_data, historico_indic.data_meta as data_meta,
-                            periodicidades.nome as periodicidade_id, historico_indic.status as status" ))
-            ->where('historico_indic.data_informada','>=',date('Y-m-d', strtotime($request->data_inicial)))
-            ->where('historico_indic.data_informada','<=',date('Y-m-d', strtotime($request->data_final)))
-            ->where('historico_indic.user_id','like',$userFiltro)
-            ->paginate(15);*/
             $historicos = historico_indic::where('historico_indic.data_informada','>=',date('Y-m-d', strtotime($request->data_inicial)))
             ->where('historico_indic.data_informada','<=',date('Y-m-d', strtotime($request->data_final)))
             ->where('historico_indic.user_id','like',$userFiltro)
             ->paginate(15);
-            //dd($historicos);
             $historicos->appends(Input::except('page'));
             $filtro = count($historicos);
             return view('historico_indic.listagem',compact('historicos','periodicidades','processos','users','filtro','data_inicial','data_final'));
