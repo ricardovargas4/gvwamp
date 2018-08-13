@@ -8,8 +8,7 @@ use gv\Periodicidade;
 class PeriodicidadeController extends Controller {
 
     public function lista(){
-        //$periodicidades = Periodicidade::all();
-        $periodicidades = DB::table('periodicidades')->paginate(15);
+        $periodicidades = Periodicidade::paginate(15);
         return view('periodicidade.listagem')->with('periodicidades', $periodicidades);
     }
 
