@@ -9,8 +9,7 @@ use gv\Tipo;
 class TipoController extends Controller {
 
     public function lista(){
-        //$tipos = Tipo::all()->paginate(15);
-        $tipos = DB::table('tipos')->paginate(15);
+        $tipos = Tipo::paginate(15);
         return view('tipo.listagem')->with('tipos', $tipos);
     }
 
