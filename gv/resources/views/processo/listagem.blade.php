@@ -76,9 +76,9 @@
                             <tr>
                                 <td scope="row">{{$p->id}}</td>
                                 <td> {{$p->nome}} </td>
-                                <td> {{$p->tipo}} </td>
-                                <td> {{$p->periodicidade}} </td>
-                                <td> {{$p->coordenacao}} </td>
+                                <td> {{$p->tipo_FK->nome}} </td>
+                                <td> {{$p->periodicidade_FK->nome}} </td>
+                                <td> {{$p->coordenacao_FK->nome}} </td>
                                 <td> {{$p->volumetria}} </td>
                                 <td>
                                     <div class="row">
@@ -97,7 +97,7 @@
                                                     <div class="form-group">
                                                         <label for="tipo">Tipo</label>
                                                         <select name="tipo" class="form-control">
-                                                            <option value="{{{ $p->tipoID }}}" disabled selected>{{{$p->tipo}}}</option>
+                                                            <option value="{{{ $p->tipoID }}}" disabled selected>{{{$p->tipo_FK->nome}}}</option>
                                                             @foreach($tipos as $t)
                                                                 <option value="{{$t->id}}">{{$t->nome}}</option>
                                                             @endforeach
@@ -106,7 +106,7 @@
                                                     <div class="form-group">
                                                         <label for="periodicidade">Periodicidade</label>
                                                         <select name="periodicidade" class="form-control">
-                                                            <option value="{{{ $p->periodicidadeID }}}" disabled selected>{{{$p->periodicidade}}}</option>
+                                                            <option value="{{{ $p->periodicidadeID }}}" disabled selected>{{{$p->periodicidade_FK->nome}}}</option>
                                                             @foreach($periodicidades as $per)
                                                                 <option value="{{$per->id}}">{{$per->nome}}</option>
                                                             @endforeach
@@ -115,7 +115,7 @@
                                                     <div class="form-group">
                                                         <label for="coordenacao">Coordenacao</label>
                                                         <select name="coordenacao" class="form-control">
-                                                            <option value="{{{ $p->coordenacaoID }}}" disabled selected>{{{$p->coordenacao}}}</option>
+                                                            <option value="{{{ $p->coordenacaoID }}}" disabled selected>{{{$p->coordenacao_FK->nome}}}</option>
                                                             @foreach($coordenacaos as $c)
                                                                 <option value="{{$c->id}}">{{$c->nome}}</option>
                                                             @endforeach

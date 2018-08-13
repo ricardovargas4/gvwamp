@@ -15,20 +15,9 @@ class ProcessoController extends Controller {
         $tipos = Tipo::all();
         $periodicidades = Periodicidade::all();
         $coordenacaos =  Coordenacao::all();
-        $processos = DB::table('processos')
-        ->join('tipos', 'tipos.id', '=', 'processos.tipo')
-        ->join('periodicidades', 'periodicidades.id', '=', 'processos.periodicidade')
-        ->join('coordenacaos', 'coordenacaos.id', '=', 'processos.coordenacao')        
-        ->select(DB::raw("processos.id as id, processos.nome as nome, tipos.nome as tipo, tipos.id as tipoID,
-                          periodicidades.nome as periodicidade, periodicidades.id as periodicidadeID,  
-                          coordenacaos.nome as coordenacao, coordenacaos.id as coordenacaoID, volumetria" ))
-        ->paginate(15);
-        //return($atividades);
-        //return view('atividade.telaAtividades',compact('atividades','usuario_id'));
+        $processos= processo::paginate(15);
         
-        //$processos = Processo::all();
         return view('processo.listagem',compact('processos','tipos','periodicidades','coordenacaos'));
-        //return view('processo.listagem')->with('processos', $processos);
     }
 
     public function remove($id){
