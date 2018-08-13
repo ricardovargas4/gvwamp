@@ -76,12 +76,12 @@
                           @foreach ($historicos as $h)
                             <tr>
                                 <td scope="row">{{$h->id}}</td>
-                                <td> {{$h->processo_nome}} </td>
+                                <td> {{$h->processo_id_FK->nome}} </td>
                                 <td> @if(isset($h->data_informada)) {{date('d/m/Y', strtotime($h->data_informada))}} @else {{$h->data_informada}} @endif</td>
-                                <td> {{$h->user_id}} </td>
+                                <td> {{$h->user_id_FK->email}} </td>
                                 <td> @if(isset($h->ultima_data)) {{date('d/m/Y', strtotime($h->ultima_data))}} @else {{$h->ultima_data}} @endif</td>
                                 <td> @if(isset($h->data_meta)) {{date('d/m/Y', strtotime($h->data_meta))}} @else {{$h->data_meta}} @endif</td>
-                                <td> {{$h->periodicidade_id}} </td>
+                                <td> {{$h->periodiciade_id_FK->nome}} </td>
                                 <td> {{$h->status}} </td>
                                 @if($h->status!="No Prazo")
                                     <td>
@@ -122,7 +122,7 @@
                                                     <div class="form-group">
                                                         <label for="processo_id">Nome Processo</label>
                                                         <select name="processo_id" class="form-control">
-                                                            <option value="{{{ $h->processo_id }}}" disabled selected>{{{$h->processo_nome}}}</option>
+                                                            <option value="{{{ $h->processo_id }}}" disabled selected>{{{$h->processo_id_FK->nome}}}</option>
                                                                 @foreach($processos as $p)
                                                                     <option value="{{$p->id}}">{{$p->nome}}</option>
                                                                 @endforeach
@@ -134,7 +134,8 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="user_id">Usuários</label>
-                                                        <select name="user_id" class="form-control" value="{{{ $h->user_id }}}">
+                                                        <select name="user_id" class="form-control">
+                                                            <option value="{{{ $h->user_id }}}" disabled selected>{{{$h->user_id_FK->email}}}</option>
                                                             @foreach($users as $u)
                                                                 <option value="{{$u->id}}">{{$u->email}}</opt ion>
                                                             @endforeach
@@ -152,8 +153,9 @@
                                                     </div>       
 
                                                     <div class="form-group">
-                                                            <label for="periodicidade_id">Tipo</label>
-                                                            <select name="periodicidade_id" class="form-control" value="{{{ $h->periodicidade_id }}}">
+                                                        <label for="periodicidade_id">Tipo</label>
+                                                        <select name="periodicidade_id" class="form-control">
+                                                            <option value="{{{ $h->periodiciade_id }}}" disabled selected>{{{$h->periodiciade_id_FK->nome}}}</option>    
                                                             @foreach($periodicidades as $p)
                                                                 <option value="{{$p->id}}">{{$p->nome}}</option>
                                                             @endforeach
