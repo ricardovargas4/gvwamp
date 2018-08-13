@@ -67,8 +67,8 @@
                           @foreach ($demandas as $d)
                             <tr>
                                 <td scope="row">{{$d->id}}</td>
-                                <td> {{$d->procNome}} </td>
-                                <td> {{$d->email}} </td>
+                                <td> {{$d->id_processo_FK->nome}} </td>
+                                <td> {{$d->id_responsavelFK->email}} </td>
                                 <td> @if(isset($d->data_final)) {{date('d/m/Y', strtotime($d->data_final))}} @else {{$d->data_final}} @endif</td>
                                 <td> @if(isset($d->data_conclusao)) {{date('d/m/Y', strtotime($d->data_conclusao))}} @else {{$d->data_conclusao}} @endif</td>
                                 @can('checkGestor')
@@ -85,7 +85,7 @@
                                                         <div class="form-group">
                                                             <label for="id_processo">Nome Processo</label>
                                                             <select name="id_processo" class="form-control">
-                                                                <option value="{{{ $d->procID }}}" disabled selected>{{{$d->procNome}}}</option>
+                                                                <option value="{{{ $d->id_processo }}}" disabled selected>{{{$d->id_processo_FK->nome}}}</option>
                                                                 @foreach($processos as $p)
                                                                     <option value="{{$p->id}}">{{$p->nome}}</option>
                                                                 @endforeach
@@ -94,7 +94,7 @@
                                                         <div class="form-group">
                                                             <label for="id_responsavel">Responsável</label>
                                                             <select name="id_responsavel" class="form-control">
-                                                                <option value="{{{ $d->userID }}}" disabled selected>{{{$d->email}}}</option>
+                                                                <option value="{{{ $d->id_responsavel }}}" disabled selected>{{{$d->id_responsavelFK->email}}}</option>
                                                                 @foreach($usuarios as $u)
                                                                     <option value="{{$u->id}}">{{$u->email}}</option>
                                                                 @endforeach
