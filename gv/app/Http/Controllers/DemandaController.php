@@ -24,13 +24,6 @@ class DemandaController extends Controller
 
         $processos = Processo::all();
         $usuarios = User::all();
-        /*$demandas = DB::table('demandas')
-        ->join('processos', 'demandas.id_processo', '=', 'processos.id')
-        ->join('users', 'demandas.id_responsavel', '=', 'users.id')
-        ->where('id_responsavel','like',$userFiltro)
-        ->select('demandas.id','processos.nome as procNome', 'processos.id as procID', 'demandas.data_final',
-                 'users.id as userID', 'users.email','data_conclusao')
-        ->paginate(15);*/
         $demandas = Demanda::where('id_responsavel','like',$userFiltro)
                 ->paginate(15);
         return view('demanda.listagem',compact('demandas','processos','usuarios'));

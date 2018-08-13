@@ -10,14 +10,14 @@ class historico_indic extends Model
     public $timestamps = true;
     protected $fillable = array('processo_id','data_informada','user_id','ultima_data','data_meta', 'periodicidade_id','status');
 
-    public function periodiciade_id(){
-        return $this->belongsTo('gv\Periodicidade');
-    }
     public function processo_id_FK(){
         return $this->belongsTo('gv\processo','processo_id');
     }
-    public function user_id(){
-        return $this->belongsTo('gv\User');
+    public function user_id_FK(){
+        return $this->belongsTo('gv\User','user_id');
+    }
+    public function periodiciade_id_FK(){
+        return $this->belongsTo('gv\Periodicidade','periodicidade_id');
     }
 }
 

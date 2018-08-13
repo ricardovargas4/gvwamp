@@ -10,14 +10,14 @@ class processo extends Model
     public $timestamps = true;
     protected $fillable = array('nome', 'tipo', 'periodicidade', 'coordenacao','volumetria');
 
-    public function tipo(){
-        return $this->belongsTo('gv\Tipo');
+    public function tipo_FK(){
+        return $this->belongsTo('gv\Tipo','tipo');
     }
-    public function periodicidade(){
-        return $this->belongsTo('gv\Periodicidade');
+    public function periodicidade_FK(){
+        return $this->belongsTo('gv\Periodicidade','periodicidade');
     }
-    public function coordenacao(){
-        return $this->belongsTo('gv\Coordenacao');
+    public function coordenacao_FK(){
+        return $this->belongsTo('gv\Coordenacao','coordenacao');
     }
     public function responsavel(){
         return $this->hasMany('gv\responsavel');

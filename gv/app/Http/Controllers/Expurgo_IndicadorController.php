@@ -45,9 +45,7 @@ class Expurgo_IndicadorController extends Controller
         $expurgos = Expurgo_Indicador::orderBy('id')
         ->where('id_usuario_solicitante','like',$userFiltro)
         ->paginate(15);
-       // $atividades->appends(Input::except('page'));
 
-        
         return view('expurgo_indicador.listagem',compact('expurgos','nivel'));
 
     }
@@ -62,14 +60,10 @@ class Expurgo_IndicadorController extends Controller
         return redirect()->action('Expurgo_IndicadorController@tela')->withInput(Request::only('usuario'));
     }
     public function adiciona(Expurgo_IndicadorRequest $request){
-        $gestor = DB::table('historico_indic')
-        ->join('processos','historico_indic.processo_id','=','processos.id')
-        ->join('coordenacaos','processos.coordenacao','=','coordenacaos.id')
-        ->where('historico_indic.id','=',$request->id_historico_indic)
-        ->select('id_gestor')
-        ->first();
+        $gestor = historico_indic::where('historico_indic.id','=',$request->id_historico_indic)
+        ->first()->processo_id_FK->coordenacao_FK->id_gestor;
         $request->offsetSet('id_usuario_solicitante',Auth::user()->id);
-        $request->offsetSet('id_usuario_aprovador',$gestor->id_gestor);
+        $request->offsetSet('id_usuario_aprovador',$gestor);
         $request->offsetSet('comentario',nl2br($request->comentario));
         $request->request->set('STATUS', 1);
         Expurgo_Indicador::create($request->except('_token'));
