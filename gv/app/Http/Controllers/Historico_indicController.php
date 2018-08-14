@@ -73,7 +73,7 @@ class Historico_indicController extends Controller
         ->join ('users','users.id','=','responsavels.usuario')
         ->join ('tipos','tipos.id','=', 'processos.tipo')
         ->leftjoin (DB::raw('(select  id_processo, data_conciliada from atividades where hora_fim is null) atividades'),function($join){$join->on('atividades.id_processo', '=', 'processos.id');})
-        ->leftjoin (DB::raw("(select id_processo, max(data_conciliada) ultima_data from conclusoes where data_conciliada <= '".$request->data_informada."' group by id_processo) conclusoes"),function($join){$join->on('conclusoes.id_processo','=','processos.id');})
+        ->leftjoin (DB::raw("(select id_processo, max(data_conciliada) ultima_data from conclusoes where data_conciliacao <= '".$request->data_informada."' group by id_processo) conclusoes"),function($join){$join->on('conclusoes.id_processo','=','processos.id');})
         ->select(DB::raw("distinct processos.id as processo_id, '$request->data_informada' data_informada, users.id user_id,
         ultima_data, FLOAT_DIAS_UTEIS('$request->data_informada',periodicidades.dias) data_meta,
         periodicidades.id periodicidade_id,
@@ -102,6 +102,36 @@ class Historico_indicController extends Controller
             $data=['data_inicial' =>$data_inicial,
                    'data_final' => $data_final];
             return redirect()->route('hist.filtro',$data);
+    }
+
+    public function indicador_atrasado_lista(){
+        $filtro = null;
+        return  view('historico_indic.indicador_atrasado',compact('filtro'));
+    }
+    public function indicador_atrasado_filtro(Historico_indicRequest $request,$data=null){
+        $user = Auth::user();
+        //dd($request);
+        if(!is_null($request->data_inicial)){
+            $data_inicial = $request->data_inicial;
+            $data_final = $request->data_final;
+            $usuario =  Auth::user()->id;
+            if($user->can('checkGestor')){
+                $userFiltro = '%';
+            }else{
+                $userFiltro = $usuario;
+            }
+            $historicos = historico_indic::where('historico_indic.data_informada','>=',date('Y-m-d', strtotime($request->data_inicial)))
+            ->where('historico_indic.data_informada','<=',date('Y-m-d', strtotime($request->data_final)))
+            ->where('historico_indic.user_id','like',$userFiltro)
+            ->where('status','=','Em Atraso')
+            ->paginate(15);
+            $historicos->appends(Input::except('page'));
+            $filtro = count($historicos);
+            return view('historico_indic.indicador_atrasado',compact('historicos','periodicidades','processos','users','filtro','data_inicial','data_final'));
+        }else{
+            $filtro = null;
+            return  view('historico_indic.indicador_atrasado',compact('filtro'));
+        }
     }
 
 }

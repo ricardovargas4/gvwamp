@@ -52,6 +52,8 @@ Route::group(['middleware'=>'auth'],function(){
     //Historico_Indicador
     Route::get('/historico_indic', 'Historico_indicController@filtro');
     Route::match(array('GET', 'POST'),'/historico_indic/filtro',['uses'=>'Historico_indicController@filtro','as'=>'hist.filtro']);
+    Route::get('/indicador_atrasado', 'Historico_indicController@indicador_atrasado_filtro');
+    Route::match(array('GET', 'POST'),'/indicador_atrasado/filtro',['uses'=>'Historico_indicController@indicador_atrasado_filtro','as'=>'hist.indicador_atrasado_filtro']);
     
     //Demanda
     Route::get('/demanda', 'DemandaController@lista');
