@@ -40,7 +40,7 @@ class ProcIndicador extends Command
     public function handle()
     {
         /*Alterar Criacao de Historico por CRUD*/
-        $data = DB::select("SELECT FLOAT_DIAS_UTEIS(NOW(),'-2') data");
+        $data = DB::select("SELECT FLOAT_DIAS_UTEIS(NOW(),'-1') data");
         $data= $data[0]->data;
         $historicos = DB::table('responsavels')
         ->join ('processos','responsavels.id_processo','=','processos.id')
