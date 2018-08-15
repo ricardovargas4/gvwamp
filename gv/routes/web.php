@@ -20,6 +20,8 @@ Auth::routes();
 //Route::get('/homea', 'HomeController@hello');
 Route::get('/auth/logout', 'Auth\AuthController@logout');
 Route::get('/auth/login', 'Auth\AuthController@login');
+Route::post('/login2', 'Auth\AuthController@login');
+//Route::get('/login', 'Auth\AuthController@login');
 
 Route::group(['middleware'=>'auth'],function(){
 
