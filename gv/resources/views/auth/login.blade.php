@@ -1,66 +1,54 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="/login2">
-                        {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">Usuário</label>
 
-                            <div class="col-md-6">
-                                <input id="email" type="text" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
+<main>
+    <div class="wrapper">
+        <div class="image">
+            <img src="{{asset('img/login/arte-login-rede.png')}}">
+        </div>
+        <div class="login-box-wrapper">
+            <div class="login-box">
+                <div class="title">
+                    <h1>Insira suas credenciais</h1>
+                </div>
+                <form id ="formLogin" role="form" method="POST" action="/login2">
+                    {{ csrf_field() }}
+                    <div class="form-group usuario">
+                        <input type="text" class="form-control" id="email" placeholder="Usuário" name="email" value="{{ old('email') }}" required autofocus>
+                    </div>
+                    @if ($errors->has('email'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
-                            </div>
+                    <div class="form-group senha">
+                        <input type="password" class="form-control" id="password" placeholder="Senha" name="password" required>
+                    </div>
+                    @if ($errors->has('password'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </span>
+                    @endif
+                    <div class="validate">
+
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} id="checkbox">Lembrar meu usuário</label>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Senha</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Lembrar
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
-                                </button>
-
-                               
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        
+                        <!--<input type="button" id="btnSubmit" class="btn" value="Entrar">-->
+                        <input class="btn" id="btnSubmit" type="submit" value="Entrar"/>
+                    </div>
+                </form>
+            </div>
+            <div class="logo">
+            <img src="{{asset('img/login/logo-sicredi-login.png')}}">
             </div>
         </div>
     </div>
-</div>
+</main>
+
+
 @endsection

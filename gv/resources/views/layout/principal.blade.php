@@ -15,7 +15,7 @@
   <div class="navBar">
 
     <nav>
-      <div class="nav-wrapper blue-grey darken-3">
+      <div class="nav-wrapper navBarMenu">
         <div class="container">
           <a class="brand-logo" href="/home">Gestão à Vista</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">

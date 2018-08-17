@@ -176,3 +176,7 @@ a:hover {
 .waves-effect.waves-light.btn.red.accent-4{
   width: 100px;
 }
+
+.navBarMenu {
+  background-color: #5A645A !important;
+}

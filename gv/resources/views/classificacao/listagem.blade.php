@@ -1,8 +1,8 @@
-@extends('layout.principal')
+@extends('layout.app')
 
 @section('conteudo')
 <br>
-
+<link href="/css/styles-login-v2.css" rel="stylesheet">
 <div class="card demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid cad_card">
         <div class="card-content">
             <div class="row">
