@@ -174,26 +174,14 @@ class AtividadeController extends Controller
             $data_conciliacao = date('Y-m-d H:i:s');
         }
         if($opcao =='C'){
-            if($request->tipoId[substr($request->submit,1,10)]==3){
-                $id_conclusao=Conclusao::where('id_processo','=',$request->id_processo[substr($request->submit,1,10)])
-                                       ->where('data_conciliada','=',$request->data_conciliada[substr($request->submit,1,10)])->get();                               
-
-                if(!$id_conclusao->count()>0){
-                    Conclusao::create(['id_processo'=>$request->id_processo[substr($request->submit,1,10)],
-                                       'data_conciliada'=>$request->data_conciliada[substr($request->submit,1,10)],
-                                       'data_conciliacao'=>$data_conciliacao]);
-                }
-
-            }
-            if($request->tipoId[substr($request->submit,1,10)]==4){
-                $id_demanda=Demanda::where('id_processo','=',$request->id_processo[substr($request->submit,1,10)])
-                                    ->where('data_final','=',$request->data_meta[substr($request->submit,1,10)])
-                                    ->where('data_conclusao','=',null)
-                                    ->first(); 
-                $demandaSave = Demanda::find($id_demanda->id);
-                $demandaSave->data_conclusao = date('Y-m-d H:i:s');
-                $demandaSave->save();
-            }
+           //
+           $tipo = $request->tipoId[substr($request->submit,1,10)];
+           $id_processo = $request->id_processo[substr($request->submit,1,10)];
+           $data_conciliada = $request->data_conciliada[substr($request->submit,1,10)];
+           $data_final = $request->data_meta[substr($request->submit,1,10)];
+            //
+            //dd($data_final);
+            $this->concluir($tipo,$id_processo,$data_conciliada,$data_final,$data_conciliacao);
         }
         $atividade = Atividade::find($aberta->id);
         
@@ -213,6 +201,30 @@ class AtividadeController extends Controller
         
         return redirect()->action('AtividadeController@home');
     }
+
+    public function concluir($tipo,$id_processo,$data_conciliada,$data_final,$data_conciliacao){
+        if($tipo==3){
+            $id_conclusao=Conclusao::where('id_processo','=',$id_processo)
+                                   ->where('data_conciliada','=',$data_conciliada)->get();                               
+
+            if(!$id_conclusao->count()>0){
+                Conclusao::create(['id_processo'=>$id_processo,
+                                   'data_conciliada'=>$data_conciliada,
+                                   'data_conciliacao'=>$data_conciliacao]);
+            }
+        }
+
+        if($tipo==4){
+            $id_demanda=Demanda::where('id_processo','=',$id_processo)
+                               ->where('data_final','=',$data_final)
+                               ->where('data_conclusao','=',null)
+                               ->first(); 
+            $demandaSave = Demanda::find($id_demanda->id);
+            $demandaSave->data_conclusao = date('Y-m-d H:i:s');
+            $demandaSave->save();
+        }
+    }
+
     public function lista(){
         $filtro = null;
         $classificacoes =Classificacao::all();
@@ -336,5 +348,40 @@ class AtividadeController extends Controller
         }
 
         return redirect()->route('atividade.filtro',$data);  
+    }    
+
+    public function teste(AtividadeRequest $request){
+        //rodar as 22h ver 
+        $data = DB::table('atividades')
+        ->select(DB::raw('id, usuario, data_conciliacao, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val'))
+        //->where('sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600)','>','24')
+        //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
+        ->where('data_conciliacao','=',date('Y-m-d'))
+        ->groupBy('id','usuario', 'data_conciliacao')
+        ->havingRaw('sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) > 10')
+        ->get();
+        foreach ($data as $ativ) {
+            $enviarEmail = 1;
+         }
+        
+        //rodar as 22h
+        $data = Atividade::where('data_conciliacao','=',date('Y-m-d'))
+        ->where('hora_fim','=',null)
+        ->get();
+        
+        foreach ($data as $ativ) {
+           $tipo = $ativ->id_processo_FK->tipo_FK->id;
+           $id_processo = $ativ->id_processo_FK->id;
+           $data_conciliada = $ativ->data_conciliada;
+           $data_final = $ativ->data_final;
+           $data_conciliacao = date('Y-m-d');
+           $this->concluir($tipo,$id_processo,$data_conciliada,$data_final,$data_conciliacao);
+           $atividade = Atividade::find($ativ->id);
+           $atividade->hora_fim = date('Y-m-d H:i:s');
+           $atividade->save();
+        }
+
+        dd($data);
+        
     }    
 }

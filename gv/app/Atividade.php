@@ -16,8 +16,8 @@ class Atividade extends Model
     public function usuario(){
         return $this->belongsTo('gv\user');
     }
-    public function id_processo(){
-        return $this->belongsTo('gv\Processo');
+    public function id_processo_FK(){
+        return $this->belongsTo('gv\processo', 'id_processo');
     }
 }
 

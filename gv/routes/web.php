@@ -21,6 +21,7 @@ Auth::routes();
 Route::get('/auth/logout', 'Auth\AuthController@logout');
 Route::get('/auth/login', 'Auth\AuthController@login');
 Route::post('/login2', 'Auth\AuthController@login');
+Route::get('/teste', 'AtividadeController@teste');
 //Route::get('/login', 'Auth\AuthController@login');
 
 Route::group(['middleware'=>'auth'],function(){
@@ -154,7 +155,7 @@ Route::group(['middleware'=>'Verifica.Desenvolvedor'],function(){
 });
    
 
-Route::get('/teste',function(){
+Route::get('/testeSchedule',function(){
     $exitCode = Artisan::call('schedule:run');
     return '<h1>Schedule criado</h1>'; 
 });
