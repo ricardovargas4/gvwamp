@@ -351,7 +351,7 @@ class AtividadeController extends Controller
     }    
 
     public function teste(AtividadeRequest $request){
-        //rodar as 22h ver 
+        //rodar as 22h valida atividades com mais de 10h
         $data = DB::table('atividades')
         ->select(DB::raw('id, usuario, data_conciliacao, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val'))
         //->where('sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600)','>','24')
@@ -360,11 +360,13 @@ class AtividadeController extends Controller
         ->groupBy('id','usuario', 'data_conciliacao')
         ->havingRaw('sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) > 10')
         ->get();
+        
+        dd($data);
         foreach ($data as $ativ) {
             $enviarEmail = 1;
          }
         
-        //rodar as 22h
+        //rodar as 22h valida atividades abertas apos as 22
         $data = Atividade::where('data_conciliacao','=',date('Y-m-d'))
         ->where('hora_fim','=',null)
         ->get();
