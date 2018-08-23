@@ -10,7 +10,7 @@ class CoordenacaoController extends Controller {
 
     public function lista(){
        // $coordenacaos = Coordenacao::all();
-        $users = User::all();
+        $users = User::where('nivel','<','3')->get();
         $coordenacaos = Coordenacao::all();
         return view('coordenacao.listagem',compact('coordenacaos','users'));
     }
