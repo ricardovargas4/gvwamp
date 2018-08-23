@@ -102,18 +102,17 @@
                                                         </select>
                                                     </div>
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
-                                                    @can('checkDev')
-                                                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
-                                                    @endcan
+                                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
                                                 </form>
                                             </div>
                                         </div>
-                                        <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('UserController@remove', $u->id)}}' : false)">Deletar</a>
+                                        @can('checkDev')
+                                            <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('UserController@remove', $u->id)}}' : false)">Deletar</a>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>
                             @endforeach
-            
                         </tbody>
                     </table>
                 </div>   
