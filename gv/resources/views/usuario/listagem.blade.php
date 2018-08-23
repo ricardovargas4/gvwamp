@@ -24,17 +24,6 @@
                                         <label for="email">Login</label>
                                         <input name="email" class="form-control"/>
                                     </div>
-                                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                        <label for="password">Senha</label>
-                                       <div>
-                                            <input id="password" type="password" class="form-control" name="password" required>
-                                            @if ($errors->has('password'))
-                                                <span class="help-block">
-                                                    <strong>{{ $errors->first('password') }}</strong>
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </div>
                                     <div class="form-group">
                                         <label for="nivel">Nível</label>
                                         <select name="nivel" class="form-control">
@@ -111,17 +100,6 @@
                                                                 <option value="2">Gestor</option>
                                                                 <option value="3">Analista</option>
                                                         </select>
-                                                    </div>
-                                                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                                        <label for="password">Nova Senha</label>
-                                                    <div>
-                                                            <input id="password" type="password" class="form-control" name="password" required>
-                                                            @if ($errors->has('password'))
-                                                                <span class="help-block">
-                                                                    <strong>{{ $errors->first('password') }}</strong>
-                                                                </span>
-                                                            @endif
-                                                        </div>
                                                     </div>
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
                                                     @can('checkDev')

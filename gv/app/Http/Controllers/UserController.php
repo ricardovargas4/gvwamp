@@ -28,7 +28,7 @@ class UserController extends Controller
     }
 
     public function adiciona(UsuarioRequest $request){
-        $request->offsetSet('password',bcrypt($request->password));
+       // $request->offsetSet('password',bcrypt($request->password));
         User::create($request->all());
         return redirect()->action('UserController@lista')->withInput(Request::only('nome'));
     }
