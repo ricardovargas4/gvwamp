@@ -23,7 +23,6 @@ class PeriodicidadeController extends Controller {
         return view('periodicidade.formulario_alteracao',compact('periodicidade'));
     }
     public function salvaAlt(PeriodicidadeRequest $request){
-        
         $id = $request->id;
         Periodicidade::whereId($id)->update($request->except('_token'));
         return redirect()->action('PeriodicidadeController@lista')->withInput(Request::only('nome'));
@@ -35,7 +34,6 @@ class PeriodicidadeController extends Controller {
     }   
 
     public function adiciona(PeriodicidadeRequest $request){
-
         Periodicidade::create($request->all());
         return redirect()->action('PeriodicidadeController@lista')->withInput(Request::only('nome'));
     }

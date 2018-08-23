@@ -40,6 +40,7 @@
                             <tr>
                                 <th>ID </th>
                                 <th>Nome </th>
+                                <th>Quantidade de Dias</th>
                                 <th>Úteis</th>
                                 <th> Alterar/Excluir </th>
                             </tr>
@@ -49,6 +50,7 @@
                             <tr>
                                 <td scope="row">{{$p->id}}</td>
                                 <td> {{$p->nome}} </td>
+                                <td> {{$p->dias}} </td>
                                 <td> {{$p->uteis}} </td>
                                 <td>
                                     <div class="row">
