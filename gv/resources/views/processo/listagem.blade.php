@@ -51,7 +51,7 @@
                                         <label for="volumetria">Volumetria</label>
                                         <select name="volumetria" class="form-control">
                                             <option value=""></option>
-                                            <option value="S">S</option>
+                                            <option value="S">Sim</option>
                                         </select>
                                     </div>                                  
                                     <button type="submit" class="btn waves-effect light-green accent-3"> Salvar</button>
@@ -79,7 +79,12 @@
                                 <td> {{$p->tipo_FK->nome}} </td>
                                 <td> {{$p->periodicidade_FK->nome}} </td>
                                 <td> {{$p->coordenacao_FK->nome}} </td>
-                                <td> {{$p->volumetria}} </td>
+                                <td>
+                                    @if (!$p->volumetria == "" )
+                                        Sim
+                                    @endif
+                                </td>
+
                                 <td>
                                     <div class="row">
                                         <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$p->id}}">Editar</a>
@@ -124,11 +129,15 @@
                                                     <div class="form-group">
                                                         <label for="volumetria">Volumetria</label>
                                                         <select name="volumetria" class="form-control">
-                                                            <option value="{{{ $p->volumetria }}}" >{{{$p->volumetria}}}</option>
+                                                            <option value="{{{ $p->volumetria }}}" >
+                                                                @if (!$p->volumetria == "" )
+                                                                    Sim
+                                                                @endif
+                                                            </option>
                                                             @if (!$p->volumetria == "" )
                                                                 <option value=""></option>
                                                             @else
-                                                                <option value="S">S</option>
+                                                                <option value="S">Sim</option>
                                                             @endif
                                                         </select>
                                                     </div>                                        

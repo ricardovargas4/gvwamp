@@ -51,7 +51,11 @@
                                 <td scope="row">{{$p->id}}</td>
                                 <td> {{$p->nome}} </td>
                                 <td> {{$p->dias}} </td>
-                                <td> {{$p->uteis}} </td>
+                                <td> @if($p->uteis == "S" ) 
+                                        Sim
+                                    @elseif($p->uteis == "N" )
+                                        Não 
+                                    @endif </td>
                                 <td>
                                     <div class="row">
                                         <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$p->id}}">Editar</a>
@@ -71,9 +75,15 @@
                                                     </div>
                                                     <label>Úteis</label> 
                                                     <select name="uteis"  class="form-control" value="{{$p->uteis}}">
-                                                        <option value="{{{ $p->uteis }}}" disabled selected>{{{$p->uteis}}}</option>
-                                                        <option value="S">S</option>
-                                                        <option value="N">N</option>
+                                                        <option value="{{$p->uteis}}" disabled selected> 
+                                                            @if($p->uteis == "S" ) 
+                                                                Sim
+                                                            @elseif($p->uteis == "N" )
+                                                                Não 
+                                                            @endif
+                                                        </option>
+                                                        <option value="S">Sim</option>
+                                                        <option value="N">Não</option>
                                                     </select>
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
                                                     <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
