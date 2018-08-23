@@ -22,7 +22,7 @@ class DemandaController extends Controller
             $userFiltro = $usuario;
         }
 
-        $processos = Processo::all();
+        $processos = Processo::where('id','=','4')->get();
         $usuarios = User::all();
         $demandas = Demanda::where('id_responsavel','like',$userFiltro)
                 ->paginate(15);
@@ -38,7 +38,7 @@ class DemandaController extends Controller
     public function altera($id){
         $demanda = Demanda::find($id);
         $users = User::all();
-        $processos = Processo::all();
+        $processos = Processo::where('id','=','4')->get();
         return view('demanda.formulario_alteracao',compact('demanda','users','processos'));
     }
 

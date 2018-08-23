@@ -1,8 +1,8 @@
-@extends('layout.app')
+@extends('layout.principal')
 
 @section('conteudo')
 <br>
-<link href="/css/styles-login-v2.css" rel="stylesheet">
+
 <div class="card demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid cad_card">
         <div class="card-content">
             <div class="row">
@@ -29,7 +29,6 @@
                                     <div class="form-group">
                                         <label for="opcao">Opção de Classificação</label>
                                         <input type="text" name="opcao" class="form-control">
-                                        </input>
                                     </div>
 
                                     <button type="submit" class="btn waves-effect light-green accent-3"> Salvar</button>
