@@ -48,8 +48,8 @@
       <tbody>
         @foreach ($atividades as $index => $a)
           <tr>
-              <td> {{$a->tipoNome}} <input type="hidden" name="tipoId[]" value="{{{ $a->tipoId }}}" /> </td>
-              <td> {{$a->processoNome}} <input type="hidden" name="id_processo[]" value="{{{ $a->processoId }}}" /> </td>
+              <td> {{$a->tipoNome}} <input type="hidden" name="tipoId[{{{$index}}}]" value="{{{ $a->tipoId }}}" /> </td>
+              <td> {{$a->processoNome}} <input type="hidden" name="id_processo[{{{$index}}}]" value="{{{ $a->processoId }}}" /> </td>
               <td>
                 @if($a->tipoId == 3)
                   @if (($a->ultima_data)<($a->data_meta))
@@ -71,24 +71,24 @@
               </td>
               <td> 
                 @if($a->tipoId == 3)
-                  <input type="date" name="data_meta[]" value="{{{ $a->data_meta }}}" readonly/> 
+                  <input type="date" name="data_meta[{{{$index}}}]" value="{{{ $a->data_meta }}}" readonly/> 
                 @elseif($a->tipoId == 4)
-                  <input type="date" name="data_meta[]" value="{{{ $a->data_final }}}" readonly/> 
+                  <input type="date" name="data_meta[{{{$index}}}]" value="{{{ $a->data_final }}}" readonly/> 
                 @else
-                  <input type="hidden" name="data_meta[]" value="" readonly/>   
+                  <input type="hidden" name="data_meta[{{{$index}}}]" value="" readonly/>   
                 @endif
               </td>
               <td> 
                 @if($a->tipoId == 3)
-                  <input type=date name="ultima_data[]" value="{{{ $a->ultima_data }}}" readonly/> 
+                  <input type=date name="ultima_data[{{{$index}}}]" value="{{{ $a->ultima_data }}}" readonly/> 
                 @else
-                  <input type="hidden" name="ultima_data[]" value="" readonly/>   
+                  <input type="hidden" name="ultima_data[{{{$index}}}]" value="" readonly/>   
                 @endif
               </td>
               @if($a->tipoId==4)
-                <td> <input type="hidden" id='DtConc{{{ $a->processoId }}}' name="data_conciliada[]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
+                <td> <input type="hidden" id='DtConc{{{ $a->processoId }}}' name="data_conciliada[{{{$index}}}]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
               @else
-                <td> <input type=date id='DtConc{{{ $a->processoId }}}' name="data_conciliada[]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
+                <td> <input type=date id='DtConc{{{ $a->processoId }}}' name="data_conciliada[{{{$index}}}]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
               @endif
               @if (($a->aberta)==1)
                 <td>  
@@ -101,7 +101,7 @@
                     </button>
                     @if(date('H') < 10 and $a->tipoId == 3)
                       <div>
-                        <input type="checkbox" name = "tolerancia[]" id="checkTolerancia" />
+                        <input type="checkbox" name = "tolerancia[{{{$index}}}]" id="checkTolerancia" />
                         <label for="checkTolerancia">Atividade Concluída na Tolerância</label>
                       </div>
                     @endif
@@ -121,12 +121,18 @@
                 @endif
                 <td><textarea name="observacao"> </textarea> </td>
                 @if (!$aberta->isEmpty() and !$processosVol->isEmpty())
-                  <td>  <input type="number" name = "volumetria[]" /> </td>         
+                  <td>  <input type="number" name = "volumetria[{{{$index}}}]" /> </td>         
                 @endif 
               @else
                 <td>  <button id='BtnI{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" <?php if (!$aberta->isEmpty()){ ?> disabled <?php   } ?>  name="submit" value="{{{ $index }}}"> 
                         <i class="fa fa-play" aria-hidden="true"></i>
                       </button> </td>
+                  @if (!$aberta->isEmpty() )
+                      <td></td>
+                  @endif
+                  @if (!$aberta->isEmpty() and !$processosVol->isEmpty())
+                    <td>  </td>         
+                  @endif 
               @endif
             </tr>
         @endforeach
