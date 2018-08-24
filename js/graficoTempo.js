@@ -1,7 +1,7 @@
 
 function dadosBanco(callback) {$.ajax({
         method: 'GET',
-        url: '/dados/tempo',
+        url: '/dados/tempo/{id}',
         success: callback,
         error: function (error) {
         }

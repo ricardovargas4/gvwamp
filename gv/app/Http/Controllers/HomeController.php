@@ -39,9 +39,17 @@ class HomeController extends Controller
         return view('chartjs');
     }
 
+    public function tempo(TempoRequest $request){
+    //dd($request);
+        return view('chartjs');
+       // $coordenacaos = null;
+       // return view('coordenacao.listagem')->with('coordenacaos', $coordenacaos);
+    }
 
-    public function dadosTempos()//(TempoRequest $request)
+    public function dadosTempos(TempoRequest $request)//(TempoRequest $request)
     {
+
+        $id = $_GET['id'];
         $data = DB::table('atividades')
         ->join('processos', 'atividades.id_processo', '=', 'processos.id')
         ->join('users', 'users.id', '=', 'atividades.usuario')

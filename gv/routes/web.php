@@ -27,11 +27,11 @@ Route::get('/teste', 'AtividadeController@teste');
 Route::group(['middleware'=>'auth'],function(){
 
     
-    Route::post('/relatorio/tempo', 'Controller@tempo');
+    Route::post('/relatorio/tempo', 'HomeController@tempo');
 
     Route::get('/chartjs', 'HomeController@chartjs');
     Route::get('/hello', 'HomeController@hello');
-    Route::get('/dados/tempo', 'HomeController@dadosTempos');
+    Route::get('/dados/tempo/{id}', 'HomeController@dadosTempos');
 
     //Route::get('/login','LoginController@Form');
     //Route::post('/login','LoginController@Login');

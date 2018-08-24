@@ -11,13 +11,5 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
    
-    public function tempo(){
-    
-        return view('relatorios/tempo');
-       // $coordenacaos = null;
-       // return view('coordenacao.listagem')->with('coordenacaos', $coordenacaos);
-    }
-
-
 
 }
