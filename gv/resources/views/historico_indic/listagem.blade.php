@@ -4,7 +4,7 @@
 <br>
 <div class="containerFiltro">
     <div class="form-group">
-    <form action="/historico_indic/filtro" method="post">
+    <form action="{{ route('historico.filtro') }}" method="post">
     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
     <div class="dataIni">       
         <label>Data Inicial</label>
@@ -32,7 +32,7 @@
                                     <i class="fa fa-plus-square-o fa-sm"></i>Adicionar
                                 </div>
                                 <div class="collapsible-body">
-                                    <form action="/historico_indic/adiciona" method="post">
+                                    <form action="{{ route('historico.adiciona') }}" method="post">
                                         <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                         <input type="hidden" name="data_inicial" @if(isset($data_inicial)) value="{{{$data_inicial}}}" @else value = "{{{date('Y-m-d', strtotime('-15 day', strtotime(date('Y-m-d'))))}}}" @endif />
                                         <input type="hidden" name="data_final" @if(isset($data_final)) value="{{{$data_final}}}" @else value = "{{{date('Y-m-d')}}}" @endif />
@@ -89,7 +89,7 @@
                                             <a class="waves-effect waves-light btn grey accent-3  modal-trigger" href="#modalJ1{{$h->id}}">Expurgar</a>
                                             <div id="modalJ1{{$h->id}}" class="modal">
                                                 <div class="modal-content">
-                                                    <form action="/expurgo_indicador/adiciona" method="post">
+                                                    <form action="{{ route('expurgo.adiciona') }}" method="post">
                                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                     <input type="hidden" name="id_historico_indic" value="{{{ $h->id }}}" />
                                                     
@@ -113,7 +113,7 @@
                                             <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$h->id}}">Editar</a>
                                             <div id="modal1{{$h->id}}" class="modal">
                                                 <div class="modal-content">
-                                                    <form action="/historico_indic/salvaAlt" method="post">
+                                                    <form action="{{ route('historico.salvaAlt') }}" method="post">
                                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                     <input type="hidden" name="id" value="{{{ $h->id }}}" />
                                                     
@@ -137,7 +137,7 @@
                                                         <select name="user_id" class="form-control">
                                                             <option value="{{{ $h->user_id }}}" disabled selected>{{{$h->user_id_FK->email}}}</option>
                                                             @foreach($users as $u)
-                                                                <option value="{{$u->id}}">{{$u->email}}</opt ion>
+                                                                <option value="{{$u->id}}">{{$u->email}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

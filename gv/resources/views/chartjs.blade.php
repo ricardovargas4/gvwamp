@@ -8,7 +8,7 @@
 <br>
 <div class="containerFiltro">
     <div class="form-group">
-    <form action="/relatorio/tempo" method="post">
+    <form action="{{ route('home.tempo') }}" method="post">
     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
         <div class="dataIni">    
             <label>Data Inicial</label>

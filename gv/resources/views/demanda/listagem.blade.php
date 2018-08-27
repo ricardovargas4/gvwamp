@@ -14,7 +14,7 @@
                                     <i class="fa fa-plus-square-o fa-sm"></i>Adicionar
                                 </div>
                                 <div class="collapsible-body">
-                                    <form action="/demanda/adiciona" method="post">
+                                    <form action="{{ route('demanda.adiciona') }}" method="post">
                                         <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
 
                                         <div class="form-group">
@@ -77,7 +77,7 @@
                                             <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$d->id}}">Editar</a>
                                             <div id="modal1{{$d->id}}" class="modal">
                                                 <div class="modal-content">
-                                                    <form action="/demanda/salvaAlt" method="post">
+                                                    <form action="{{ route('demanda.salvaAlt') }}" method="post">
                                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                     <input type="hidden" name="id" value="{{{ $d->id }}}" />
                                                         <!--<input type="hidden" name="_method" value="put">-->

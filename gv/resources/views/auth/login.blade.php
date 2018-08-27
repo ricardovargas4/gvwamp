@@ -13,7 +13,7 @@
                 <div class="title">
                     <h1>Insira suas credenciais</h1>
                 </div>
-                <form id ="formLogin" role="form" method="POST" action="/login2">
+                <form id ="formLogin" role="form" method="POST" action="{{ route('loginLdap') }}">
                     {{ csrf_field() }}
                     <div class="form-group usuario">
                         <input type="text" class="form-control" id="email" placeholder="Usuário" name="email" value="{{ old('email') }}" required autofocus>

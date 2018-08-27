@@ -13,7 +13,7 @@
                                 <i class="fa fa-plus-square-o fa-sm"></i>Adicionar
                             </div>
                             <div class="collapsible-body">
-                                <form action="/responsavel/adiciona" method="post">
+                                <form action="{{ route('responsavel.adiciona') }}" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                     
                                     <div class="form-group">
@@ -61,7 +61,7 @@
                                         <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$r->id}}">Editar</a>
                                         <div id="modal1{{$r->id}}" class="modal">
                                             <div class="modal-content">
-                                                <form action="/responsavel/salvaAlt" method="post">
+                                                <form action="{{ route('responsavel.salvaAlt') }}" method="post">
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                 <input type="hidden" name="id" value="{{{ $r->id }}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->

@@ -3,11 +3,12 @@
 <head>
     <?php $AppVersion = "1.0.0"; ?>
 
-    <link href="/lib/materialize/dist/css/materialize.css" rel="stylesheet">
-    <link href="/css/app.css" rel="stylesheet">
-    <link href="/css/font-awesome.css" rel="stylesheet">
+    <link href="{{ asset('lib/materialize/dist/css/materialize.css') }} " rel="stylesheet">
+    <link href="{{ asset('css/app.css') }} " rel="stylesheet">
+    <link href="{{ asset('css/font-awesome.css') }} " rel="stylesheet">
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="/css/style.css?v=<?php echo $AppVersion; ?>" rel="stylesheet">
+    <!--<link href="/css/style.css?v=<?php echo $AppVersion; ?>" rel="stylesheet">-->
+    <link href="{{ asset('css/style.css') }}?v={{$AppVersion}}" rel="stylesheet">
 
     <title>Gestão à Vista</title>
 </head>
@@ -17,30 +18,29 @@
     <nav>
       <div class="nav-wrapper navBarMenu">
         <div class="container">
-          <a class="brand-logo" href="/home">Gestão à Vista</a>
+          <a class="brand-logo" href="{{ route('atividade.home') }}">Gestão à Vista</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
           @if (Auth::guest())
             <li><a href="/login">Login</a></li>
-            <li><a href="/auth/register">Register</a></li>
           @else
             <li>{{ Auth::user()->name }} </li>
             <li><a href="/logout">Logout</a></li>
           @endif
             <!-- Dropdown Trigger -->
             <ul id="dropdown1" class="dropdown-content">
-              <li><a href="/atividade/">Atividades</a></li>
-              <li><a href="/responsavel/">Responsaveis</a></li>
-              <li><a href="/historico_indic/">Histórico Indicadores</a></li>
-              <li><a href="/expurgo_indicador/tela">Expurgo Indicador</a></li>
-              <li><a href="/expurgo_indicador">Expurgo Indicador Lista</a></li>
-              <li><a href="/demanda">Demandas</a></li>
+              <li><a href="{{ route('atividade.filtro') }}">Atividades</a></li>
+              <li><a href="{{ route('responsavel.lista') }}">Responsaveis</a></li>
+              <li><a href="{{ route('historico.filtro') }}">Histórico Indicadores</a></li>
+              <li><a href="{{ route('expurgo.tela') }}">Expurgo Indicador</a></li>
+              <li><a href="{{ route('expurgo.lista') }}">Expurgo Indicador Lista</a></li>
+              <li><a href="{{ route('demanda.lista') }}">Demandas</a></li>
               @can('checkGestor')
-                <li><a href="/processo/">Processos</a></li>
-                <li><a href="/tipo/">Tipos</a></li>
-                <li><a href="/periodicidade/">Periodicidades</a></li>
-                <li><a href="/coordenacao/">Coordenações</a></li>
-                <li><a href="/classificacao/">Classificações</a></li>
-                <li><a href="/usuario/">Usuários</a></li>
+                <li><a href="{{ route('processo.lista') }}">Processos</a></li>
+                <li><a href="{{ route('tipo.lista') }}">Tipos</a></li>
+                <li><a href="{{ route('periodicidade.lista') }}">Periodicidades</a></li>
+                <li><a href="{{ route('coordenacao.lista') }}">Coordenações</a></li>
+                <li><a href="{{ route('classificacao.lista') }}">Classificações</a></li>
+                <li><a href="{{ route('usuario.lista') }}">Usuários</a></li>
               @endcan
               <!--<li class="divider"></li>-->
             </ul>
@@ -90,11 +90,11 @@
   </div>
 -->
 
-    <script src="/js/Chart.js"></script>
-    <script src="/js/Chart.min.js"></script>
-    <script type="text/javascript" src="\lib\jquery\dist\jquery.min.js"></script>           
-    <script src="\lib\materialize\dist\js\materialize.min.js"></script> 
-    <script src="\js\init.js"></script>
-    <script src="/js/validacao.js?v=<?php echo $AppVersion; ?>"></script>  
+    <script src="{{asset('js/Chart.js')}}"></script>
+    <script src="{{asset('js/Chart.min.js')}}"></script> 
+    <script src="{{asset('lib\jquery\dist\jquery.min.js')}}"></script>
+    <script src="{{asset('lib\materialize\dist\js\materialize.min.js')}}"></script>
+    <script src="{{asset('js/init.js')}}"></script>
+    <script src="{{ asset('js/validacao.js') }}?v={{$AppVersion}}"></script>
 
 </html>

@@ -49,7 +49,7 @@
                                             <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$e->id}}">Aprovar</a>
                                             <div id="modal1{{$e->id}}" class="modal">
                                                 <div class="modal-content">
-                                                    <form action="/expurgo_indicador/aprovar" method="post">
+                                                    <form action="{{ route('expurgo.aprovar') }}" method="post">
                                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                     <input type="hidden" name="id" value="{{{ $e->id }}}" />
                                                     <input type="hidden" name="id_historico_indic" value="{{{ $e->id_historico_indic }}}" />
@@ -71,7 +71,7 @@
                                             <a class="waves-effect waves-light btn red accent-4  modal-trigger" href="#modalreprovar{{$e->id}}">Reprovar</a>
                                             <div id="modalreprovar{{$e->id}}" class="modal">
                                                 <div class="modal-content">
-                                                    <form action="/expurgo_indicador/reprovar" method="post">
+                                                    <form action="{{ route('expurgo.reprovar') }}" method="post">
                                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                     <input type="hidden" name="id" value="{{{ $e->id }}}" />
                                                     <div class="form-group">

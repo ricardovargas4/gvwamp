@@ -18,53 +18,59 @@
 
 Auth::routes();
 //Route::get('/homea', 'HomeController@hello');
-Route::get('/auth/logout', 'Auth\AuthController@logout');
-Route::get('/auth/login', 'Auth\AuthController@login');
-Route::post('/login2', 'Auth\AuthController@login');
+//Route::get('/auth/logout', 'Auth\AuthController@logout');
+//Route::get('/auth/logout', ['uses'=>'Auth\AuthController@logout', 'as'=>'logout']);
+//Route::get('/auth/login', 'Auth\AuthController@login');
+//Route::post('/login2', 'Auth\AuthController@login');
+Route::post('/loginLdap', ['uses'=>'Auth\AuthController@login', 'as'=>'loginLdap']);
 Route::get('/teste', 'AtividadeController@teste');
 //Route::get('/login', 'Auth\AuthController@login');
+Route::get('/', function () {
+    return redirect('/home');// view('welcome');
+});
 
 Route::group(['middleware'=>'auth'],function(){
 
+    Route::post('/relatorio/tempo', ['uses'=>'HomeController@tempo', 'as'=>'home.tempo']);
     
-    Route::post('/relatorio/tempo', 'HomeController@tempo');
+    Route::get('/chartjs', ['uses'=>'HomeController@chartjs', 'as'=>'home.chartjs']);
 
-    Route::get('/chartjs', 'HomeController@chartjs');
-    Route::get('/hello', 'HomeController@hello');
-    Route::get('/dados/tempo/{id}', 'HomeController@dadosTempos');
+    Route::get('/hello', ['uses'=>'HomeController@hello', 'as'=>'home.hello']);
+    Route::get('/dados/tempo/{id}', ['uses'=>'HomeController@dadosTempos', 'as'=>'home.dadosTempos']);
 
     //Route::get('/login','LoginController@Form');
     //Route::post('/login','LoginController@Login');
     Route::get('/logout','LoginController@Logout');
 
     //Responsavel
-    Route::get('/responsavel', 'ResponsavelController@lista');
+    Route::get('/responsavel', ['uses'=>'ResponsavelController@lista', 'as'=>'responsavel.lista']);
 
     //Atividade
-    Route::get('/home','AtividadeController@home');
+    Route::get('/home', ['uses'=>'AtividadeController@home', 'as'=>'atividade.home']);
+    //Route::get('/home','AtividadeController@home');
     Route::get('/welcome','HomeController@index');
-    Route::post('/atividade/iniciar','AtividadeController@iniciar');
-    Route::post('/atividade/parar','AtividadeController@parar');
-    Route::get('/atividade/novo', 'AtividadeController@novo');
-    Route::post('/atividade/adiciona','AtividadeController@adiciona');
-    Route::get('/atividade','AtividadeController@filtro');
+
+    Route::post('/atividade/iniciar', ['uses'=>'AtividadeController@tempo', 'as'=>'atividade.iniciar']);
+    Route::post('/atividade/parar',['uses'=>'AtividadeController@parar', 'as'=>'atividade.parar']);
+    Route::get('/atividade/novo', ['uses'=>'AtividadeController@novo', 'as'=>'atividade.novo']);
+    Route::post('/atividade/adiciona',['uses'=>'AtividadeController@adiciona', 'as'=>'atividade.adiciona']);
+    Route::get('/atividade',['uses'=>'AtividadeController@filtro', 'as'=>'atividade.filtro']);
     Route::match(array('GET', 'POST'),'/atividade/filtro',['uses'=>'AtividadeController@filtro','as'=>'atividade.filtro']);
-    Route::get('/atividade/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}', 'AtividadeController@remove');
-    Route::post('/atividade/salvaAlt','AtividadeController@salvaAlt');
+    Route::get('/atividade/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}', ['uses'=>'AtividadeController@remove','as'=>'atividade.remove']);
+    Route::post('/atividade/salvaAlt',['uses'=>'AtividadeController@salvaAlt','as'=>'atividade.salvaAlt']);
 
     //Historico_Indicador
-    Route::get('/historico_indic', 'Historico_indicController@filtro');
-    Route::match(array('GET', 'POST'),'/historico_indic/filtro',['uses'=>'Historico_indicController@filtro','as'=>'hist.filtro']);
-    Route::get('/indicador_atrasado', 'Historico_indicController@indicador_atrasado_filtro');
-    Route::match(array('GET', 'POST'),'/indicador_atrasado/filtro',['uses'=>'Historico_indicController@indicador_atrasado_filtro','as'=>'hist.indicador_atrasado_filtro']);
+    Route::get('/historico_indic', ['uses'=>'Historico_indicController@filtro','as'=>'historico.filtro']);
+    Route::match(array('GET', 'POST'),'/historico_indic/filtro',['uses'=>'Historico_indicController@filtro','as'=>'historico.filtro']);
+    Route::match(array('GET', 'POST'),'/indicador_atrasado/filtro',['uses'=>'Historico_indicController@indicador_atrasado_filtro','as'=>'historico.indicador_atrasado_filtro']);
     
     //Demanda
-    Route::get('/demanda', 'DemandaController@lista');
+    Route::get('/demanda', ['uses'=>'DemandaController@lista', 'as'=>'demanda.lista']);
 
     //Expurgo
-    Route::get('/expurgo_indicador', 'Expurgo_IndicadorController@lista');
-    Route::get('/expurgo_indicador/tela', 'Expurgo_IndicadorController@tela');
-    Route::post('/expurgo_indicador/adiciona', 'Expurgo_IndicadorController@adiciona');
+    Route::get('/expurgo_indicador', ['uses'=>'Expurgo_IndicadorController@lista', 'as'=>'expurgo.lista']);
+    Route::get('/expurgo_indicador/tela', ['uses'=>'Expurgo_IndicadorController@tela', 'as'=>'expurgo.tela']);
+    Route::post('/expurgo_indicador/adiciona', ['uses'=>'Expurgo_IndicadorController@adiciona', 'as'=>'expurgo.adiciona']);
 
     
 });
@@ -74,84 +80,84 @@ Route::group(['middleware'=>'Verifica.Gestor'],function(){
 //Gestor
    
     //Tipo
-    Route::get('/tipo', 'TipoController@lista');
+    Route::get('/tipo', ['uses'=>'TipoController@lista', 'as'=>'tipo.lista']);
 
     //Processo
-    Route::get('/processo', 'ProcessoController@lista');
-    Route::get('/processo/novo', 'ProcessoController@novo');
-    Route::post('/processo/adiciona','ProcessoController@adiciona');
-    Route::get('/processo/altera/{id}','ProcessoController@altera');
-    Route::post('/processo/salvaAlt','ProcessoController@salvaAlt');
+    Route::get('/processo', ['uses'=>'ProcessoController@lista', 'as'=>'processo.lista']);
+    Route::get('/processo/novo', ['uses'=>'ProcessoController@novo', 'as'=>'processo.novo']);
+    Route::post('/processo/adiciona', ['uses'=>'ProcessoController@adiciona', 'as'=>'processo.adiciona']);
+    Route::get('/processo/altera/{id}',['uses'=>'ProcessoController@altera', 'as'=>'processo.altera']);
+    Route::post('/processo/salvaAlt',['uses'=>'ProcessoController@salvaAlt', 'as'=>'processo.salvaAlt']);
     
     //Coordenacao
-    Route::get('/coordenacao', 'CoordenacaoController@lista');
-    Route::get('/coordenacao/novo', 'CoordenacaoController@novo');
-    Route::post('/coordenacao/adiciona','CoordenacaoController@adiciona');
-    Route::get('/coordenacao/altera/{id}','CoordenacaoController@altera');
-    Route::post('/coordenacao/salvaAlt','CoordenacaoController@salvaAlt');
+    Route::get('/coordenacao', ['uses'=>'CoordenacaoController@lista', 'as'=>'coordenacao.lista']);
+    Route::get('/coordenacao/novo', ['uses'=>'CoordenacaoController@novo', 'as'=>'coordenacao.novo']);
+    Route::post('/coordenacao/adiciona',['uses'=>'CoordenacaoController@adiciona', 'as'=>'coordenacao.adiciona']);
+    Route::get('/coordenacao/altera/{id}',['uses'=>'CoordenacaoController@altera', 'as'=>'coordenacao.altera']);
+    Route::post('/coordenacao/salvaAlt',['uses'=>'CoordenacaoController@salvaAlt', 'as'=>'coordenacao.salvaAlt']);
 
     //Periodicidade
-    Route::get('/periodicidade', 'PeriodicidadeController@lista');
-    Route::get('/periodicidade/novo', 'PeriodicidadeController@novo');
-    Route::post('/periodicidade/adiciona','PeriodicidadeController@adiciona');
-    Route::get('/periodicidade/altera/{id}','PeriodicidadeController@altera');
-    Route::post('/periodicidade/salvaAlt','PeriodicidadeController@salvaAlt');
+    Route::get('/periodicidade', ['uses'=>'PeriodicidadeController@lista', 'as'=>'periodicidade.lista']);
+    Route::get('/periodicidade/novo', ['uses'=>'PeriodicidadeController@novo', 'as'=>'periodicidade.novo']);
+    Route::post('/periodicidade/adiciona',['uses'=>'PeriodicidadeController@adiciona', 'as'=>'periodicidade.adiciona']);
+    Route::get('/periodicidade/altera/{id}',['uses'=>'PeriodicidadeController@altera', 'as'=>'periodicidade.altera']);
+    Route::post('/periodicidade/salvaAlt',['uses'=>'PeriodicidadeController@salvaAlt', 'as'=>'periodicidade.salvaAlt']);
     
     //Responsavel
-    Route::get('/responsavel/remove/{id}', 'ResponsavelController@remove');
-    Route::get('/responsavel/novo', 'ResponsavelController@novo');
-    Route::post('/responsavel/adiciona','ResponsavelController@adiciona');
-    Route::get('/responsavel/altera/{id}','ResponsavelController@altera');
-    Route::post('/responsavel/salvaAlt','ResponsavelController@salvaAlt');
+    Route::get('/responsavel/remove/{id}', ['uses'=>'ResponsavelController@remove', 'as'=>'responsavel.remove']);
+    Route::get('/responsavel/novo', ['uses'=>'ResponsavelController@novo', 'as'=>'responsavel.novo']);
+    Route::post('/responsavel/adiciona',['uses'=>'ResponsavelController@adiciona', 'as'=>'responsavel.adiciona']);
+    Route::get('/responsavel/altera/{id}', ['uses'=>'ResponsavelController@altera', 'as'=>'responsavel.altera']);
+    Route::post('/responsavel/salvaAlt',['uses'=>'ResponsavelController@salvaAlt', 'as'=>'responsavel.salvaAlt']);
 
     //Historico_Indicador
-    Route::post('/historico_indic/adiciona','Historico_indicController@adiciona');
-    Route::post('/historico_indic/salvaAlt','Historico_indicController@salvaAlt');
-    Route::get('/historico_indic/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}', 'Historico_indicController@remove');
+    Route::post('/historico_indic/adiciona',['uses'=>'Historico_indicController@adiciona', 'as'=>'historico.adiciona']);
+    Route::post('/historico_indic/salvaAlt',['uses'=>'Historico_indicController@salvaAlt', 'as'=>'historico.salvaAlt']);
+    Route::get('/historico_indic/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}', ['uses'=>'Historico_indicController@remove', 'as'=>'historico.remove']);
 
     //Classificacao
-    Route::get('/classificacao', 'ClassificacaoController@lista');
-    Route::get('/classificacao/remove/{id}', 'ClassificacaoController@remove');
-    Route::post('/classificacao/adiciona','ClassificacaoController@adiciona');
-    Route::post('/classificacao/salvaAlt','ClassificacaoController@salvaAlt');
+    Route::get('/classificacao', ['uses'=>'ClassificacaoController@lista', 'as'=>'classificacao.lista']);
+    Route::get('/classificacao/remove/{id}', ['uses'=>'ClassificacaoController@remove', 'as'=>'classificacao.remove']);
+    Route::post('/classificacao/adiciona',['uses'=>'ClassificacaoController@adiciona', 'as'=>'classificacao.adiciona']);
+    Route::post('/classificacao/salvaAlt',['uses'=>'ClassificacaoController@salvaAlt', 'as'=>'classificacao.salvaAlt']);
 
     //Demanda
-    Route::get('/demanda/remove/{id}', 'DemandaController@remove');
-    Route::post('/demanda/adiciona','DemandaController@adiciona');
-    Route::post('/demanda/salvaAlt','DemandaController@salvaAlt');
+    Route::get('/demanda/remove/{id}', ['uses'=>'DemandaController@remove', 'as'=>'demanda.remove']);
+    Route::post('/demanda/adiciona',['uses'=>'DemandaController@adiciona', 'as'=>'demanda.adiciona']);
+    Route::post('/demanda/salvaAlt',['uses'=>'DemandaController@salvaAlt', 'as'=>'demanda.salvaAlt']);
 
     //Expurgo
-    Route::post('/expurgo_indicador/aprovar','Expurgo_IndicadorController@aprovar');
-    Route::post('/expurgo_indicador/reprovar','Expurgo_IndicadorController@reprovar');
+    Route::post('/expurgo_indicador/aprovar',['uses'=>'Expurgo_IndicadorController@aprovar', 'as'=>'expurgo.aprovar']);
+    Route::post('/expurgo_indicador/reprovar',['uses'=>'Expurgo_IndicadorController@reprovar', 'as'=>'expurgo.reprovar']);
 
     //Usuario
-    Route::get('/usuario/remove/{id}', 'UserController@remove');
-    Route::post('/usuario/adiciona','UserController@adiciona');
-    Route::post('/usuario/salvaAlt','UserController@salvaAlt');
-    Route::get('/usuario', 'UserController@lista');
+    Route::get('/usuario/remove/{id}', ['uses'=>'UserController@remove', 'as'=>'usuario.remove']);
+    Route::post('/usuario/adiciona',['uses'=>'UserController@adiciona', 'as'=>'usuario.adiciona']);
+    Route::post('/usuario/salvaAlt',['uses'=>'UserController@salvaAlt', 'as'=>'usuario.salvaAlt']);
+    Route::get('/usuario', ['uses'=>'UserController@lista', 'as'=>'usuario.lista']);
 });
 
 
 Route::group(['middleware'=>'Verifica.Desenvolvedor'],function(){
 //Adm
 //Processo
-    Route::get('/processo/remove/{id}', 'ProcessoController@remove');
+    Route::get('/processo/remove/{id}',  ['uses'=>'ProcessoController@remove', 'as'=>'processo.remove']);
 
     //Tipo
-    Route::get('/tipo/novo', 'TipoController@novo');
-    Route::post('/tipo/adiciona','TipoController@adiciona');
-    Route::get('/tipo/altera/{id}','TipoController@altera');
-    Route::post('/tipo/salvaAlt','TipoController@salvaAlt');
-    Route::get('/tipo/remove/{id}', 'TipoController@remove');
+    Route::get('/tipo/novo', ['uses'=>'TipoController@novo', 'as'=>'tipo.novo']);
+    Route::post('/tipo/adiciona',['uses'=>'TipoController@adiciona', 'as'=>'tipo.adiciona']);
+    Route::get('/tipo/altera/{id}',['uses'=>'TipoController@altera', 'as'=>'tipo.altera']);
+    Route::post('/tipo/salvaAlt',['uses'=>'TipoController@salvaAlt', 'as'=>'tipo.salvaAlt']);
+    Route::get('/tipo/remove/{id}', ['uses'=>'TipoController@remove', 'as'=>'tipo.remove']);
         
     //Coordenacao
-    Route::get('/coordenacao/remove/{id}', 'CoordenacaoController@remove');
+    Route::get('/coordenacao/remove/{id}', ['uses'=>'CoordenacaoController@remove', 'as'=>'coordenacao.remove']);
 
     //Periodicidade
-    Route::get('/periodicidade/remove/{id}', 'PeriodicidadeController@remove');
+    Route::get('/periodicidade/remove/{id}',  ['uses'=>'PeriodicidadeController@remove', 'as'=>'periodicidade.remove']);
 
     //Expurgo
-    Route::get('/expurgo_indicador/lista/remove/{id}', 'Expurgo_IndicadorController@remove');
+    Route::get('/expurgo_indicador/lista/remove/{id}', ['uses'=>'Expurgo_IndicadorController@remove', 'as'=>'expurgo.remove']);
 });
    
 

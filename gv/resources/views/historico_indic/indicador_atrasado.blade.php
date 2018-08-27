@@ -4,7 +4,7 @@
 <br>
 <div class="containerFiltro">
     <div class="form-group">
-        <form action="/indicador_atrasado/filtro" method="post">
+        <form action="{{ route('historico.indicador_atrasado_filtro') }} " method="post">
             <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
             <div class="dataIni">       
                 <label>Data Inicial</label>

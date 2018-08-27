@@ -18,9 +18,9 @@
 </div>
 <h1>Atividades</h1>
   @if ($aberta->isEmpty())
-    <form name='TabAtividades' action="/atividade/iniciar" method="post"> 
+    <form name='TabAtividades' action="{{ route('atividade.iniciar') }}" method="post"> 
   @else
-    <form name='TabAtividades' action="/atividade/parar" method="post">
+    <form name='TabAtividades' action="{{ route('atividade.parar') }}" method="post">
   @endif
     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
     <input type="hidden" name="usuario" value="{{{ $usuario_id }}}" />      

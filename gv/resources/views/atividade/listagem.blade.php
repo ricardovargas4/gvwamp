@@ -4,7 +4,7 @@
 <br>
 <div class="containerFiltro">
     <div class="form-group">
-    <form action="/atividade/filtro" method="post">
+    <form action="{{ route('atividade.filtro') }}" method="post">
     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
         <div class="dataIni">    
             <label>Data Inicial</label>
@@ -31,7 +31,7 @@
                                 <i class="fa fa-plus-square-o fa-sm"></i>Adicionar
                             </div>
                             <div class="collapsible-body">
-                                <form action="/atividade/adiciona" method="post">
+                                <form action="{{ route('atividade.adiciona') }}" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                     <input type="hidden" name="usuario" value="{{Auth::user()->id}}" />
 
@@ -132,7 +132,7 @@
                                         <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$a->id}}">Editar</a>
                                         <div id="modal1{{$a->id}}" class="modal">
                                             <div class="modal-content">
-                                                <form action="/atividade/salvaAlt" method="post">
+                                                <form action="{{ route('atividade.salvaAlt') }}" method="post">
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                 <input type="hidden" name="id" value="{{{ $a->id }}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
