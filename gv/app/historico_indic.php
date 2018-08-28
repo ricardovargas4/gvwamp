@@ -11,7 +11,7 @@ class historico_indic extends Model
     protected $fillable = array('processo_id','data_informada','user_id','ultima_data','data_meta', 'periodicidade_id','status');
 
     public function processo_id_FK(){
-        return $this->belongsTo('gv\processo','processo_id');
+        return $this->belongsTo('gv\Processo','processo_id');
     }
     public function user_id_FK(){
         return $this->belongsTo('gv\User','user_id');

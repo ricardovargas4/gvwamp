@@ -20,13 +20,13 @@ class processo extends Model
         return $this->belongsTo('gv\Coordenacao','coordenacao');
     }
     public function responsavel(){
-        return $this->hasMany('gv\responsavel');
+        return $this->hasMany('gv\Responsavel');
     }
     public function atividades(){
         return $this->hasMany('gv\Atividade');
     }
     public function historico_indic(){
-        return $this->hasMany('gv\historico_indic');
+        return $this->hasMany('gv\Historico_indic');
     }
     public function demandaFK(){
         return $this->hasMany('gv\Demanda');

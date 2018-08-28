@@ -15,7 +15,7 @@ class ProcessoController extends Controller {
         $tipos = Tipo::all();
         $periodicidades = Periodicidade::all();
         $coordenacaos =  Coordenacao::all();
-        $processos= processo::paginate(15);
+        $processos= Processo::paginate(15);
         
         return view('processo.listagem',compact('processos','tipos','periodicidades','coordenacaos'));
     }

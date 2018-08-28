@@ -11,7 +11,7 @@ class Expurgo_Indicador extends Model
     protected $fillable = array('id_historico_indic','STATUS','id_usuario_aprovador','comentario','id_usuario_solicitante','justificativa');
 
     public function id_historico_indic_FK(){
-        return $this->belongsTo('gv\historico_indic','id_historico_indic');
+        return $this->belongsTo('gv\Historico_indic','id_historico_indic');
     }
 
     public function id_usuario_aprovador_FK(){

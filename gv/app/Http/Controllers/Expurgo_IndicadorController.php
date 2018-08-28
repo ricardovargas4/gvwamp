@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use gv\Expurgo_Indicador;
-use gv\historico_indic;
+use gv\Historico_indic;
 use gv\Http\Requests\Expurgo_IndicadorRequest;
 use Request;
 use Auth;
@@ -60,7 +60,7 @@ class Expurgo_IndicadorController extends Controller
         return redirect()->action('Expurgo_IndicadorController@tela')->withInput(Request::only('usuario'));
     }
     public function adiciona(Expurgo_IndicadorRequest $request){
-        $gestor = historico_indic::where('historico_indic.id','=',$request->id_historico_indic)
+        $gestor = Historico_indic::where('historico_indic.id','=',$request->id_historico_indic)
         ->first()->processo_id_FK->coordenacao_FK->id_gestor;
         $request->offsetSet('id_usuario_solicitante',Auth::user()->id);
         $request->offsetSet('id_usuario_aprovador',$gestor);
@@ -72,7 +72,7 @@ class Expurgo_IndicadorController extends Controller
     public function aprovar(Expurgo_IndicadorRequest $request){
         $idExpurgo = $request->id;
         $idHistorico = $request->id_historico_indic;
-        $historico = historico_indic::find($idHistorico);
+        $historico = Historico_indic::find($idHistorico);
         $historico->status = 'No Prazo';
         $historico->save();
 

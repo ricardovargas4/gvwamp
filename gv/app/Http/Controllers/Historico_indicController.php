@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use gv\Http\Requests\Historico_indicRequest;
 use Request;
-use gv\historico_indic;
+use gv\Historico_indic;
 use gv\Processo;
 use gv\Periodicidade;
 use gv\User;
@@ -33,7 +33,7 @@ class Historico_indicController extends Controller
             }else{
                 $userFiltro = $usuario;
             }
-            $historicos = historico_indic::where('historico_indic.data_informada','>=',date('Y-m-d', strtotime($request->data_inicial)))
+            $historicos = Historico_indic::where('historico_indic.data_informada','>=',date('Y-m-d', strtotime($request->data_inicial)))
             ->where('historico_indic.data_informada','<=',date('Y-m-d', strtotime($request->data_final)))
             ->where('historico_indic.user_id','like',$userFiltro)
             ->paginate(15);
@@ -47,7 +47,7 @@ class Historico_indicController extends Controller
     }
 
     public function remove($id,$data_inicial=null,$data_final=null){
-        $historico = historico_indic::find($id);
+        $historico = Historico_indic::find($id);
         $historico->delete();
         $data=['data_inicial' =>$data_inicial,
                'data_final' => $data_final];
@@ -56,7 +56,7 @@ class Historico_indicController extends Controller
 
     public function salvaAlt(Historico_indicRequest $request){
         $id = $request->id;
-        historico_indic::whereId($id)->update($request->except('_token','data_inicial','data_final'));
+        Historico_indic::whereId($id)->update($request->except('_token','data_inicial','data_final'));
         $filtro = null;
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
@@ -82,10 +82,10 @@ class Historico_indicController extends Controller
         ->get();
         foreach ($historicos as $historicos2) {
             
-            $id_hist=historico_indic::where('processo_id','=',$historicos2->processo_id)
+            $id_hist=Historico_indic::where('processo_id','=',$historicos2->processo_id)
                                     ->where('data_informada','=',$historicos2->data_informada)->get();   
             if(!$id_hist->count()>0){
-                historico_indic::create([
+                Historico_indic::create([
                     'processo_id' => $historicos2->processo_id,
                     'data_informada' => $historicos2->data_informada,
                     'user_id' => $historicos2->user_id,
@@ -120,7 +120,7 @@ class Historico_indicController extends Controller
             }else{
                 $userFiltro = $usuario;
             }
-            $historicos = historico_indic::where('historico_indic.data_informada','>=',date('Y-m-d', strtotime($request->data_inicial)))
+            $historicos = Historico_indic::where('historico_indic.data_informada','>=',date('Y-m-d', strtotime($request->data_inicial)))
             ->where('historico_indic.data_informada','<=',date('Y-m-d', strtotime($request->data_final)))
             ->where('historico_indic.user_id','like',$userFiltro)
             ->where('status','=','Em Atraso')

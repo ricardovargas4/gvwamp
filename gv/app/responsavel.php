@@ -11,7 +11,7 @@ class responsavel extends Model
     protected $fillable = array('id', 'id_processo', 'usuario');
 
     public function id_processo_FK(){
-        return $this->belongsTo('gv\processo','id_processo');
+        return $this->belongsTo('gv\Processo','id_processo');
     }
     public function usuario_FK(){
         return $this->belongsTo('gv\User','usuario');

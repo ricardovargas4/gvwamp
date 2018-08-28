@@ -20,7 +20,7 @@ class ResponsavelController extends Controller
         ->join('users', 'users.id', '=', 'responsavels.usuario')
         ->select('responsavels.id','processos.nome as procNome', 'processos.id as procID', 'users.email', 'users.id as userID')
         ->paginate(15);*/
-        $resp=responsavel::paginate(15);
+        $resp=Responsavel::paginate(15);
         return view('responsavel.listagem',compact('resp','users','processos'));
     }
 

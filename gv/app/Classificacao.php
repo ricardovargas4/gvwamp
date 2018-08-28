@@ -11,7 +11,7 @@ class Classificacao extends Model
     protected $fillable = array('id_processo','opcao');
 
     public function id_processo_FK(){
-        return $this->belongsTo('gv\processo','id_processo');
+        return $this->belongsTo('gv\Processo','id_processo');
     }
 
 }

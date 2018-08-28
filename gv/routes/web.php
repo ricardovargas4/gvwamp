@@ -50,7 +50,7 @@ Route::group(['middleware'=>'auth'],function(){
     //Route::get('/home','AtividadeController@home');
     Route::get('/welcome','HomeController@index');
 
-    Route::post('/atividade/iniciar', ['uses'=>'AtividadeController@tempo', 'as'=>'atividade.iniciar']);
+    Route::post('/atividade/iniciar', ['uses'=>'AtividadeController@iniciar', 'as'=>'atividade.iniciar']);
     Route::post('/atividade/parar',['uses'=>'AtividadeController@parar', 'as'=>'atividade.parar']);
     Route::get('/atividade/novo', ['uses'=>'AtividadeController@novo', 'as'=>'atividade.novo']);
     Route::post('/atividade/adiciona',['uses'=>'AtividadeController@adiciona', 'as'=>'atividade.adiciona']);
