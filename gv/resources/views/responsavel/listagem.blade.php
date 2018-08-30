@@ -95,9 +95,9 @@
                                 </td>
                             </tr>
                             @endforeach
-                            {{ $resp->links() }}
                         </tbody>
                     </table>
+                    {{ $resp->links() }}
                 </div>   
             </div>
         </div>
