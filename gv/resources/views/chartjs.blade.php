@@ -6,41 +6,50 @@
 <br>
 <div class="containerFiltro">
     <div class="form-group">
-    <form action="{{ route('home.tempo') }}" method="post">
-    <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-        <div class="dataIni">    
-            <label>Data Inicial</label>
-            <input id = "dataInicial" type="date"  name="data_inicial" class="form-control" @if(isset($data_inicial)) value="{{{$data_inicial}}}" @else value = "{{{date('Y-m-d', strtotime('-15 day', strtotime(date('Y-m-d'))))}}}" @endif placeholder="dd/mm/aaaa"/>
+        <form action="{{ route('home.tempo') }}" method="post">
+        <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+            <div class="dataIniChart">    
+                <label>Data Inicial</label>
+                <input id = "dataInicial" type="date"  name="data_inicial" class="form-control" @if(isset($data_inicial)) value="{{{$data_inicial}}}" @else value = "{{{date('Y-m-d', strtotime('-15 day', strtotime(date('Y-m-d'))))}}}" @endif placeholder="dd/mm/aaaa"/>
+            </div>
+            <div class="dataFimChart">    
+                <label>Data Final</label>
+                <input id = "dataFinal" type="date" name="data_final" class="form-control" @if(isset($data_final)) value="{{{$data_final}}}" @else value = "{{{date('Y-m-d')}}}" @endif placeholder="dd/mm/aaaa"/>
+            </div>
+            <div class="filtroCoordChart">
+                    <label for="coordenacao">Coordenação</label>
+                    <select id = "coordenacaoID" name="coordenacao" class="form-control">
+                        <option @if(isset($coordenacao)) value="{{{$coordenacao->id}}}" @else value = "" @endif disabled selected>@if(isset($coordenacao)) {{{$coordenacao->nome}}} @else Selecione a Coordenação @endif </option>
+                        @if(isset($coordenacao))
+                            <option value="">Remover Filtro</option>
+                        @endif
+                        @foreach($coordenacaos as $c)
+                            <option value="{{$c->id}}">{{$c->nome}}</option>
+                        @endforeach
+                    </select>
+            </div>
+            <div class= "botaoFiltroChart">
+                <button type="submit" class="btn waves-effect light-green accent-3"> Filtrar</button>
+            </div>
+        </form>
+        <div class= "buttonVoltar">
+                <button class = "btn waves-effect light-green accent-3" id='buttonVoltar'>Voltar</button> 
         </div>
-        <div class="dataFim">    
-            <label>Data Final</label>
-            <input id = "dataFinal" type="date" name="data_final" class="form-control" @if(isset($data_final)) value="{{{$data_final}}}" @else value = "{{{date('Y-m-d')}}}" @endif placeholder="dd/mm/aaaa"/>
-        </div>
-        <div class="form-group">
-                <label for="usuario">Usuários</label>
-                <select id = "usuarioID" name="usuario" class="form-control">
-                    <option @if(isset($usuario)) value="{{{$usuario->id}}}" @else value = "" @endif disabled selected>@if(isset($usuario)) {{{$usuario->email}}} @else Selecione o usuário @endif </option>
-                    @if(isset($usuario))
-                        <option value="">Remover Filtro</option>
-                    @endif
-                    @foreach($users as $u)
-                        <option value="{{$u->id}}">{{$u->email}}</option>
-                    @endforeach
-                </select>
-        </div>
-        <div class= "botaoFiltro">
-            <button type="submit" class="btn waves-effect light-green accent-3"> Filtrar</button>
-        </div>
-    </form>
     </div>
 </div>
-
-<div id = "nome_usuario"></div>
-<div id = "data"> </div>
-    <div class="canvas-container">
+<div class="grafico">
+    <div id = "nome_usuario"> </div>
+    <div id = "data"> </div>
+    <div class="chart-container" style="position: relative; height:40vh; width:75vw">
         <canvas id="myChart"></canvas>
-        <button class = "btn waves-effect light-green accent-3" id='button'>Voltar</button> 
+       
     </div>
-
-
+    <!--<div class="TESTE_FILTRO">
+        <form action="">
+            <select id = "usuariosID" name="example" multiple="multiple" class="form-control">
+            </select>
+        </form>
+    </div>
+    -->
+</div>
 @endsection

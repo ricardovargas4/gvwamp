@@ -77,9 +77,6 @@ label {
 }
 
 #myChart {
-  height:auto;
-  width:auto;
-  max-width: 82%;
   padding-left: 0;
   padding-right: 0;
   margin-left: auto;
@@ -88,14 +85,11 @@ label {
   position: relative;
 }
 
-.canvas-container{
+.grafico{
   position: relative;
 }
-
-#button {
-  position:relative;
-  left:10%;
-  top:92%;
+.chart-container{
+  margin-left: 12%;
 }
 
 #nome_usuario, #data {
@@ -144,6 +138,44 @@ label {
   font-size: 18px;
 }
 
+.dataIniChart{
+  position: absolute;
+  top: 0%;
+  left: 13%;
+  font-size: 18px;
+}
+.dataFimChart{
+  position: absolute;
+  top: 0%;
+  left: 30%;
+  font-size: 18px;
+}
+.filtroCoordChart{
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  font-size: 18px;
+}
+.botaoFiltroChart{
+  position: absolute;
+  top: 38%;
+  left: 80%;
+  font-size: 18px;
+}
+
+.buttonVoltar {
+  position: absolute;
+  top: 38%;
+  left: 90%;
+  font-size: 18px;
+}
+/*
+.TESTE_FILTRO{
+  position: absolute;
+  float: right;
+  top: 38%;
+  left: 90%;
+}*/
 td {
   padding-right: 30px;
 }

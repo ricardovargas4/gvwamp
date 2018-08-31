@@ -1,7 +1,7 @@
 
-function dadosBanco(dataInicial, dataFinal,usuarioID, callback) {$.ajax({
+function dadosBanco(dataInicial, dataFinal,coordenacaoID, callback) {$.ajax({
         method: 'GET',
-        url: '/dados/tempo/'+dataInicial+'/'+dataFinal+'/'+usuarioID,
+        url: '/dados/tempo/'+dataInicial+'/'+dataFinal+'/'+coordenacaoID,
         success: callback,
         error: function (error) {
         }
@@ -19,14 +19,14 @@ function filtrar(dados,argumento,argumento2){
         }
 
 $(function () {
-    $('#button').hide(); 
+    $('#buttonVoltar').hide(); 
     var dataInicial = document.getElementById("dataInicial").value;
     var dataFinal = document.getElementById("dataFinal").value;
-    var usuario = document.getElementById("usuarioID").value;
-    if (usuario === "") {
-        usuario= 0
+    var coordenacao = document.getElementById("coordenacaoID").value;
+    if (coordenacao === "") {
+        coordenacao= 0
     }
-    dadosBanco(dataInicial,dataFinal,usuario,function(data){
+    dadosBanco(dataInicial,dataFinal,coordenacao,function(data){
         var parent = new Array()
         var parent2 = new Array()
         var tempo = new Array();
@@ -38,7 +38,11 @@ $(function () {
             tempo.push(entry.val);
             usuarios.push(entry.arg);
         });
-
+        //Filtro Usuario
+        /*var select = document.getElementById("usuariosID");
+        for(index in usuarios) {
+            select.options[select.options.length] = new Option(usuarios[index], usuarios[index]);
+        }*/
         var ctx = document.getElementById("myChart");
         var myChart = new Chart(ctx, {
             type: 'bar',
@@ -76,7 +80,13 @@ $(function () {
                         }
             }
         });
-
+        //Filtro Usuario
+       /* document.getElementById("usuariosID").onclick = function(evt)
+        {  
+            var teste = $('#usuariosID').val();
+            console.log(teste);
+        }*/
+        
         document.getElementById("myChart").onclick = function(evt)
         {   
             var activePoints = myChart.getElementsAtEvent(evt);
@@ -93,7 +103,7 @@ $(function () {
                 if(parent.length==2){
                     parent.push(label);
                     if(parent.length>0){
-                        $('#button').show();
+                        $('#buttonVoltar').show();
                         //console.log(parent[parent.length-1]);
                     }
                     //console.log("Label-1 :"+parent[parent.length-1])
@@ -106,12 +116,12 @@ $(function () {
                         usuarios.push(entry.arg);
                     });
                     myChart.update();
-                    document.getElementById("data").innerHTML = parent[parent.length - 1];
+                    document.getElementById("data").innerHTML = "Data: " + parent[parent.length - 1];
                 }
                 if(parent.length==1){
                     parent.push(label);
                     if(parent.length>0){
-                        $('#button').show();
+                        $('#buttonVoltar').show();
                       }
                     var novaData = filtrar(data,label,'');
                     tempo.length=0;
@@ -121,7 +131,7 @@ $(function () {
                         usuarios.push(entry.arg);
                     });
                     myChart.update();
-                    document.getElementById("nome_usuario").innerHTML = parent[parent.length - 1];
+                    document.getElementById("nome_usuario").innerHTML = "Usuário: " + parent[parent.length - 1];
                 }
         }
         }
@@ -138,7 +148,7 @@ $(function () {
                 });
                 myChart.update();
                 if(parent.length<=1){
-                    $('#button').hide(); 
+                    $('#buttonVoltar').hide(); 
                 }
                 document.getElementById("nome_usuario").innerHTML = "";
             } 
@@ -156,6 +166,6 @@ $(function () {
                 document.getElementById("data").innerHTML = parent[parent.length - 2];
                 }           
         };
-        document.getElementById("button").onclick = function() {voltar()};
+        document.getElementById("buttonVoltar").onclick = function() {voltar()};
     });
 });
