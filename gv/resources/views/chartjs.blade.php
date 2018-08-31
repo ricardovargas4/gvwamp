@@ -19,12 +19,14 @@
             <div class="filtroCoordChart">
                     <label for="coordenacao">Coordenação</label>
                     <select id = "coordenacaoID" name="coordenacao" class="form-control">
-                        <option @if(isset($coordenacao)) value="{{{$coordenacao->id}}}" @else value = "" @endif disabled selected>@if(isset($coordenacao)) {{{$coordenacao->nome}}} @else Selecione a Coordenação @endif </option>
+                        <option @if(isset($coordenacao)) value="{{{$coordenacao->id}}}" @else value = "" @endif selected>@if(isset($coordenacao)) {{{$coordenacao->nome}}} @else Selecione a Coordenação @endif</option>
                         @if(isset($coordenacao))
                             <option value="">Remover Filtro</option>
                         @endif
                         @foreach($coordenacaos as $c)
+                            @if( (isset($coordenacao) ? $coordenacao->id : "AA") != $c->id)
                             <option value="{{$c->id}}">{{$c->nome}}</option>
+                            @endif
                         @endforeach
                     </select>
             </div>
