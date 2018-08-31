@@ -31,12 +31,10 @@ Route::get('/', function () {
 
 Route::group(['middleware'=>'auth'],function(){
 
-    Route::post('/relatorio/tempo', ['uses'=>'HomeController@tempo', 'as'=>'home.tempo']);
+    Route::match(array('GET', 'POST'),'/relatorio/tempo',['uses'=>'HomeController@tempo','as'=>'home.tempo']);
     
-    Route::get('/chartjs', ['uses'=>'HomeController@chartjs', 'as'=>'home.chartjs']);
-
     Route::get('/hello', ['uses'=>'HomeController@hello', 'as'=>'home.hello']);
-    Route::get('/dados/tempo/{id}', ['uses'=>'HomeController@dadosTempos', 'as'=>'home.dadosTempos']);
+    Route::get('/dados/tempo/{dataInicial}/{dataFinal}/{usuarioID}', ['uses'=>'HomeController@dadosTempos', 'as'=>'home.dadosTempos']);
 
     //Route::get('/login','LoginController@Form');
     //Route::post('/login','LoginController@Login');

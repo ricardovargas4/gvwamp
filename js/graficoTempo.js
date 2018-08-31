@@ -1,7 +1,7 @@
 
-function dadosBanco(callback) {$.ajax({
+function dadosBanco(dataInicial, dataFinal,usuarioID, callback) {$.ajax({
         method: 'GET',
-        url: '/dados/tempo/{id}',
+        url: '/dados/tempo/'+dataInicial+'/'+dataFinal+'/'+usuarioID,
         success: callback,
         error: function (error) {
         }
@@ -20,7 +20,13 @@ function filtrar(dados,argumento,argumento2){
 
 $(function () {
     $('#button').hide(); 
-    dadosBanco(function(data){
+    var dataInicial = document.getElementById("dataInicial").value;
+    var dataFinal = document.getElementById("dataFinal").value;
+    var usuario = document.getElementById("usuarioID").value;
+    if (usuario === "") {
+        usuario= 0
+    }
+    dadosBanco(dataInicial,dataFinal,usuario,function(data){
         var parent = new Array()
         var parent2 = new Array()
         var tempo = new Array();

@@ -96,5 +96,6 @@
     <script src="{{asset('lib\materialize\dist\js\materialize.min.js')}}"></script>
     <script src="{{asset('js/init.js')}}"></script>
     <script src="{{ asset('js/validacao.js') }}?v={{$AppVersion}}"></script>
+    <script src="{{ asset('js/graficoTempo.js') }}?v={{$AppVersion}}"></script>
 
 </html>
