@@ -33,6 +33,7 @@ $(function () {
         var usuarios = new Array();
         parent.push('');
         parent2.push('');
+        console.log(data);
         var novaData = filtrar(data,'','');
         novaData.data2.forEach(function(entry) {
             tempo.push(entry.val);

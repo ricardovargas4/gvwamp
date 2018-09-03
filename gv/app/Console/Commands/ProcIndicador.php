@@ -4,7 +4,7 @@ namespace gv\Console\Commands;
 use Illuminate\Console\Command;
 
 use DB;
-use gv\historico_indic;
+use gv\Historico_indic;
 
 class ProcIndicador extends Command
 {
@@ -58,10 +58,10 @@ class ProcIndicador extends Command
         
         foreach ($historicos as $historicos2) {
             
-            $id_hist=historico_indic::where('processo_id','=',$historicos2->processo_id)
+            $id_hist=Historico_indic::where('processo_id','=',$historicos2->processo_id)
                                     ->where('data_informada','=',$historicos2->data_informada)->get();   
             if(!$id_hist->count()>0){
-                historico_indic::create([
+                Historico_indic::create([
                     'processo_id' => $historicos2->processo_id,
                     'data_informada' => $historicos2->data_informada,
                     'user_id' => $historicos2->user_id,
