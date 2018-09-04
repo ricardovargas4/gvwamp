@@ -61,7 +61,9 @@ class AtividadeController extends Controller
                           FLOAT_DIAS_UTEIS(now(),periodicidades.dias) data_meta, 
                           (CASE WHEN atividades.id_processo is not null then 'aberta' else '' end) as hora_fim, 
                           conclusoes.ultima_data,data_final,demandas.id as demandaID"))
-        ->orderByDesc('hora_fim')                          
+        ->orderByDesc('hora_fim')  
+        ->orderByDesc('tipoNome')
+        ->orderByDesc('processoNome')                        
         ->get();
         
         foreach($atividades as $a){
