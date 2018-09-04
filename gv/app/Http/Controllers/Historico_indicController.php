@@ -79,6 +79,7 @@ class Historico_indicController extends Controller
         periodicidades.id periodicidade_id,
         (CASE WHEN ultima_data >= FLOAT_DIAS_UTEIS('$request->data_informada',periodicidades.dias) then 'No Prazo' else 'Em Atraso' end) as status
         "))
+        ->where('tipos.id','=','3')
         ->get();
         foreach ($historicos as $historicos2) {
             
@@ -101,7 +102,7 @@ class Historico_indicController extends Controller
             $data_final = $request->data_final;
             $data=['data_inicial' =>$data_inicial,
                    'data_final' => $data_final];
-            return redirect()->route('hist.filtro',$data);
+            return redirect()->route('historico.filtro',$data);
     }
 
     public function indicador_atrasado_lista(){

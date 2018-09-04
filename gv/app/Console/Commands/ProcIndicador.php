@@ -54,6 +54,7 @@ class ProcIndicador extends Command
         periodicidades.id periodicidade_id,
         (CASE WHEN ultima_data >= FLOAT_DIAS_UTEIS('$data',periodicidades.dias) then 'No Prazo' else 'Em Atraso' end) as status
         "))
+        ->where('tipos.id','=','3')
         ->get();
         
         foreach ($historicos as $historicos2) {
