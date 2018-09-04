@@ -10,11 +10,11 @@
         <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
             <div class="dataIniChart">    
                 <label>Data Inicial</label>
-                <input id = "dataInicial" type="date"  name="data_inicial" class="form-control" @if(isset($data_inicial)) value="{{{$data_inicial}}}" @else value = "{{{date('Y-m-d', strtotime('-15 day', strtotime(date('Y-m-d'))))}}}" @endif placeholder="dd/mm/aaaa"/>
+                <input id = "dataInicial" type="date"  name="data_inicial" class="form-control" value="{{{$data_inicial}}}" placeholder="dd/mm/aaaa"/>
             </div>
             <div class="dataFimChart">    
                 <label>Data Final</label>
-                <input id = "dataFinal" type="date" name="data_final" class="form-control" @if(isset($data_final)) value="{{{$data_final}}}" @else value = "{{{date('Y-m-d')}}}" @endif placeholder="dd/mm/aaaa"/>
+                <input id = "dataFinal" type="date" name="data_final" class="form-control" value="{{{$data_final}}}" placeholder="dd/mm/aaaa"/>
             </div>
             <div class="filtroCoordChart">
                     <label for="coordenacao">Coordenação</label>
@@ -39,6 +39,9 @@
         </div>
     </div>
 </div>
+<form class="" role="form" method="POST" id="remove-step-form" action="{{ URL::route('home.dadosTempos',['dataInicial'=> $data_inicial,'dataFinal'=>$data_final,'coordenacaoID'=> empty($coordenacao) ? '0' : $coordenacao->id  ])}}">
+</form>
+
 <div class="grafico">
     <div id = "nome_usuario"> </div>
     <div id = "data"> </div>

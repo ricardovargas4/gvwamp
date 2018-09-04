@@ -51,8 +51,8 @@ class HomeController extends Controller
             $data_inicial = $request->data_inicial;
             $data_final = $request->data_final;
         }else{
-            $data_inicial = null;
-            $data_final = null;
+            $data_inicial = date('Y-m-d', strtotime('-15 day', strtotime(date('Y-m-d'))));
+            $data_final = date('Y-m-d');
         }    
         return view('chartjs',compact('data_inicial','data_final','coordenacao','coordenacaos'));
        // $coordenacaos = null;

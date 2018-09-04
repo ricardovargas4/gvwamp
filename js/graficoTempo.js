@@ -1,7 +1,7 @@
 
-function dadosBanco(dataInicial, dataFinal,coordenacaoID, callback) {$.ajax({
-        method: 'GET',
-        url: '/dados/tempo/'+dataInicial+'/'+dataFinal+'/'+coordenacaoID,
+function dadosBanco(urlrota,callback) {$.ajax({
+    method: 'GET',
+        url: urlrota,
         success: callback,
         error: function (error) {
         }
@@ -20,13 +20,8 @@ function filtrar(dados,argumento,argumento2){
 
 $(function () {
     $('#buttonVoltar').hide(); 
-    var dataInicial = document.getElementById("dataInicial").value;
-    var dataFinal = document.getElementById("dataFinal").value;
-    var coordenacao = document.getElementById("coordenacaoID").value;
-    if (coordenacao === "") {
-        coordenacao= 0
-    }
-    dadosBanco(dataInicial,dataFinal,coordenacao,function(data){
+    urlrota = $("#remove-step-form").attr('action');
+    dadosBanco(urlrota,function(data){
         var parent = new Array()
         var parent2 = new Array()
         var tempo = new Array();
