@@ -257,8 +257,8 @@ class AtividadeController extends Controller
                             users.id as user_Id, users.email as user_Email,atividades.data_conciliacao, atividades.hora_inicio,
                             atividades.hora_fim, atividades.data_meta,data_conciliada,ultima_data, observacoes.id observacao_ID, 
                             observacoes.observacao, classificacoes.id class_ID, classificacoes.opcao class_Opcao, volumetrias.volumetria" ))
-            ->where('atividades.hora_inicio','>=',$request->data_inicial)
-            ->where('atividades.hora_fim','<=',$request->data_final." 23:59:59")
+            ->where('atividades.data_conciliacao','>=',$request->data_inicial)
+            ->where('atividades.data_conciliacao','<=',$request->data_final)
             ->where('atividades.usuario','like',$userFiltro)
             ->orderBy('hora_inicio', 'ASC')
             ->paginate(15);

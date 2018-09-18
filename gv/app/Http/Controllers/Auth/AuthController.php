@@ -20,6 +20,7 @@ class AuthController extends Controller {
         $ldapini = substr($ldapusr,0,1); 
         if (empty($ldaprdn)){
             $ldaprdn = 'uid='.$ldapusr.',cn='.$ldapini.',cn=users,dc=sicredi,dc=com,dc=br'; 
+            //dd($ldaprdn);
         }
         $ldappass = isset($_POST['password']) ? $_POST['password'] : 'A';
         $ldapconn = ldap_connect("ldap.sicredi.net")
