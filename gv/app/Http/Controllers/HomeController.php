@@ -75,6 +75,9 @@ class HomeController extends Controller
         }else{
             $coordenacaoID = $request->coordenacaoID;
         }
+        $processosSelecEx = array_map('intval', explode(',', $request->processosSelec));
+        $processosSelec = $processosSelecEx;
+//        dd($processosSelec);
         $data = DB::table('atividades')
         ->join('processos', 'atividades.id_processo', '=', 'processos.id')
         ->join('users', 'users.id', '=', 'atividades.usuario')
@@ -82,6 +85,7 @@ class HomeController extends Controller
         //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
         ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
         ->where('processos.coordenacao','like',$coordenacaoID)
+        ->whereIn('processos.id',$processosSelec)
         ->groupby('arg')
         ->get();
 
@@ -92,6 +96,8 @@ class HomeController extends Controller
         //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
         ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
         ->where('processos.coordenacao','like',$coordenacaoID)
+        ->whereIn('processos.id',$processosSelec )
+        //->whereIn('processos.id',$request->processosSelec )
         ->groupby('arg', 'parentID')
         ->get();
         
@@ -102,6 +108,8 @@ class HomeController extends Controller
         //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
         ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
         ->where('processos.coordenacao','like',$coordenacaoID)
+        ->whereIn('processos.id',$processosSelec )
+        //->whereIn('processos.id',$request->processosSelec )
         ->groupby('arg', 'parentID', 'parentID2')
         ->orderby('val')
         ->get();

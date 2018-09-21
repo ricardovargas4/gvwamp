@@ -1,5 +1,5 @@
 
-function dadosBanco(token,dataInicial,dataFinal,coordenacaoID,urlrota,callback) {
+function dadosBanco(token,dataInicial,dataFinal,coordenacaoID,processosSelec, urlrota,callback) {
     $.ajax({
     /*method: 'GET',
         url: urlrota,
@@ -16,6 +16,7 @@ function dadosBanco(token,dataInicial,dataFinal,coordenacaoID,urlrota,callback) 
             "dataInicial": dataInicial,
             "dataFinal": dataFinal,
             "coordenacaoID": coordenacaoID,
+            "processosSelec": processosSelec,
         },
         success:callback,
         error: function(error){
@@ -35,14 +36,27 @@ function filtrar(dados,argumento,argumento2){
         }
 
 $(function () {
+    function listaProc() {
+        var checa = $("input:checkbox")
+        var numElementos = checa.length;
+        var processosSelec = "";
+        for(var x=0; x<numElementos; x++){
+            if(document.getElementById(checa[x].id).checked == true){
+                if(x>0){
+                    processosSelec = processosSelec + ',';
+                }
+                processosSelec = processosSelec +  document.getElementById(checa[x].id).value ;
+            }
+        }
+        return processosSelec;
+    };
     $('#buttonVoltar').hide(); 
     urlrota = $("#remove-step-form").attr('action');
     var token = document.getElementsByName("_token")[0].value;
-    console.log(token);
     var dataInicial = document.getElementById("dataInicial").value;
     var dataFinal = document.getElementById("dataFinal").value;
     var coordenacaoID = document.getElementById("coordenacaoID").value;
-    dadosBanco(token,dataInicial,dataFinal,coordenacaoID,urlrota,function(data){
+    dadosBanco(token,dataInicial,dataFinal,coordenacaoID,listaProc(),urlrota,function(data){
         var parent = new Array()
         var parent2 = new Array()
         var tempo = new Array();
