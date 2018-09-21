@@ -39,15 +39,15 @@
                 @endforeach
             </div>
             <div class= "botaoFiltroChart">
-                <button type="submit" class="btn waves-effect light-green accent-3"> Filtrar</button>
+                <button type="submit" class="btn waves-effect green accent-3"> Filtrar</button>
             </div>
         </form>
         <div class= "buttonVoltar">
-                <button class = "btn waves-effect light-green accent-3" id='buttonVoltar'>Voltar</button> 
+                <button class = "btn waves-effect green accent-3" id='buttonVoltar'>Voltar</button> 
         </div>
     </div>
 </div>
-<form class="" role="form" method="POST" id="remove-step-form" action="{{ URL::route('home.dadosTempos',['dataInicial'=> $data_inicial,'dataFinal'=>$data_final,'coordenacaoID'=> empty($coordenacao) ? '0' : $coordenacao->id  ])}}">
+<form class="" role="form" method="POST" id="remove-step-form" action="{{ URL::route('home.dadosTempos')}}">
 </form>
 <div class="containerGraf">
     <div class="grafico">
@@ -60,8 +60,8 @@
     </div>
 </div>    
 <div class="testeGraf">
-    <button id = "buttonMarcar" type="submit" class="btn waves-effect light-green accent-3"> Marcar</button>
-    <button id = "buttonDesmarcar" type="submit" class="btn waves-effect light-green accent-3"> Desmarcar</button>
+    <button id = "buttonMarcar" type="submit" class="btn waves-effect green accent-3"> Marcar</button>
+    <button id = "buttonDesmarcar" type="submit" class="btn waves-effect green accent-3"> Desmarcar</button>
 </div>
     <!--<div class="TESTE_FILTRO">
         <form action="">

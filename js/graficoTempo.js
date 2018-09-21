@@ -1,10 +1,26 @@
 
-function dadosBanco(urlrota,callback) {$.ajax({
-    method: 'GET',
+function dadosBanco(token,dataInicial,dataFinal,coordenacaoID,urlrota,callback) {
+    $.ajax({
+    /*method: 'GET',
         url: urlrota,
         success: callback,
         error: function (error) {
+        }*/
+
+        type:'POST',
+        url:urlrota,
+        dataType: 'JSON',
+        data: {
+            "_method": 'POST',
+            "_token": token,
+            "dataInicial": dataInicial,
+            "dataFinal": dataFinal,
+            "coordenacaoID": coordenacaoID,
+        },
+        success:callback,
+        error: function(error){
         }
+
     })
 }
 
@@ -21,7 +37,12 @@ function filtrar(dados,argumento,argumento2){
 $(function () {
     $('#buttonVoltar').hide(); 
     urlrota = $("#remove-step-form").attr('action');
-    dadosBanco(urlrota,function(data){
+    var token = document.getElementsByName("_token")[0].value;
+    console.log(token);
+    var dataInicial = document.getElementById("dataInicial").value;
+    var dataFinal = document.getElementById("dataFinal").value;
+    var coordenacaoID = document.getElementById("coordenacaoID").value;
+    dadosBanco(token,dataInicial,dataFinal,coordenacaoID,urlrota,function(data){
         var parent = new Array()
         var parent2 = new Array()
         var tempo = new Array();
@@ -47,7 +68,7 @@ $(function () {
                 datasets: [{
                     label: 'Tempos',
                     data: tempo,
-                    backgroundColor: '#ADFF2F',
+                    backgroundColor: '#00E676',
                     borderWidth: 1
                 }]
             },

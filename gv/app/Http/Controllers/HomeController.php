@@ -51,10 +51,10 @@ class HomeController extends Controller
         $coordenacaos = Coordenacao::all();
         if(isset($request->coordenacao)){
             $coordenacao = Coordenacao::find($request->coordenacao);
-            $processos = Processo::where('coordenacao',$request->coordenacao)->get();
+            $processos = Processo::where('coordenacao',$request->coordenacao)->orderby('nome')->get();
         }else{
             $coordenacao = null;
-            $processos = Processo::all();
+            $processos = Processo::orderby('nome')->get();
         }    
         if(isset($request->data_inicial)){
             $data_inicial = $request->data_inicial;
@@ -68,17 +68,19 @@ class HomeController extends Controller
        // return view('coordenacao.listagem')->with('coordenacaos', $coordenacaos);
     }
 
-    public function dadosTempos($dataInicial, $dataFinal,$coordenacaoID)//(TempoRequest $request)
+    public function dadosTempos(TempoRequest $request)//($dataInicial, $dataFinal,$coordenacaoID)//(TempoRequest $request)
     {
-        if($coordenacaoID==0){
+        if($request->coordenacaoID==0){
             $coordenacaoID = '%';
+        }else{
+            $coordenacaoID = $request->coordenacaoID;
         }
         $data = DB::table('atividades')
         ->join('processos', 'atividades.id_processo', '=', 'processos.id')
         ->join('users', 'users.id', '=', 'atividades.usuario')
         ->select(DB::raw("users.email as arg, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val, '' as parentID, '' as parentID2"))
         //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
-        ->whereBetween('atividades.data_conciliacao', [$dataInicial, $dataFinal])
+        ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
         ->where('processos.coordenacao','like',$coordenacaoID)
         ->groupby('arg')
         ->get();
@@ -88,7 +90,7 @@ class HomeController extends Controller
         ->join('users', 'users.id', '=', 'atividades.usuario')
         ->select(DB::raw("atividades.data_conciliacao as arg, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val, users.email as parentID, '' as parentID2"))
         //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
-        ->whereBetween('atividades.data_conciliacao', [$dataInicial, $dataFinal])
+        ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
         ->where('processos.coordenacao','like',$coordenacaoID)
         ->groupby('arg', 'parentID')
         ->get();
@@ -98,7 +100,7 @@ class HomeController extends Controller
         ->join('users', 'users.id', '=', 'atividades.usuario')
         ->select(DB::raw("processos.nome as arg, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val, users.email as parentID, atividades.data_conciliacao as parentID2 "))
         //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
-        ->whereBetween('atividades.data_conciliacao', [$dataInicial, $dataFinal])
+        ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
         ->where('processos.coordenacao','like',$coordenacaoID)
         ->groupby('arg', 'parentID', 'parentID2')
         ->orderby('val')
