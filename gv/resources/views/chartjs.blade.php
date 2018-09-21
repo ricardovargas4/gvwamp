@@ -30,6 +30,24 @@
                         @endforeach
                     </select>
             </div>
+            <div class="filtroProcChart">
+                @foreach($processos as $p)
+                    <p>
+                        <input type="checkbox" id="processo{{$p->id}}" value="{{$p->id}}" name="filtroProc[]"
+                            @if(isset($filtroProc))    
+                                @foreach($filtroProc as $f)    
+                                    @if($f == $p->id) 
+                                        checked="checked"
+                                    @endif
+                                @endforeach
+                            @else
+                                checked="checked"
+                            @endif
+                        />
+                        <label for="processo{{$p->id}}">{{$p->nome}}</label>
+                    </p>
+                @endforeach
+            </div>
             <div class= "botaoFiltroChart">
                 <button type="submit" class="btn waves-effect light-green accent-3"> Filtrar</button>
             </div>
@@ -41,14 +59,20 @@
 </div>
 <form class="" role="form" method="POST" id="remove-step-form" action="{{ URL::route('home.dadosTempos',['dataInicial'=> $data_inicial,'dataFinal'=>$data_final,'coordenacaoID'=> empty($coordenacao) ? '0' : $coordenacao->id  ])}}">
 </form>
-
-<div class="grafico">
-    <div id = "nome_usuario"> </div>
-    <div id = "data"> </div>
-    <div class="chart-container" style="position: relative; height:40vh; width:75vw">
-        <canvas id="myChart"></canvas>
-       
+<div class="containerGraf">
+    <div class="grafico">
+        <div id = "nome_usuario"> </div>
+        <div id = "data"> </div>
+        <div class="chart-container" style="position: relative; height:40vh; width:75vw">
+        <!--<div class="chart-container">-->
+            <canvas id="myChart"></canvas>
+        
     </div>
+</div>    
+<div class="testeGraf">
+    <button id = "buttonMarcar" type="submit" class="btn waves-effect light-green accent-3"> Marcar</button>
+    <button id = "buttonDesmarcar" type="submit" class="btn waves-effect light-green accent-3"> Desmarcar</button>
+</div>
     <!--<div class="TESTE_FILTRO">
         <form action="">
             <select id = "usuariosID" name="example" multiple="multiple" class="form-control">
@@ -56,5 +80,5 @@
         </form>
     </div>
     -->
-</div>
+  
 @endsection

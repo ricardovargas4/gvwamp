@@ -163,5 +163,22 @@ $(function () {
                 }           
         };
         document.getElementById("buttonVoltar").onclick = function() {voltar()};
+        
+        function marcarTodos() {
+            var checa = $("input:checkbox")
+            var numElementos = checa.length;
+            for(var x=0; x<numElementos; x++){
+                document.getElementById(checa[x].id).checked = true;
+            }
+        };
+        function desmarcarTodos() {
+            var checa = $("input:checkbox")
+            var numElementos = checa.length;
+            for(var x=0; x<numElementos; x++){
+                document.getElementById(checa[x].id).checked = false;
+            }
+        };
+        document.getElementById("buttonMarcar").onclick = function() {marcarTodos()};
+        document.getElementById("buttonDesmarcar").onclick = function() {desmarcarTodos()};
     });
 });

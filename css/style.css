@@ -83,10 +83,21 @@ label {
   margin-right: auto;
   display: block;
   position: relative;
+  /*border-style: solid;
+  border-color: black;*/
 }
-
-.grafico{
+.containerGraf{
   position: relative;
+  height:100%;
+  width: 100%;
+
+}
+.grafico{
+  position: absolute;
+  float:left;
+}
+.testeGraf{
+  float:right;
 }
 .chart-container{
   margin-left: 12%;
@@ -115,7 +126,7 @@ label {
 .containerFiltro{
   height: 80px;
   position: relative;
-  width: 80%;
+  width: 100%;
   display: flex;
 }
 
@@ -155,6 +166,15 @@ label {
   top: 0%;
   left: 50%;
   font-size: 18px;
+}
+.filtroProcChart{
+  position: absolute;
+  top: 160%;
+  left: 84.5%;
+  font-size: 18px;
+  width: 220px;
+  height: 680%;
+  overflow-y:auto
 }
 .botaoFiltroChart{
   position: absolute;
@@ -212,3 +232,4 @@ a:hover {
 .navBarMenu {
   background-color: #5A645A !important;
 }
+

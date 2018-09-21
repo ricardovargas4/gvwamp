@@ -7,6 +7,7 @@ use Auth;
 use Illuminate\Http\Request;
 use gv\Http\Requests\TempoRequest;
 use gv\Coordenacao;
+use gv\Processo;
 
 class HomeController extends Controller
 {
@@ -41,11 +42,18 @@ class HomeController extends Controller
     }
 
     public function tempo(TempoRequest $request){
+        if(isset($request->filtroProc)){
+            $filtroProc = $request->filtroProc;
+         }else{
+            $filtroProc=null; 
+         }          
         $coordenacaos = Coordenacao::all();
         if(isset($request->coordenacao)){
             $coordenacao = Coordenacao::find($request->coordenacao);
+            $processos = Processo::where('coordenacao',$request->coordenacao)->get();
         }else{
             $coordenacao = null;
+            $processos = Processo::all();
         }    
         if(isset($request->data_inicial)){
             $data_inicial = $request->data_inicial;
@@ -54,7 +62,7 @@ class HomeController extends Controller
             $data_inicial = date('Y-m-d', strtotime('-15 day', strtotime(date('Y-m-d'))));
             $data_final = date('Y-m-d');
         }    
-        return view('chartjs',compact('data_inicial','data_final','coordenacao','coordenacaos'));
+        return view('chartjs',compact('data_inicial','data_final','coordenacao','coordenacaos','processos','filtroProc'));
        // $coordenacaos = null;
        // return view('coordenacao.listagem')->with('coordenacaos', $coordenacaos);
     }
