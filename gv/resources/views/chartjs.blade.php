@@ -33,17 +33,7 @@
             <div class="filtroProcChart">
                 @foreach($processos as $p)
                     <p>
-                        <input type="checkbox" id="processo{{$p->id}}" value="{{$p->id}}" name="filtroProc[]"
-                            @if(isset($filtroProc))    
-                                @foreach($filtroProc as $f)    
-                                    @if($f == $p->id) 
-                                        checked="checked"
-                                    @endif
-                                @endforeach
-                            @else
-                                checked="checked"
-                            @endif
-                        />
+                        <input type="checkbox" id="processo{{$p->id}}" value="{{$p->id}}" name="filtroProc[]"  {{ (is_array($filtroProc) && in_array($p->id, $filtroProc)) ? ' checked' : '' }} > 
                         <label for="processo{{$p->id}}">{{$p->nome}}</label>
                     </p>
                 @endforeach

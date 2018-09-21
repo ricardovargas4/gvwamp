@@ -46,7 +46,8 @@ class HomeController extends Controller
             $filtroProc = $request->filtroProc;
          }else{
             $filtroProc=null; 
-         }          
+         }     
+         //dd($request->filtroProc->to_array());
         $coordenacaos = Coordenacao::all();
         if(isset($request->coordenacao)){
             $coordenacao = Coordenacao::find($request->coordenacao);
