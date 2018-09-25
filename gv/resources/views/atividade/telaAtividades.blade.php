@@ -92,11 +92,11 @@
               @endif
               @if (($a->aberta)==1)
                 <td>  
-                  <button id='BtnP{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="P{{{ $index }}}">
+                  <button id='BtnP{{{ $a->processoId }}}' title="Parar o processo sem encerrar o indicador." type="submit" class="waves-effect waves-light btn" name="submit" value="P{{{ $index }}}">
                     <i class="fa fa-pause" aria-hidden="true"></i>
                   </button>
                   @if($a->tipoId == 3 or $a->tipoId == 4)
-                    <button id='BtnC{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" name="submit" value="C{{{ $index }}}">
+                    <button id='BtnC{{{ $a->processoId }}}' title="Finalizar o processo encerrando o indicador."  type="submit" class="waves-effect waves-light btn" name="submit" value="C{{{ $index }}}">
                       <i class="fa fa-stop" aria-hidden="true"></i>
                     </button>
                     @if(date('H') < 10 and $a->tipoId == 3)
@@ -124,7 +124,7 @@
                   <td>  <input type="number" name = "volumetria[{{{$index}}}]" /> </td>         
                 @endif 
               @else
-                <td>  <button id='BtnI{{{ $a->processoId }}}' type="submit" class="waves-effect waves-light btn" <?php if (!$aberta->isEmpty()){ ?> disabled <?php   } ?>  name="submit" value="{{{ $index }}}"> 
+                <td>  <button id='BtnI{{{ $a->processoId }}}' type="submit" title="Iniciar o processo." class="waves-effect waves-light btn" <?php if (!$aberta->isEmpty()){ ?> disabled <?php   } ?>  name="submit" value="{{{ $index }}}"> 
                         <i class="fa fa-play" aria-hidden="true"></i>
                       </button> </td>
                   @if (!$aberta->isEmpty() )

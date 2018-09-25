@@ -47,6 +47,16 @@ class Handler extends ExceptionHandler
        /* if (!$exception == null) {
             return redirect()->guest('home');
         }*/
+        if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
+            return redirect()->guest(route('telaLogin'));
+        }
+        if($exception instanceof \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException){
+            return redirect()->guest(route('atividade.home'));
+        }
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException){
+            return redirect()->guest(route('atividade.home'));
+        }
+           
         return parent::render($request, $exception);
     }
 
@@ -63,6 +73,6 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return redirect()->guest(route('login'));
+        return redirect()->guest(route('telaLogin'));
     }
 }

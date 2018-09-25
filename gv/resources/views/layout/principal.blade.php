@@ -24,7 +24,7 @@
             <li><a href="/login">Login</a></li>
           @else
             <li>{{ Auth::user()->name }} </li>
-            <li><a href="/gestaoavista/logout">Logout</a></li>
+            <li><a href="{{ route('logout') }}">Logout</a></li>
           @endif
             <!-- Dropdown Trigger -->
             <ul id="dropdown1" class="dropdown-content">

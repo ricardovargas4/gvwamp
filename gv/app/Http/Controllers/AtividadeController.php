@@ -92,7 +92,7 @@ class AtividadeController extends Controller
             $total ++;
             }
         if($total<>0) {
-            $percPrazo = ($prazo/$total*100)."%";
+            $percPrazo = round($prazo/$total*100,2)."%";
         }else{
             $percPrazo = 0;
         }
