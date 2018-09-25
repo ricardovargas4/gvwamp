@@ -62,10 +62,10 @@ class AtividadeController extends Controller
                           (CASE WHEN atividades.id_processo is not null then 'aberta' else '' end) as hora_fim, 
                           conclusoes.ultima_data,data_final,demandas.id as demandaID"))
         ->orderByDesc('hora_fim')  
-        ->orderByDesc('tipoNome')
-        ->orderByDesc('processoNome')                        
+   
+        ->orderBy('tipoNome')
+        ->orderByDesc('processoNome')                     
         ->get();
-        
         foreach($atividades as $a){
             $a->aberta=0;
             if(!$aberta->isEmpty()){     
@@ -82,7 +82,12 @@ class AtividadeController extends Controller
                 }
             }
         }
-        $atividades = $atividades->sortByDesc('aberta');
+        $atividades->sort(
+            function ($a, $b) {
+                return strcmp($a->tipoNome, $b->tipoNome)
+                    ?: strcmp($a->aberta, $b->aberta);
+            }
+        );
         $total=0;
         $prazo=0;
         foreach ($atividades as $atividade) {
