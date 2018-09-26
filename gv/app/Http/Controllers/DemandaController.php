@@ -22,8 +22,8 @@ class DemandaController extends Controller
             $userFiltro = $usuario;
         }
 
-        $processos = Processo::where('id','=','4')->get();
-        $usuarios = User::all();
+        $processos = Processo::where('id','=','4')->orderBy('nome')->get();
+        $usuarios = User::orderBy('email')->get();
         $demandas = Demanda::where('id_responsavel','like',$userFiltro)
                 ->paginate(15);
         return view('demanda.listagem',compact('demandas','processos','usuarios'));
@@ -37,8 +37,8 @@ class DemandaController extends Controller
 
     public function altera($id){
         $demanda = Demanda::find($id);
-        $users = User::all();
-        $processos = Processo::where('id','=','4')->get();
+        $users = User::orderBy('email')->get();
+        $processos = Processo::where('id','=','4')->orderBy('nome')->get();
         return view('demanda.formulario_alteracao',compact('demanda','users','processos'));
     }
 

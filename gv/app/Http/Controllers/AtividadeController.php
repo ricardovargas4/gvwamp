@@ -234,8 +234,8 @@ class AtividadeController extends Controller
 
     public function lista(){
         $filtro = null;
-        $classificacoes =Classificacao::all();
-        $processos = Processo::all();
+        $classificacoes =Classificacao::orderBy('opcao');
+        $processos = Processo::orderBy('nome');
         return  view('atividade.listagem',compact('filtro','classificacoes','processos'));
     }
     public function filtro(AtividadeRequest $request,$data=null){
@@ -244,9 +244,9 @@ class AtividadeController extends Controller
             $data_inicial = $request->data_inicial;
             $data_final = $request->data_final;
             $usuario =  Auth::user()->id;
-            $processos = Processo::all();
-            $users = User::all();
-            $classificacoes =Classificacao::all();
+            $processos = Processo::orderBy('nome')->get();
+            $users = User::orderBy('email')->get();
+            $classificacoes =Classificacao::orderBy('opcao')->get();
             if($user->can('checkGestor')){
                 $userFiltro = '%';
             }else{
@@ -273,8 +273,8 @@ class AtividadeController extends Controller
         }
         else{
             $filtro = null;
-            $classificacoes =Classificacao::all();
-            $processos = Processo::all();
+            $classificacoes =Classificacao::orderBy('opcao')->get();
+            $processos = Processo::orderBy('nome')->get();
             return  view('atividade.listagem',compact('filtro','classificacoes','processos'));
         }
        

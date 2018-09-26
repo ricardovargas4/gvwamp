@@ -10,9 +10,9 @@ class ClassificacaoController extends Controller
 {
 
     public function lista(){
-        $processos = Processo::all();
+        $processos = Processo::orderBy('nome')->get();
 
-        $classificacoes = Classificacao::all();//->paginate(15);
+        $classificacoes = Classificacao::orderBy('opcao')->get();//->paginate(15);
         return view('classificacao.listagem',compact('classificacoes','processos'));
     }
     public function remove($id){
