@@ -70,25 +70,28 @@
                 @endif
               </td>
               <td> 
-                @if($a->tipoId == 3)
-                  <input type="date" name="data_meta[{{{$index}}}]" value="{{{ $a->data_meta }}}" readonly/> 
-                @elseif($a->tipoId == 4)
-                  <input type="date" name="data_meta[{{{$index}}}]" value="{{{ $a->data_final }}}" readonly/> 
-                @else
-                  <input type="hidden" name="data_meta[{{{$index}}}]" value="" readonly/>   
-                @endif
+                  @if($a->tipoId == 3)
+                    <input type="date" name="data_meta[{{{$index}}}]" value="{{{ $a->data_meta }}}" hidden/>
+                    {{\Carbon\Carbon::parse($a->data_meta)->format('d/m/Y') }}
+                  @elseif($a->tipoId == 4)
+                    <input type="date" name="data_meta[{{{$index}}}]" value="{{{ $a->data_final }}}" hidden/> 
+                    {{\Carbon\Carbon::parse($a->data_final)->format('d/m/Y') }}
+                  @else
+                    <input type="hidden" name="data_meta[{{{$index}}}]" value="" readonly/>   
+                  @endif
               </td>
               <td> 
                 @if($a->tipoId == 3)
-                  <input type=date name="ultima_data[{{{$index}}}]" value="{{{ $a->ultima_data }}}" readonly/> 
+                  <input type=date name="ultima_data[{{{$index}}}]" value="{{{ $a->ultima_data }}}" hidden/> 
+                  {{\Carbon\Carbon::parse($a->ultima_data)->format('d/m/Y') }}
                 @else
-                  <input type="hidden" name="ultima_data[{{{$index}}}]" value="" readonly/>   
+                  <input type="hidden" name="ultima_data[{{{$index}}}]" value=""/>   
                 @endif
               </td>
               @if($a->tipoId==4)
                 <td> <input type="hidden" id='DtConc{{{ $a->processoId }}}' name="data_conciliada[{{{$index}}}]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
               @else
-                <td> <input type=date id='DtConc{{{ $a->processoId }}}' name="data_conciliada[{{{$index}}}]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
+                <td> <input type="text" class="datepicker" placeholder="DD/MM/AAAA" id='DtConc{{{ $a->processoId }}}' name="data_conciliada[{{{$index}}}]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
               @endif
               @if (($a->aberta)==1)
                 <td>  
