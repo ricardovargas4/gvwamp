@@ -146,7 +146,7 @@ class AtividadeController extends Controller
     }
 
     public function iniciar(AtividadeRequest $request){
-
+  
         if(count($request->data_meta)-1<$request->submit){
             $data_metaCalc = null;
         }else{
@@ -157,12 +157,17 @@ class AtividadeController extends Controller
         }else{
             $ultima_dataCalc = $request->ultima_data[$request->submit];
         }
+        
+        //conversão da data conciliada para o formato do DB
+        $data_conciliada = \DateTime::createFromFormat('d/m/Y', $request->data_conciliada[$request->submit]);
+
+
         Atividade::create(['id_processo'=>$request->id_processo[$request->submit],
                             'usuario'=> Auth::user()->id,
                             'data_conciliacao'=>date('Y-m-d H:i:s'),
                             'hora_inicio'=>date('Y-m-d H:i:s'),
                             'data_meta'=>$data_metaCalc,
-                            'data_conciliada'=>$request->data_conciliada[$request->submit],
+                            'data_conciliada'=>$data_conciliada->format('Y-m-d'),
                             'ultima_data'=>$ultima_dataCalc]);
         return redirect()->action('AtividadeController@home');
     }
