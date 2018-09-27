@@ -24,9 +24,9 @@ class Historico_indicController extends Controller
         if(!is_null($request->data_inicial)){
             $data_inicial = $request->data_inicial;
             $data_final = $request->data_final;
-            $periodicidades = Periodicidade::all();
-            $users = User::all();
-            $processos = Processo::all();
+            $periodicidades = Periodicidade::orderBy('nome')->get();
+            $users = User::orderBy('email')->get();
+            $processos = Processo::orderBy('nome')->get();
             $usuario =  Auth::user()->id;
             if($user->can('checkGestor')){
                 $userFiltro = '%';

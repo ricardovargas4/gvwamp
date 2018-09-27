@@ -10,7 +10,7 @@ use gv\User;
 class UserController extends Controller
 {
     public function lista(){
-        $usuarios = User::all();
+        $usuarios = User::orderBy('email')->get();
         return view('usuario.listagem')->with('usuarios', $usuarios);
     }
 

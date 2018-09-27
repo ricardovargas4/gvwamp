@@ -12,9 +12,9 @@ class ProcessoController extends Controller {
 
     public function lista(){
 
-        $tipos = Tipo::all();
-        $periodicidades = Periodicidade::all();
-        $coordenacaos =  Coordenacao::all();
+        $tipos = Tipo::orderBy('nome')->get();
+        $periodicidades = Periodicidade::orderBy('nome')->get();
+        $coordenacaos =  Coordenacao::orderBy('nome')->get();
         $processos= Processo::paginate(15);
         
         return view('processo.listagem',compact('processos','tipos','periodicidades','coordenacaos'));
@@ -28,9 +28,9 @@ class ProcessoController extends Controller {
 
     public function altera($id){
         $processo = Processo::find($id);
-        $tipos = Tipo::all();
-        $periodicidades = Periodicidade::all();
-        $coordenacaos =  Coordenacao::all();
+        $tipos = Tipo::orderBy('nome')->get();
+        $periodicidades = Periodicidade::orderBy('nome')->get();
+        $coordenacaos =  Coordenacao::orderBy('nome')->get();
         return view('processo.formulario_alteracao',compact('processo','tipos','periodicidades','coordenacaos'));
     }
     public function salvaAlt(ProcessosRequest $request){
@@ -43,9 +43,9 @@ class ProcessoController extends Controller {
 
     public function novo(){
 
-        $tipos = Tipo::all();
-        $periodicidades = Periodicidade::all();
-        $coordenacaos =  Coordenacao::all();
+        $tipos = Tipo::orderBy('nome')->get();
+        $periodicidades = Periodicidade::orderBy('nome')->get();
+        $coordenacaos =  Coordenacao::orderBy('nome')->get();
 
         return view('processo.formulario',compact('tipos','periodicidades','coordenacaos'));
     }   

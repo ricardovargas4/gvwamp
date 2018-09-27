@@ -13,8 +13,8 @@ class ResponsavelController extends Controller
 
     public function lista(){
         //$responsavels = Responsavel::all();
-        $users = User::all();
-        $processos = Processo::all();
+        $users = User::orderBy('email')->get();
+        $processos = Processo::orderBy('nome')->get();
         /*$resp = DB::table('responsavels')
         ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
         ->join('users', 'users.id', '=', 'responsavels.usuario')
@@ -32,8 +32,8 @@ class ResponsavelController extends Controller
 
     public function altera($id){
         $responsavel = Responsavel::find($id);
-        $users = User::all();
-        $processos = Processo::all();
+        $users = User::orderBy('email')->get();
+        $processos = Processo::orderBy('nome')->get();
         return view('responsavel.formulario_alteracao',compact('responsavel','users','processos'));
     }
     public function salvaAlt(ResponsavelRequest $request){
@@ -44,8 +44,8 @@ class ResponsavelController extends Controller
 
 
     public function novo(){
-        $users = User::all();
-        $processos = Processo::all();
+        $users = User::orderBy('email')->get();
+        $processos = Processo::orderBy('nome')->get();
         return view('responsavel.formulario',compact('users','processos'));
     }   
 
