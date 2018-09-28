@@ -31,7 +31,10 @@
               @endcan
               <!--<li class="divider"></li>-->
             </ul>
-
+            <li><a class='dropdown-button navBarMenu' href='#' data-activates='dropdown2'>Gráficos<i class="material-icons right">arrow_drop_down</i></a></li>
+              <ul id="dropdown2" class="dropdown-content">
+                <li><a href="{{ route('home.tempo') }}">Tempos</a></li>
+              </ul>
             <!-- Dropdown Trigger -->
             <li><a class='dropdown-button navBarMenu' href='#' data-activates='dropdown1'>Manutenção<i class="material-icons right">arrow_drop_down</i></a></li>
           </ul>
