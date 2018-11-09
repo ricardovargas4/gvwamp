@@ -15,7 +15,7 @@ class ProcessoController extends Controller {
         $tipos = Tipo::orderBy('nome')->get();
         $periodicidades = Periodicidade::orderBy('nome')->get();
         $coordenacaos =  Coordenacao::orderBy('nome')->get();
-        $processos= Processo::paginate(15);
+        $processos= Processo::orderBy('nome')->paginate(15);
         
         return view('processo.listagem',compact('processos','tipos','periodicidades','coordenacaos'));
     }
