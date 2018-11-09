@@ -61,10 +61,10 @@ class AtividadeController extends Controller
                           FLOAT_DIAS_UTEIS(now(),periodicidades.dias) data_meta, 
                           (CASE WHEN atividades.id_processo is not null then 'aberta' else '' end) as hora_fim, 
                           conclusoes.ultima_data,data_final,demandas.id as demandaID"))
-        ->orderByDesc('hora_fim')  
-   
-        ->orderBy('tipoNome')
-        ->orderByDesc('processoNome')                     
+        ->orderBy('hora_fim','DESC')  
+       
+        ->orderBy('tipoNome','ASC')
+        ->orderBy('processoNome','ASC')            
         ->get();
         foreach($atividades as $a){
             $a->aberta=0;
@@ -82,12 +82,12 @@ class AtividadeController extends Controller
                 }
             }
         }
-        $atividades->sort(
+  /*      $atividades->sort(
             function ($a, $b) {
                 return strcmp($a->tipoNome, $b->tipoNome)
                     ?: strcmp($a->aberta, $b->aberta);
             }
-        );
+        );*/
         $total=0;
         $prazo=0;
         foreach ($atividades as $atividade) {
