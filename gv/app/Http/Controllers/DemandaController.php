@@ -22,7 +22,7 @@ class DemandaController extends Controller
             $userFiltro = $usuario;
         }
 
-        $processos = Processo::where('id','=','4')->orderBy('nome')->get();
+        $processos = Processo::where('tipo','=','4')->orderBy('nome')->get();
         $usuarios = User::orderBy('email')->get();
         $demandas = Demanda::where('id_responsavel','like',$userFiltro)
                 ->paginate(15);

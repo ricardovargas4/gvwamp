@@ -72,10 +72,10 @@
               <td> 
                   @if($a->tipoId == 3)
                     <input type="date" name="data_meta[{{{$index}}}]" value="{{{ $a->data_meta }}}" hidden/>
-                    {{\Carbon\Carbon::parse($a->data_meta)->format('d/m/Y') }}
+                    {{$a->data_meta ? \Carbon\Carbon::parse($a->data_meta)->format('d/m/Y') : null }}
                   @elseif($a->tipoId == 4)
                     <input type="date" name="data_meta[{{{$index}}}]" value="{{{ $a->data_final }}}" hidden/> 
-                    {{\Carbon\Carbon::parse($a->data_final)->format('d/m/Y') }}
+                    {{$a->data_final ? \Carbon\Carbon::parse($a->data_final)->format('d/m/Y') : null }}
                   @else
                     <input type="hidden" name="data_meta[{{{$index}}}]" value="" readonly/>   
                   @endif
@@ -83,7 +83,7 @@
               <td> 
                 @if($a->tipoId == 3)
                   <input type=date name="ultima_data[{{{$index}}}]" value="{{{ $a->ultima_data }}}" hidden/> 
-                  {{\Carbon\Carbon::parse($a->ultima_data)->format('d/m/Y') }}
+                  {{ $a->ultima_data ? \Carbon\Carbon::parse($a->ultima_data)->format('d/m/Y') : null }}
                 @else
                   <input type="hidden" name="ultima_data[{{{$index}}}]" value=""/>   
                 @endif

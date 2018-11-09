@@ -60,12 +60,15 @@ class AtividadeController extends Controller
                           tipos.nome as tipoNome, atividades.data_conciliada,
                           FLOAT_DIAS_UTEIS(now(),periodicidades.dias) data_meta, 
                           (CASE WHEN atividades.id_processo is not null then 'aberta' else '' end) as hora_fim, 
-                          conclusoes.ultima_data,data_final,demandas.id as demandaID"))
+                          conclusoes.ultima_data,data_final,demandas.id as demandaID, conclusoes.ultima_data - FLOAT_DIAS_UTEIS(now(),periodicidades.dias) as Ordem, (case when tipos.id = 3 then 2 when tipos.id = 4 then 1 else 0 end )concilicao "))
         ->orderBy('hora_fim','DESC')  
-       
+        ->orderBy('concilicao','DESC')
+        ->orderBy('Ordem','ASC')
         ->orderBy('tipoNome','ASC')
         ->orderBy('processoNome','ASC')            
         ->get();
+        //->toSql();
+        //dd($atividades);
         foreach($atividades as $a){
             $a->aberta=0;
             if(!$aberta->isEmpty()){     
