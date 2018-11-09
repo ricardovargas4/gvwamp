@@ -54,8 +54,8 @@
                           @foreach ($resp as $r)
                             <tr>
                                 <td scope="row">{{$r->id}}</td>
-                                <td> {{$r->id_processo_FK->nome}} </td>
-                                <td> {{$r->usuario_FK->email}} </td>
+                                <td> {{$r->procNome}} </td>
+                                <td> {{$r->email}} </td>
                                 <td>
                                     <div class="row">
                                         <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal1{{$r->id}}">Editar</a>
@@ -68,7 +68,7 @@
                                                     <div class="form-group">
                                                         <label for="id_processo">Nome Processo</label>
                                                         <select name="id_processo" class="form-control">
-                                                            <option value="{{{ $r->id_processo }}}" disabled selected>{{{$r->id_processo_FK->nome}}}</option>
+                                                            <option value="{{{ $r->id_processo }}}" disabled selected>{{{$r->procNome}}}</option>
                                                               @foreach($processos as $p)
                                                                 <option value="{{$p->id}}">{{$p->nome}}</option>
                                                             @endforeach
@@ -78,7 +78,7 @@
                                                     <div class="form-group">
                                                         <label for="usuario">Usuários</label>
                                                         <select name="usuario" class="form-control">
-                                                            <option value="{{{ $r->usuario }}}" disabled selected>{{{$r->usuario_FK->email}}}</option>
+                                                            <option value="{{{ $r->usuario }}}" disabled selected>{{{$r->email}}}</option>
                                                             @foreach($users as $u)
                                                                 <option value="{{$u->id}}">{{$u->email}}</option>
                                                             @endforeach

@@ -15,12 +15,14 @@ class ResponsavelController extends Controller
         //$responsavels = Responsavel::all();
         $users = User::orderBy('email')->get();
         $processos = Processo::orderBy('nome')->get();
-        /*$resp = DB::table('responsavels')
+        $resp = DB::table('responsavels')
         ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
         ->join('users', 'users.id', '=', 'responsavels.usuario')
-        ->select('responsavels.id','processos.nome as procNome', 'processos.id as procID', 'users.email', 'users.id as userID')
-        ->paginate(15);*/
-        $resp=Responsavel::paginate(15);
+        ->select('responsavels.id','processos.nome as procNome', 'processos.id as id_processo', 'users.email', 'users.id as usuario')
+        ->orderBy('processos.nome','ASC')
+        ->orderBy('users.email','ASC')
+        ->paginate(15);
+        //$resp=Responsavel::paginate(15);
         return view('responsavel.listagem',compact('resp','users','processos'));
     }
 
