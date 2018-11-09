@@ -35,18 +35,6 @@
                                                 <option value="3">Analista</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="LDAP">LDAP</label>
-                                        <select name="LDAP" class="form-control">
-                                            <option value="" disabled selected></option>
-                                                <option value="S">Sim</option>
-                                                <option value="N">Não</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="password">Senha</label>
-                                        <input type= "password" name="password" class="form-control"/>
-                                    </div>
                                     <button type="submit" class="btn waves-effect light-green accent-3"> Salvar</button>
                                 </form>
                             </div>
@@ -59,7 +47,6 @@
                                 <th>Nome </th>
                                 <th>Login </th>
                                 <th>Nível </th>
-                                <th>LDAP </th>
                                 <th>Alterar/Excluir </th>
                             </tr>
                         </thead>
@@ -77,11 +64,6 @@
                                     <td>Analista</td>
                                 @else
                                     <td></td>
-                                @endif
-                                @if($u->LDAP == 'S' ) 
-                                    <td>Sim</td>
-                                @else
-                                    <td>Não</td>
                                 @endif
                                 <td>
                                     <div class="row">
@@ -118,24 +100,6 @@
                                                                 <option value="2">Gestor</option>
                                                                 <option value="3">Analista</option>
                                                         </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="LDAP">LDAP</label>
-                                                        <select name="LDAP" class="form-control">
-                                                            <option value="{{$u->LDAP}}" disabled selected> 
-                                                                @if($u->LDAP == "S" ) 
-                                                                    Sim
-                                                                @elseif($u->LDAP == "N" )
-                                                                    Não
-                                                                @endif
-                                                            </option>
-                                                            <option value="S">Sim</option>
-                                                            <option value="N">Não</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="password">Nova Senha</label>
-                                                        <input type= "password" name="password" class="form-control"/>
                                                     </div>
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
                                                     <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>

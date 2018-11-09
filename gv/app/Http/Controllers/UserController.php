@@ -24,18 +24,18 @@ class UserController extends Controller
         //dd($request)
         $id = $request->id;
         $usuario = User::find($id);
-        if($usuario->LDAP == 'N'){
+        /*if($usuario->LDAP == 'N'){
             $request->offsetSet('password',bcrypt($request->password));  
-        }
+        }*/
         User::whereId($id)->update($request->except('_token'));
         return redirect()->action('UserController@lista')->withInput(Request::only('nome'));
     }
 
     public function adiciona(UsuarioRequest $request){
        // $request->offsetSet('password',bcrypt($request->password));
-        if($request->LDAP == 'N'){
+        /*if($request->LDAP == 'N'){
             $request->offsetSet('password',bcrypt($request->password));  
-        }
+        }*/
         User::create($request->all());
         return redirect()->action('UserController@lista')->withInput(Request::only('nome'));
     }
