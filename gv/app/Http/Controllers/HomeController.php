@@ -47,6 +47,11 @@ class HomeController extends Controller
          }else{
             $filtroProc=null; 
          }     
+         if(isset($request->tipo_relatorio)){
+            $tipo_relatorio = $request->tipo_relatorio;
+         }else{
+            $tipo_relatorio=null; 
+         }  
          //dd($request->filtroProc->to_array());
         $coordenacaos = Coordenacao::orderBy('nome')->get();
         if(isset($request->coordenacao)){
@@ -63,7 +68,7 @@ class HomeController extends Controller
             $data_inicial = date('Y-m-d', strtotime('-15 day', strtotime(date('Y-m-d'))));
             $data_final = date('Y-m-d');
         }    
-        return view('chartjs',compact('data_inicial','data_final','coordenacao','coordenacaos','processos','filtroProc'));
+        return view('relatorios.tempo',compact('data_inicial','data_final','coordenacao','coordenacaos','processos','filtroProc','tipo_relatorio'));
        // $coordenacaos = null;
        // return view('coordenacao.listagem')->with('coordenacaos', $coordenacaos);
     }
@@ -88,31 +93,58 @@ class HomeController extends Controller
         ->whereIn('processos.id',$processosSelec)
         ->groupby('arg')
         ->get();
-
-        $data2 = DB::table('atividades')
-        ->join('processos', 'atividades.id_processo', '=', 'processos.id')
-        ->join('users', 'users.id', '=', 'atividades.usuario')
-        ->select(DB::raw("atividades.data_conciliacao as arg, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val, users.email as parentID, '' as parentID2"))
-        //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
-        ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
-        ->where('processos.coordenacao','like',$coordenacaoID)
-        ->whereIn('processos.id',$processosSelec )
-        //->whereIn('processos.id',$request->processosSelec )
-        ->groupby('arg', 'parentID')
-        ->get();
+        if($request->tipo_relatorio == 2){
+            $data2 = DB::table('atividades')
+            ->join('processos', 'atividades.id_processo', '=', 'processos.id')
+            ->join('users', 'users.id', '=', 'atividades.usuario')
+            ->select(DB::raw("atividades.data_conciliacao as arg, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val, users.email as parentID, '' as parentID2"))
+            //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
+            ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
+            ->where('processos.coordenacao','like',$coordenacaoID)
+            ->whereIn('processos.id',$processosSelec )
+            //->whereIn('processos.id',$request->processosSelec )
+            ->groupby('arg', 'parentID')
+            ->get();
+            
+            $data3 = DB::table('atividades')
+            ->join('processos', 'atividades.id_processo', '=', 'processos.id')
+            ->join('users', 'users.id', '=', 'atividades.usuario')
+            ->select(DB::raw("processos.nome as arg, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val, users.email as parentID, atividades.data_conciliacao as parentID2 "))
+            //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
+            ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
+            ->where('processos.coordenacao','like',$coordenacaoID)
+            ->whereIn('processos.id',$processosSelec )
+            //->whereIn('processos.id',$request->processosSelec )
+            ->groupby('arg', 'parentID', 'parentID2')
+            ->orderby('val')
+            ->get();
+        }else{
+            $data2 = DB::table('atividades')
+            ->join('processos', 'atividades.id_processo', '=', 'processos.id')
+            ->join('users', 'users.id', '=', 'atividades.usuario')
+            ->select(DB::raw("processos.nome as arg, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val, users.email as parentID, '' as parentID2"))
+            //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
+            ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
+            ->where('processos.coordenacao','like',$coordenacaoID)
+            ->whereIn('processos.id',$processosSelec )
+            //->whereIn('processos.id',$request->processosSelec )
+            ->groupby('arg', 'parentID')
+            ->get();
+            
+            $data3 = DB::table('atividades')
+            ->join('processos', 'atividades.id_processo', '=', 'processos.id')
+            ->join('users', 'users.id', '=', 'atividades.usuario')
+            ->select(DB::raw("atividades.data_conciliacao as arg, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val, users.email as parentID, processos.nome as parentID2 "))
+            //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
+            ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
+            ->where('processos.coordenacao','like',$coordenacaoID)
+            ->whereIn('processos.id',$processosSelec )
+            //->whereIn('processos.id',$request->processosSelec )
+            ->groupby('arg', 'parentID', 'parentID2')
+            ->orderby('val')
+            ->get();
+        }
         
-        $data3 = DB::table('atividades')
-        ->join('processos', 'atividades.id_processo', '=', 'processos.id')
-        ->join('users', 'users.id', '=', 'atividades.usuario')
-        ->select(DB::raw("processos.nome as arg, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val, users.email as parentID, atividades.data_conciliacao as parentID2 "))
-        //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
-        ->whereBetween('atividades.data_conciliacao', [$request->dataInicial, $request->dataFinal])
-        ->where('processos.coordenacao','like',$coordenacaoID)
-        ->whereIn('processos.id',$processosSelec )
-        //->whereIn('processos.id',$request->processosSelec )
-        ->groupby('arg', 'parentID', 'parentID2')
-        ->orderby('val')
-        ->get();
         foreach($data2 as $value){
             $data->push($value);
         }

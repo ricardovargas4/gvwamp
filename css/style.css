@@ -157,22 +157,28 @@ label {
   font-size: 18px;
 }
 
-.dataIniChart{
+.filtroTipoRelatorio{
   position: absolute;
   top: 0%;
   left: 13%;
   font-size: 18px;
 }
+.dataIniChart{
+  position: absolute;
+  top: 0%;
+  left: 24%;
+  font-size: 18px;
+}
 .dataFimChart{
   position: absolute;
   top: 0%;
-  left: 30%;
+  left: 36%;
   font-size: 18px;
 }
 .filtroCoordChart{
   position: absolute;
   top: 0%;
-  left: 50%;
+  left: 48%;
   font-size: 18px;
 }
 .filtroProcChart{
@@ -187,7 +193,7 @@ label {
 .botaoFiltroChart{
   position: absolute;
   top: 38%;
-  left: 80%;
+  left: 74%;
   font-size: 18px;
 }
 

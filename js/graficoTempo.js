@@ -1,5 +1,5 @@
 
-function dadosBanco(token,dataInicial,dataFinal,coordenacaoID,processosSelec, urlrota,callback) {
+function dadosBanco(token,dataInicial,dataFinal,coordenacaoID,processosSelec, urlrota,tipo_relatorio,callback) {
     $.ajax({
     /*method: 'GET',
         url: urlrota,
@@ -17,6 +17,7 @@ function dadosBanco(token,dataInicial,dataFinal,coordenacaoID,processosSelec, ur
             "dataFinal": dataFinal,
             "coordenacaoID": coordenacaoID,
             "processosSelec": processosSelec,
+            "tipo_relatorio": tipo_relatorio,
         },
         success:callback,
         error: function(error){
@@ -56,7 +57,9 @@ $(function () {
     var dataInicial = document.getElementById("dataInicial").value;
     var dataFinal = document.getElementById("dataFinal").value;
     var coordenacaoID = document.getElementById("coordenacaoID").value;
-    dadosBanco(token,dataInicial,dataFinal,coordenacaoID,listaProc(),urlrota,function(data){
+    var tipo_relatorio = document.getElementById("tipo_relatorio").value;
+    console.log(tipo_relatorio);
+    dadosBanco(token,dataInicial,dataFinal,coordenacaoID,listaProc(),urlrota,tipo_relatorio,function(data){
         var parent = new Array()
         var parent2 = new Array()
         var tempo = new Array();
