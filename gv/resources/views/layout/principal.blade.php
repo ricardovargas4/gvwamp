@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php $AppVersion = "1.0.0.12"; ?>
+    <?php $AppVersion = "1.0.0.13"; ?>
 
     <link href="{{ asset('lib/materialize/dist/css/materialize.css') }} " rel="stylesheet">
     <link href="{{ asset('css/app.css') }} " rel="stylesheet">

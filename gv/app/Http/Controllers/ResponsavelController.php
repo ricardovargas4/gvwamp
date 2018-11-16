@@ -13,6 +13,16 @@ class ResponsavelController extends Controller
 
     public function lista(){
         //$responsavels = Responsavel::all();
+        //dd(isset($_GET['page']));
+        /*if(isset($_GET['page'])){
+            $currentPage = $_GET['page'];
+        }else{
+            $currentPage = 1;
+        }
+        \Illuminate\Pagination\Paginator::currentPageResolver(function () use ($currentPage) {
+            return $currentPage;
+        });*/
+    //dd( $currentPage);
         $users = User::orderBy('email')->get();
         $processos = Processo::orderBy('nome')->get();
         $resp = DB::table('responsavels')
@@ -39,9 +49,12 @@ class ResponsavelController extends Controller
         return view('responsavel.formulario_alteracao',compact('responsavel','users','processos'));
     }
     public function salvaAlt(ResponsavelRequest $request){
+        //dd($request->page);
+        $page = $request->page;
         $id = $request->id;
-        Responsavel::whereId($id)->update($request->except('_token'));
-        return redirect()->action('ResponsavelController@lista')->withInput(Request::only('usuario'));
+        Responsavel::whereId($id)->update($request->except('_token','page'));
+        //return redirect()->action('ResponsavelController@lista')->withInput(Request::only('page',$page));
+        return redirect()->action('ResponsavelController@lista',['page'=>$page]);
     }
 
 

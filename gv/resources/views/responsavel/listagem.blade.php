@@ -15,7 +15,6 @@
                             <div class="collapsible-body">
                                 <form action="{{ route('responsavel.adiciona') }}" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-                                    
                                     <div class="form-group">
                                         <label for="id_processo">Nome Processo</label>
                                         <select name="id_processo" class="form-control">
@@ -64,6 +63,7 @@
                                                 <form action="{{ route('responsavel.salvaAlt') }}" method="post">
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                 <input type="hidden" name="id" value="{{{ $r->id }}}" />
+                                                <input type="hidden" name="page" value="{{{ isset($_GET['page']) ? $_GET['page'] : 1}}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
                                                     <div class="form-group">
                                                         <label for="id_processo">Nome Processo</label>

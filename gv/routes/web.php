@@ -43,6 +43,7 @@ Route::group(['middleware'=>'auth'],function(){
 
     //Responsavel
     Route::get('/responsavel', ['uses'=>'ResponsavelController@lista', 'as'=>'responsavel.lista']);
+    Route::get('/responsavel/?page={?}', ['uses'=>'ResponsavelController@lista', 'as'=>'responsavel.lista']);
 
     //Atividade
     Route::get('/home', ['uses'=>'AtividadeController@home', 'as'=>'atividade.home']);
