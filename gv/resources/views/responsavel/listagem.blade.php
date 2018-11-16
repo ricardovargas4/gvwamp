@@ -90,7 +90,7 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('ResponsavelController@remove', $r->id)}}' : false)">Deletar</a>
+                                        <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('ResponsavelController@remove', [$r->id,empty($_GET['page']) ? 1 : $_GET['page']])}}' : false)">Deletar</a>
                                     </div>
                                 </td>
                             </tr>

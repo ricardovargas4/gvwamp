@@ -101,7 +101,7 @@ Route::group(['middleware'=>'auth'],function(){
         Route::post('/periodicidade/salvaAlt',['uses'=>'PeriodicidadeController@salvaAlt', 'as'=>'periodicidade.salvaAlt']);
         
         //Responsavel
-        Route::get('/responsavel/remove/{id}', ['uses'=>'ResponsavelController@remove', 'as'=>'responsavel.remove']);
+        Route::get('/responsavel/remove/{id}/{page?}', ['uses'=>'ResponsavelController@remove', 'as'=>'responsavel.remove']);
         Route::get('/responsavel/novo', ['uses'=>'ResponsavelController@novo', 'as'=>'responsavel.novo']);
         Route::post('/responsavel/adiciona',['uses'=>'ResponsavelController@adiciona', 'as'=>'responsavel.adiciona']);
         Route::get('/responsavel/altera/{id}', ['uses'=>'ResponsavelController@altera', 'as'=>'responsavel.altera']);

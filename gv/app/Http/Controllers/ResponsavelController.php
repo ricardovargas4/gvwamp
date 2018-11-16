@@ -36,10 +36,10 @@ class ResponsavelController extends Controller
         return view('responsavel.listagem',compact('resp','users','processos'));
     }
 
-    public function remove($id){
+    public function remove($id,$page){
         $responsavel = Responsavel::find($id);
         $responsavel->delete();
-        return redirect()->action('ResponsavelController@lista');
+        return redirect()->action('ResponsavelController@lista',['page'=>$page]);
     }
 
     public function altera($id){
