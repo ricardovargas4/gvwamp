@@ -80,6 +80,7 @@ Route::group(['middleware'=>'auth'],function(){
 
         //Processo
         Route::get('/processo', ['uses'=>'ProcessoController@lista', 'as'=>'processo.lista']);
+        Route::get('/processo/?page={?}', ['uses'=>'ProcessoController@lista', 'as'=>'processo.lista']);
         Route::get('/processo/novo', ['uses'=>'ProcessoController@novo', 'as'=>'processo.novo']);
         Route::post('/processo/adiciona', ['uses'=>'ProcessoController@adiciona', 'as'=>'processo.adiciona']);
         Route::get('/processo/altera/{id}',['uses'=>'ProcessoController@altera', 'as'=>'processo.altera']);
@@ -137,7 +138,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::group(['middleware'=>'Verifica.Desenvolvedor'],function(){
     //Adm
     //Processo
-        Route::get('/processo/remove/{id}',  ['uses'=>'ProcessoController@remove', 'as'=>'processo.remove']);
+        Route::get('/processo/remove/{id}/{page?}',  ['uses'=>'ProcessoController@remove', 'as'=>'processo.remove']);
 
         //Tipo
         Route::get('/tipo/novo', ['uses'=>'TipoController@novo', 'as'=>'tipo.novo']);

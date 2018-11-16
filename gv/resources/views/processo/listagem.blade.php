@@ -93,6 +93,7 @@
                                                 <form action="{{ route('processo.salvaAlt') }}" method="post">
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                 <input type="hidden" name="id" value="{{{ $p->id }}}" />
+                                                <input type="hidden" name="page" value="{{{ is_null($_GET['page']) ? $_GET['page'] : 1}}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
                                                     <div class="form-group">
                                                         <label for="nome">Nome</label>
@@ -147,7 +148,7 @@
                                             </div>
                                         </div>
                                         @can('checkDev')
-                                            <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('ProcessoController@remove', $p->id)}}' : false)">Deletar</a>
+                                            <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('ProcessoController@remove', [$p->id,empty($_GET['page']) ? 1 : $_GET['page']])}}' : false)">Deletar</a>
                                         @endcan
                                     </div>
                                 </td>
