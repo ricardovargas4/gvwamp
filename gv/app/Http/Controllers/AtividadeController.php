@@ -102,7 +102,7 @@ class AtividadeController extends Controller
         if($total<>0) {
             $percPrazo = round($prazo/$total*100,2)."%";
         }else{
-            $percPrazo = 0;
+            $percPrazo = "0%";
         }
        
         $prazoM = 0;
@@ -122,7 +122,7 @@ class AtividadeController extends Controller
         if($totalM<>0) {
             $percPrazoMes = round($prazoM/$totalM*100,2)."%";
         }else{
-            $percPrazoMes = 0;
+            $percPrazoMes = "0%";
         }
 
         $prazoA = 0;
@@ -142,7 +142,7 @@ class AtividadeController extends Controller
         if($totalA<>0) {
             $percPrazoAno = round($prazoA/$totalA*100,2)."%";
         }else{
-            $percPrazoAno = 0;
+            $percPrazoAno = "0%";
         }
         return view('atividade.telaAtividades',compact('atividades','usuario_id','aberta','percPrazo','percPrazoMes','percPrazoAno','classificacoes','processosVol','demanda'));
 

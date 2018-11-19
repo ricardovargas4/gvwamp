@@ -141,7 +141,7 @@ class HomeController extends Controller
             ->whereIn('processos.id',$processosSelec )
             //->whereIn('processos.id',$request->processosSelec )
             ->groupby('arg', 'parentID', 'parentID2')
-            ->orderby('val')
+            ->orderby('arg')
             ->get();
         }
         
