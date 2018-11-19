@@ -46,7 +46,7 @@ class AtividadeController extends Controller
         ->join('periodicidades', 'periodicidades.id', '=', 'processos.periodicidade')
         ->join('users', 'users.id', '=', 'responsavels.usuario')
         ->join('tipos', 'tipos.id', '=', 'processos.tipo')
-        ->leftjoin(DB::raw('(select id_processo, data_conciliada from atividades where hora_fim is null) atividades'), function($join) {$join->on('atividades.id_processo', '=', 'processos.id'); })
+        ->leftjoin(DB::raw('(select id_processo, data_conciliada, usuario from atividades where hora_fim is null) atividades'), function($join) {$join->on('atividades.id_processo', '=', 'processos.id'); $join->on('atividades.usuario', '=', 'users.id'); })
         ->leftjoin(DB::raw('(select id_processo, max(data_conciliada) ultima_data from conclusoes group by id_processo) conclusoes'), function($join) {$join->on('conclusoes.id_processo', '=', 'processos.id'); })
         ->leftjoin(DB::raw('(select id, id_processo, data_final, id_responsavel from demandas where data_conclusao is null) demandas'), function($join) {$join->on('demandas.id_processo', '=', 'processos.id');$join->on('users.id', '=', 'demandas.id_responsavel'); })
         ->where('users.id','=',$usuario_id)
