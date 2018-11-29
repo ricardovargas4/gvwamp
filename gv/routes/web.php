@@ -43,7 +43,12 @@ Route::group(['middleware'=>'auth'],function(){
 
     //Responsavel
     Route::get('/responsavel', ['uses'=>'ResponsavelController@lista', 'as'=>'responsavel.lista']);
-    Route::get('/responsavel/?page={?}', ['uses'=>'ResponsavelController@lista', 'as'=>'responsavel.lista']);
+    //Route::get('/responsavel/?page={?}', ['uses'=>'ResponsavelController@lista', 'as'=>'responsavel.lista']);
+    //Route::match(array('GET', 'POST'),'/responsavel', ['uses'=>'ResponsavelController@lista', 'as'=>'responsavel.lista']);
+    //Route::match(array('GET', 'POST'),'/responsavel/?page={?}', ['uses'=>'ResponsavelController@lista', 'as'=>'responsavel.lista']);
+    //Route::post('/responsavel/filtro', ['uses'=>'ResponsavelController@listaPost', 'as'=>'responsavel.listaPost']);
+    Route::match(array('GET', 'POST'),'/responsavel/filtro',['uses'=>'ResponsavelController@filtro','as'=>'responsavel.filtro']);
+
 
     //Atividade
     Route::get('/home', ['uses'=>'AtividadeController@home', 'as'=>'atividade.home']);
@@ -81,31 +86,26 @@ Route::group(['middleware'=>'auth'],function(){
         //Processo
         Route::get('/processo', ['uses'=>'ProcessoController@lista', 'as'=>'processo.lista']);
         Route::get('/processo/?page={?}', ['uses'=>'ProcessoController@lista', 'as'=>'processo.lista']);
-        Route::get('/processo/novo', ['uses'=>'ProcessoController@novo', 'as'=>'processo.novo']);
         Route::post('/processo/adiciona', ['uses'=>'ProcessoController@adiciona', 'as'=>'processo.adiciona']);
-        Route::get('/processo/altera/{id}',['uses'=>'ProcessoController@altera', 'as'=>'processo.altera']);
         Route::post('/processo/salvaAlt',['uses'=>'ProcessoController@salvaAlt', 'as'=>'processo.salvaAlt']);
         
         //Coordenacao
         Route::get('/coordenacao', ['uses'=>'CoordenacaoController@lista', 'as'=>'coordenacao.lista']);
-        Route::get('/coordenacao/novo', ['uses'=>'CoordenacaoController@novo', 'as'=>'coordenacao.novo']);
         Route::post('/coordenacao/adiciona',['uses'=>'CoordenacaoController@adiciona', 'as'=>'coordenacao.adiciona']);
-        Route::get('/coordenacao/altera/{id}',['uses'=>'CoordenacaoController@altera', 'as'=>'coordenacao.altera']);
         Route::post('/coordenacao/salvaAlt',['uses'=>'CoordenacaoController@salvaAlt', 'as'=>'coordenacao.salvaAlt']);
 
         //Periodicidade
         Route::get('/periodicidade', ['uses'=>'PeriodicidadeController@lista', 'as'=>'periodicidade.lista']);
-        Route::get('/periodicidade/novo', ['uses'=>'PeriodicidadeController@novo', 'as'=>'periodicidade.novo']);
         Route::post('/periodicidade/adiciona',['uses'=>'PeriodicidadeController@adiciona', 'as'=>'periodicidade.adiciona']);
-        Route::get('/periodicidade/altera/{id}',['uses'=>'PeriodicidadeController@altera', 'as'=>'periodicidade.altera']);
         Route::post('/periodicidade/salvaAlt',['uses'=>'PeriodicidadeController@salvaAlt', 'as'=>'periodicidade.salvaAlt']);
         
         //Responsavel
-        Route::get('/responsavel/remove/{id}/{page?}', ['uses'=>'ResponsavelController@remove', 'as'=>'responsavel.remove']);
-        Route::get('/responsavel/novo', ['uses'=>'ResponsavelController@novo', 'as'=>'responsavel.novo']);
+        //Route::get('/responsavel/remove/{id}/{page?}', ['uses'=>'ResponsavelController@remove', 'as'=>'responsavel.remove']);
         Route::post('/responsavel/adiciona',['uses'=>'ResponsavelController@adiciona', 'as'=>'responsavel.adiciona']);
-        Route::get('/responsavel/altera/{id}', ['uses'=>'ResponsavelController@altera', 'as'=>'responsavel.altera']);
-        Route::post('/responsavel/salvaAlt',['uses'=>'ResponsavelController@salvaAlt', 'as'=>'responsavel.salvaAlt']);
+        //Route::post('/responsavel/salvaAlt',['uses'=>'ResponsavelController@salvaAlt', 'as'=>'responsavel.salvaAlt']);
+        //Route::get('/responsavel/remove/{id}/{filtroId_processo?}/{filtroUsuario?}', ['uses'=>'ResponsavelController@remove','as'=>'responsavel.remove']);
+        Route::post('/responsavel/remove', ['uses'=>'ResponsavelController@remove','as'=>'responsavel.remove']);
+        Route::post('/responsavel/salvaAlt',['uses'=>'ResponsavelController@salvaAlt','as'=>'responsavel.salvaAlt']);
 
         //Historico_Indicador
         Route::post('/historico_indic/adiciona',['uses'=>'Historico_indicController@adiciona', 'as'=>'historico.adiciona']);

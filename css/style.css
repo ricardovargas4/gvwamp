@@ -55,6 +55,8 @@ canvas {
 
 .cad_card{
   margin: 2rem 0 2rem 0;
+/*  top:115px;
+  position: relative;*/
 }
 
 .dropdown-content li > a, .dropdown-content li > span{
@@ -156,6 +158,34 @@ label {
   top: 20%;
   left: 45%;
   font-size: 18px;
+}
+/*.containerCard{
+  padding-top: 115px;
+}*/
+.filtroId_processo{
+  position: absolute;
+  top: 0%;
+  left: 20%;
+  font-size: 18px;
+} 
+.filtroUsuario{
+  position: absolute;
+  top: 0%;
+  left: 5%;
+  font-size: 18px;
+} 
+.botaoFiltroResp{
+  position: absolute;
+  top: 38%;
+  left: 85%;
+  font-size: 18px;
+}
+.containerFiltroResp{
+  height: 200px;
+  position: relative;
+  width: 100%;
+  display: flex;
+  padding: 50px !important;
 }
 
 .filtroTipoRelatorio{
