@@ -31,11 +31,15 @@ Route::get('/', function () {
 
 Route::group(['middleware'=>'auth'],function(){
 
-    Route::match(array('GET', 'POST'),'/relatorio/tempo',['uses'=>'HomeController@tempo','as'=>'home.tempo']);
-    
     Route::get('/hello', ['uses'=>'HomeController@hello', 'as'=>'home.hello']);
-    //Route::get('/dados/tempo/{dataInicial}/{dataFinal}/{coordenacaoID}', ['uses'=>'HomeController@dadosTempos', 'as'=>'home.dadosTempos']);
+    
+    Route::match(array('GET', 'POST'),'/relatorio/tempo',['uses'=>'HomeController@tempo','as'=>'home.tempo']);
     Route::post('/dados/tempo', ['uses'=>'HomeController@dadosTempos', 'as'=>'home.dadosTempos']);
+    //Route::get('/dados/tempo/{dataInicial}/{dataFinal}/{coordenacaoID}', ['uses'=>'HomeController@dadosTempos', 'as'=>'home.dadosTempos']);
+    
+    Route::match(array('GET', 'POST'),'/relatorio/indicador',['uses'=>'HomeController@indicador','as'=>'home.indicador']);
+    Route::post('/dados/Indicador', ['uses'=>'HomeController@dadosIndicador', 'as'=>'home.dadosIndicador']);
+
 
     //Route::get('/login','LoginController@Form');
     //Route::post('/login','LoginController@Login');
