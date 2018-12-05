@@ -36,7 +36,7 @@ function filtrar(dados,argumento,argumento2){
             return { data2: data2} 
         }
 
-$(function () {
+$(document).ready(function () {
     function listaProc() {
         var checa = $("input:checkbox")
         var numElementos = checa.length;
@@ -83,7 +83,7 @@ $(function () {
             data: {
                 labels: usuarios,
                 datasets: [{
-                    label: 'Tempos',
+                    label: 'Indicador',
                     data: tempo,
                     backgroundColor: '#00E676',
                     borderWidth: 1

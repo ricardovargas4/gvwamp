@@ -2,7 +2,7 @@
 
 
 @section('conteudo')
-
+<script src="{{ asset('js/graficoTempo.js') }}?v={{ $AppVersionCons}}"></script>  
 <br>
 <div class="containerFiltro">
     <div class="form-group">
@@ -82,5 +82,5 @@
         </form>
     </div>
     -->
-  
+
 @endsection

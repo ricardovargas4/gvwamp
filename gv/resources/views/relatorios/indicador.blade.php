@@ -2,6 +2,7 @@
 
 
 @section('conteudo')
+<script src="{{ asset('js/graficoIndicador.js') }}?v={{ $AppVersionCons}}"></script>
 
 <br>
 <div class="containerFiltro">
@@ -82,5 +83,6 @@
         </form>
     </div>
     -->
-  
+
+
 @endsection
