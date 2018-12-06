@@ -22,6 +22,7 @@ Auth::routes();
 //Route::get('/auth/logout', ['uses'=>'Auth\AuthController@logout', 'as'=>'logout']);
 //Route::get('/auth/login', 'Auth\AuthController@login');
 //Route::post('/login2', 'Auth\AuthController@login');
+
 Route::post('/loginLdap', ['uses'=>'Auth\AuthController@login', 'as'=>'loginLdap']);
 Route::get('/teste', 'AtividadeController@teste');
 Route::get('/login',  ['uses'=>'Auth\AuthController@telaLogin', 'as'=>'telaLogin']);
@@ -84,6 +85,12 @@ Route::group(['middleware'=>'auth'],function(){
     Route::group(['middleware'=>'Verifica.Gestor'],function(){
     //Gestor
     
+        //Relatorios    
+        Route::get('/relatorio/usuarios', ['uses'=>'UserController@RelatorioUsuarios', 'as'=>'RelatorioUsuarios']);
+        Route::get('/relatorio/responsaveis', ['uses'=>'ResponsavelController@RelatorioResp', 'as'=>'RelatorioResp']);
+        Route::get('/relatorio/indicador', ['uses'=>'ResponsavelController@RelatorioIndicador', 'as'=>'RelatorioIndicador']);
+        Route::get('/relatorio/indicadorAnalitico', ['uses'=>'ResponsavelController@RelatorioIndicador', 'as'=>'RelatorioIndicadorAnalitico']);
+
         //Tipo
         Route::get('/tipo', ['uses'=>'TipoController@lista', 'as'=>'tipo.lista']);
 

@@ -12,6 +12,7 @@ use gv\Periodicidade;
 use gv\User;
 use \Datetime;
 use Auth;
+use Excel;
 
 class Historico_indicController extends Controller
 {
@@ -133,6 +134,54 @@ class Historico_indicController extends Controller
             $filtro = null;
             return  view('historico_indic.indicador_atrasado',compact('filtro'));
         }
+    }
+
+    public function RelatorioIndicador() {
+
+        //$dados = Responsavel::all();
+        $dados = DB::table('responsavels')
+        ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
+        ->join('users', 'users.id', '=', 'responsavels.usuario')
+        ->join('coordenacaos', 'processos.coordenacao', '=', 'coordenacaos.id')
+        ->select('processos.nome as processo', 'users.email as usuario', 'coordenacaos.nome as coordenacao')
+        ->orderBy('processos.nome','ASC')
+        ->orderBy('users.email','ASC')
+        ->get();
+        $dados= json_decode( json_encode($dados), true);
+        $tam = count($dados) + 1;
+
+        Excel::create('Relatório Responsáveis', function($excel) use ($dados, $tam) {
+            $excel->setTitle('Relatório GV');
+            $excel->setCreator('Gestão à Vista')->setCompany('Confederação Sicredi');
+
+            // Build the spreadsheet, data in the data array
+            $excel->sheet('Relatório', function($sheet) use ($dados, $tam) {
+                $sheet->fromArray($dados);
+                $sheet->setStyle([
+                    'borders' => [
+                        'allborders' => [
+                            'color' => [
+                                'rgb' => '#000000'
+                            ]
+                        ]
+                    ]
+                ]);
+                $sheet->row(1, function($row) {
+                    // call cell manipulation methods
+                    $row->setBackground('#808080');
+                    $row->setFontWeight('bold');
+                    //$row->setBorder('solid','solid','solid','solid');
+
+                });
+                //$sheet->setAllBorders('thin');
+                $sheet->setBorder('A1:D'.$tam, 'thin');
+                //$sheet->setAutoFilter();
+                $sheet->setAutoSize(true);
+            });
+            
+        })->download('xls');
+
+        return true;
     }
 
 }
