@@ -16,6 +16,7 @@ use gv\Volumetria;
 use gv\Observacao;
 use gv\User;
 use Carbon\Carbon;
+use Excel;
 
 class AtividadeController extends Controller
 {
@@ -400,5 +401,65 @@ class AtividadeController extends Controller
 
         dd($data);
         
+    }
+
+    public function RelatorioTempos(){
+        $filtro = null;
+        return  view('relatorios.tempos',compact('filtro'));
+    }
+
+    public function RelatorioTemposAnalitico(AtividadeRequest $request) {
+
+        $tempos= DB::table('atividades')
+        ->join('users', 'users.id', '=', 'atividades.usuario')
+        ->join('processos', 'atividades.id_processo', '=', 'processos.id')
+        ->select(DB::RAW('usuario,users.email , id_processo,processos.nome,data_conciliacao, hora_inicio, hora_fim,data_conciliada'))
+        ->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
+         ->orderBy('users.email')
+        ->orderBy('data_conciliacao')
+        ->orderBy('hora_inicio')                
+        ->get();
+        //->toSql();
+
+        $tempos->transform(function($i) {
+            unset($i->id_processo);
+            unset($i->usuario);
+            return $i;
+        });
+        $dados= json_decode( json_encode($tempos), true);
+        $tam = count($dados) + 1;
+
+        Excel::create('Relatório Tempos', function($excel) use ($dados, $tam) {
+            $excel->setTitle('Relatório GV');
+            $excel->setCreator('Gestão à Vista')->setCompany('Confederação Sicredi');
+
+            // Build the spreadsheet, data in the data array
+            $excel->sheet('Relatório', function($sheet) use ($dados, $tam) {
+                $sheet->fromArray($dados);
+                $sheet->setStyle([
+                    'borders' => [
+                        'allborders' => [
+                            'color' => [
+                                'rgb' => '#000000'
+                            ]
+                        ]
+                    ]
+                ]);
+                $sheet->row(1, function($row) {
+                    // call cell manipulation methods
+                    $row->setBackground('#808080');
+                    $row->setFontWeight('bold');
+                    //$row->setBorder('solid','solid','solid','solid');
+
+                });
+                //$sheet->setAllBorders('thin');
+                $sheet->setAutoSize(true);
+                $sheet->setBorder('A1:F'.$tam, 'thin');
+                //$sheet->setAutoFilter();
+            });
+            
+        })->download('xls');
+
+        return true;
     }    
 }

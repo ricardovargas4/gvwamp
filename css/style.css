@@ -177,7 +177,7 @@ label {
 .botaoFiltroResp{
   position: absolute;
   top: 38%;
-  left: 85%;
+  left: 87%;
   font-size: 18px;
 }
 .containerFiltroResp{
@@ -279,4 +279,44 @@ a:hover {
   text-decoration: none;
 }
 
+.containerDown{
+  height: 140px;
+  margin-top: 20px;
+  position: relative;
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid #636b6f;
+  /*border-radius: 5px;*/
+  font-family: Raleway,sans-serif;
+}
 
+.TituloRelat{
+  position: absolute;
+  top: 0%;
+  left: 13%;
+  font-size: 18px;
+  color: #9e9e9e;
+  font-weight: bold;
+}
+
+.dataIniIndic{
+
+  position: absolute;
+  top: 30%;
+  left: 13%;
+  font-size: 18px;
+
+
+}
+.dataFimIndic{
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  font-size: 18px;
+}
+.botaoDownIndic{
+  position: absolute;
+  top: 50%;
+  left: 45%;
+  font-size: 18px;
+}

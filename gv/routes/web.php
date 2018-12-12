@@ -34,11 +34,11 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::get('/hello', ['uses'=>'HomeController@hello', 'as'=>'home.hello']);
     
-    Route::match(array('GET', 'POST'),'/relatorio/tempo',['uses'=>'HomeController@tempo','as'=>'home.tempo']);
+    Route::match(array('GET', 'POST'),'/graficos/tempo',['uses'=>'HomeController@tempo','as'=>'home.tempo']);
     Route::post('/dados/tempo', ['uses'=>'HomeController@dadosTempos', 'as'=>'home.dadosTempos']);
     //Route::get('/dados/tempo/{dataInicial}/{dataFinal}/{coordenacaoID}', ['uses'=>'HomeController@dadosTempos', 'as'=>'home.dadosTempos']);
     
-    Route::match(array('GET', 'POST'),'/relatorio/indicador',['uses'=>'HomeController@indicador','as'=>'home.indicador']);
+    Route::match(array('GET', 'POST'),'/graficos/indicador',['uses'=>'HomeController@indicador','as'=>'home.indicador']);
     Route::post('/dados/Indicador', ['uses'=>'HomeController@dadosIndicador', 'as'=>'home.dadosIndicador']);
 
 
@@ -86,10 +86,14 @@ Route::group(['middleware'=>'auth'],function(){
     //Gestor
     
         //Relatorios    
-        Route::get('/relatorio/usuarios', ['uses'=>'UserController@RelatorioUsuarios', 'as'=>'RelatorioUsuarios']);
-        Route::get('/relatorio/responsaveis', ['uses'=>'ResponsavelController@RelatorioResp', 'as'=>'RelatorioResp']);
-        Route::get('/relatorio/indicador', ['uses'=>'ResponsavelController@RelatorioIndicador', 'as'=>'RelatorioIndicador']);
-        Route::get('/relatorio/indicadorAnalitico', ['uses'=>'ResponsavelController@RelatorioIndicador', 'as'=>'RelatorioIndicadorAnalitico']);
+        Route::get('/relatorio/usuarios', ['uses'=>'UserController@RelatorioUsuarios', 'as'=>'user.RelatorioUsuarios']);
+        Route::get('/relatorio/responsaveis', ['uses'=>'ResponsavelController@RelatorioResp', 'as'=>'resp.RelatorioResp']);
+        Route::get('/relatorio/indicador', ['uses'=>'Historico_indicController@RelatorioIndicador', 'as'=>'indic.RelatorioIndicador']);
+        Route::post('/relatorio/indicadorMensal', ['uses'=>'Historico_indicController@RelatorioIndicadorMensal', 'as'=>'indic.RelatorioIndicadorMensal']);
+        Route::post('/relatorio/indicadorMensalProc', ['uses'=>'Historico_indicController@RelatorioIndicadorMensalProc', 'as'=>'indic.RelatorioIndicadorMensalProc']);
+        Route::post('/relatorio/indicadorAnalitico', ['uses'=>'Historico_indicController@RelatorioIndicadorAnalitico', 'as'=>'indic.RelatorioIndicadorAnalitico']);
+        Route::get('/relatorio/tempos', ['uses'=>'AtividadeController@RelatorioTempos', 'as'=>'atividade.RelatorioTempos']);
+        Route::post('/relatorio/temposAnalitico', ['uses'=>'AtividadeController@RelatorioTemposAnalitico', 'as'=>'atividade.RelatorioTemposAnalitico']);
 
         //Tipo
         Route::get('/tipo', ['uses'=>'TipoController@lista', 'as'=>'tipo.lista']);

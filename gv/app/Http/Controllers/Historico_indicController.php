@@ -136,21 +136,49 @@ class Historico_indicController extends Controller
         }
     }
 
-    public function RelatorioIndicador() {
+    public function RelatorioIndicador(){
+        $filtro = null;
+        return  view('relatorios.indicador',compact('filtro'));
+    }
 
-        //$dados = Responsavel::all();
-        $dados = DB::table('responsavels')
-        ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
-        ->join('users', 'users.id', '=', 'responsavels.usuario')
-        ->join('coordenacaos', 'processos.coordenacao', '=', 'coordenacaos.id')
-        ->select('processos.nome as processo', 'users.email as usuario', 'coordenacaos.nome as coordenacao')
-        ->orderBy('processos.nome','ASC')
-        ->orderBy('users.email','ASC')
+    public function RelatorioIndicadorMensal(Historico_indicRequest $request) {
+
+        $NoPrazo= DB::table('historico_indic')
+        ->select(DB::raw(" user_id , count(*) as Indic, MONTH(historico_indic.data_informada) as mes, year(historico_indic.data_informada) ano"))
+        ->whereBetween('historico_indic.data_informada', [$request->data_inicial, $request->data_final])
+        ->where('status','=','No Prazo')
+        ->groupBy('user_id','mes', 'ano')
+        ->get()
+        ;
+        
+        $Total= DB::table('historico_indic')
+        ->join('users', 'users.id', '=', 'historico_indic.user_id')
+        ->select(DB::raw(" user_id,users.email , count(*) as Indic, MONTH(historico_indic.data_informada) as mes, year(historico_indic.data_informada) ano"))
+        ->whereBetween('historico_indic.data_informada', [$request->data_inicial, $request->data_final])
+        ->groupBy('user_id','users.email','mes', 'ano')
+        ->orderBy('users.email')
+        ->orderBy('mes')
+        ->orderBy('ano')                
         ->get();
-        $dados= json_decode( json_encode($dados), true);
+        //->toSql();
+        //dd($Total);
+        foreach($Total as $T){
+            $T->Indicador="0";
+            foreach($NoPrazo as $P){
+                if($T->user_id == $P->user_id && $T->mes == $P->mes && $T->ano == $P->ano){     
+                    $T->Indicador = round($P->Indic / $T->Indic * 100,2);
+                }
+            }
+        }
+        $Total->transform(function($i) {
+            unset($i->user_id);
+            unset($i->Indic);
+            return $i;
+        });
+        $dados= json_decode( json_encode($Total), true);
         $tam = count($dados) + 1;
 
-        Excel::create('Relatório Responsáveis', function($excel) use ($dados, $tam) {
+        Excel::create('Relatório Indicador Mensal', function($excel) use ($dados, $tam) {
             $excel->setTitle('Relatório GV');
             $excel->setCreator('Gestão à Vista')->setCompany('Confederação Sicredi');
 
@@ -174,9 +202,138 @@ class Historico_indicController extends Controller
 
                 });
                 //$sheet->setAllBorders('thin');
-                $sheet->setBorder('A1:D'.$tam, 'thin');
+                $sheet->setBorder('A1:E'.$tam, 'thin');
                 //$sheet->setAutoFilter();
                 $sheet->setAutoSize(true);
+            });
+            
+        })->download('xls');
+
+        return true;
+    }
+
+    public function RelatorioIndicadorMensalProc(Historico_indicRequest $request) {
+
+        $NoPrazo= DB::table('historico_indic')
+        ->select(DB::raw(" user_id , count(*) as Indic,processo_id, MONTH(historico_indic.data_informada) as mes, year(historico_indic.data_informada) ano"))
+        ->whereBetween('historico_indic.data_informada', [$request->data_inicial, $request->data_final])
+        ->where('status','=','No Prazo')
+        ->groupBy('user_id','mes', 'ano','processo_id')
+        ->get()
+        ;
+        $Total= DB::table('historico_indic')
+        ->join('users', 'users.id', '=', 'historico_indic.user_id')
+        ->join('processos', 'historico_indic.processo_id', '=', 'processos.id')
+        ->select(DB::raw(" user_id,users.email , count(*) as Indic,processo_id,processos.nome, MONTH(historico_indic.data_informada) as mes, year(historico_indic.data_informada) ano"))
+        ->whereBetween('historico_indic.data_informada', [$request->data_inicial, $request->data_final])
+        ->groupBy('user_id','users.email','mes', 'ano','processo_id','processos.nome')
+        ->orderBy('users.email')
+        ->orderBy('mes')
+        ->orderBy('ano')                
+        ->orderBy('processos.nome')
+        ->get();
+        //->toSql();
+
+        foreach($Total as $T){
+            $T->Indicador="0";
+            foreach($NoPrazo as $P){
+                if($T->user_id == $P->user_id && $T->processo_id == $P->processo_id && $T->mes == $P->mes && $T->ano == $P->ano){     
+                    $T->Indicador = round($P->Indic / $T->Indic * 100,2);
+                }
+            }
+        }
+        $Total->transform(function($i) {
+            unset($i->user_id);
+            unset($i->Indic);
+            unset($i->processo_id);
+            return $i;
+        });
+        $dados= json_decode( json_encode($Total), true);
+        $tam = count($dados) + 1;
+
+        Excel::create('Relatório Indicador Mensal por Processo', function($excel) use ($dados, $tam) {
+            $excel->setTitle('Relatório GV');
+            $excel->setCreator('Gestão à Vista')->setCompany('Confederação Sicredi');
+
+            // Build the spreadsheet, data in the data array
+            $excel->sheet('Relatório', function($sheet) use ($dados, $tam) {
+                $sheet->fromArray($dados);
+                $sheet->setStyle([
+                    'borders' => [
+                        'allborders' => [
+                            'color' => [
+                                'rgb' => '#000000'
+                            ]
+                        ]
+                    ]
+                ]);
+                $sheet->row(1, function($row) {
+                    // call cell manipulation methods
+                    $row->setBackground('#808080');
+                    $row->setFontWeight('bold');
+                    //$row->setBorder('solid','solid','solid','solid');
+
+                });
+                //$sheet->setAllBorders('thin');
+                $sheet->setAutoSize(true);
+                $sheet->setBorder('A1:F'.$tam, 'thin');
+                //$sheet->setAutoFilter();
+            });
+            
+        })->download('xls');
+
+        return true;
+    }
+
+    public function RelatorioIndicadorAnalitico(Historico_indicRequest $request) {
+
+        $hist= DB::table('historico_indic')
+        ->join('users', 'users.id', '=', 'historico_indic.user_id')
+        ->join('processos', 'historico_indic.processo_id', '=', 'processos.id')
+        ->join('periodicidades', 'historico_indic.periodicidade_id', '=', 'periodicidades.id')
+        ->select(DB::raw(" user_id,users.email ,processo_id,processos.nome as processo, periodicidades.nome as periodicidade, data_informada, ultima_data, data_meta, status  "))
+        ->whereBetween('historico_indic.data_informada', [$request->data_inicial, $request->data_final])
+        ->orderBy('users.email')
+        ->orderBy('data_informada')
+        ->orderBy('processos.nome')
+        ->get();
+        //->toSql();
+       
+        $hist->transform(function($i) {
+            unset($i->user_id);
+            unset($i->processo_id);
+            return $i;
+        });
+        $dados= json_decode( json_encode($hist), true);
+        $tam = count($dados) + 1;
+
+        Excel::create('Relatório Indicador Analítico', function($excel) use ($dados, $tam) {
+            $excel->setTitle('Relatório GV');
+            $excel->setCreator('Gestão à Vista')->setCompany('Confederação Sicredi');
+
+            // Build the spreadsheet, data in the data array
+            $excel->sheet('Relatório', function($sheet) use ($dados, $tam) {
+                $sheet->fromArray($dados);
+                $sheet->setStyle([
+                    'borders' => [
+                        'allborders' => [
+                            'color' => [
+                                'rgb' => '#000000'
+                            ]
+                        ]
+                    ]
+                ]);
+                $sheet->row(1, function($row) {
+                    // call cell manipulation methods
+                    $row->setBackground('#808080');
+                    $row->setFontWeight('bold');
+                    //$row->setBorder('solid','solid','solid','solid');
+
+                });
+                //$sheet->setAllBorders('thin');
+                $sheet->setAutoSize(true);
+                $sheet->setBorder('A1:G'.$tam, 'thin');
+                //$sheet->setAutoFilter();
             });
             
         })->download('xls');
