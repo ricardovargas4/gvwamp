@@ -100,7 +100,7 @@ Route::group(['middleware'=>'auth'],function(){
 
         //Processo
         Route::get('/processo', ['uses'=>'ProcessoController@lista', 'as'=>'processo.lista']);
-        Route::get('/processo/?page={?}', ['uses'=>'ProcessoController@lista', 'as'=>'processo.lista']);
+        Route::get('/processo?page={?}', ['uses'=>'ProcessoController@lista', 'as'=>'processo.lista']);
         Route::post('/processo/adiciona', ['uses'=>'ProcessoController@adiciona', 'as'=>'processo.adiciona']);
         Route::post('/processo/salvaAlt',['uses'=>'ProcessoController@salvaAlt', 'as'=>'processo.salvaAlt']);
         
