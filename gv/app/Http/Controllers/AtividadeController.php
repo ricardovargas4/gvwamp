@@ -372,7 +372,7 @@ class AtividadeController extends Controller
         ->select(DB::raw('id, usuario, data_conciliacao, sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) as val'))
         //->where('sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600)','>','24')
         //->whereBetween('atividades.data_conciliacao', [$request->data_inicial, $request->data_final])
-        ->where('data_conciliacao','=',date('Y-m-d'))
+        //->where('data_conciliacao','=',date('Y-m-d'))
         ->groupBy('id','usuario', 'data_conciliacao')
         ->havingRaw('sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) > 10')
         ->get();

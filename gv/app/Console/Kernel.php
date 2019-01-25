@@ -31,6 +31,10 @@ class Kernel extends ConsoleKernel
                  ->withoutOverlapping()
                  ->weekdays()
                  ->dailyAt('10:00');
+        $schedule->call('gv\Http\Controllers\EmailController@envioAtividadesAcimaDoTempo')
+                 ->withoutOverlapping()
+                 ->weekdays()
+                 ->dailyAt('22:00');
     }
 
     /**
