@@ -96,14 +96,19 @@
                                 </li>
                             </ul>
                         @endcan
-                        @if (!isset($filtro))
-                        <div class="container">
-                            Selecione um dos filtros.
-                        </div>    
+                        @if(isset($teste) && $teste =="ERRO")
+                            <div class="container">
+                                O processo é de conciliação e já cadastrado para outro usuário.<BR>
+                                Cadastro não realizado.
+                            </div>       
+                        @elseif (!isset($filtro))
+                            <div class="container">
+                                Selecione um dos filtros.
+                            </div>    
                         @elseif($filtro==0)
-                        <div class="container">
-                            Sem dados para os filtros selecionados.
-                        </div>
+                            <div class="container">
+                                Sem dados para os filtros selecionados.
+                            </div>
                         @else
                         
                             <table class="bordered">

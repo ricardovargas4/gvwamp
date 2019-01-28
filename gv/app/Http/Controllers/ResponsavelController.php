@@ -16,12 +16,19 @@ class ResponsavelController extends Controller
         $filtro = null;
         $users = User::orderBy('email')->get();
         $processos = Processo::orderBy('nome')->get();
+        //$teste = 'OK';
         return  view('responsavel.listagem',compact('filtro','users','processos'));
     }
     
     public function filtro(ResponsavelRequest $request,$filtroId_processo=null,$filtroUsuario=null){
         //dd($request->filtroId_processo->attributes);
-
+        if(isset($request->teste)){
+            if($request->teste == "ERRO"){
+                $teste = "ERRO";
+            }else{
+                $teste = "OK";
+            }
+        }
         if(isset($request->filtroId_processo)){
             $filtroId_processo = json_decode($request->filtroId_processo);
             if(!isset($filtroId_processo->id)){
@@ -65,11 +72,11 @@ class ResponsavelController extends Controller
             $filtro = null;
             $resp = null;
         }
-
+        //$teste = 'OK';
         $users = User::orderBy('email')->get();
         $processos = Processo::orderBy('nome')->get();
 
-            return view('responsavel.listagem',compact('resp','users','processos','filtroId_processo','filtroUsuario','filtro'));
+            return view('responsavel.listagem',compact('resp','users','processos','filtroId_processo','filtroUsuario','filtro','teste'));
         }
 
     public function remove(ResponsavelRequest $request){
@@ -88,25 +95,61 @@ class ResponsavelController extends Controller
 
     public function salvaAlt(ResponsavelRequest $request){
         //dd($request->page);
+        $teste='OK';
         $id = $request->id;
-        Responsavel::whereId($id)->update($request->except('_token','filtroId_processo','filtroUsuario'));
+        if(isset($request->id_processo)){
+            if(Processo::find($request->id_processo)->tipo==3){
+                $resp = DB::table('responsavels')
+                ->select('responsavels.id')
+                ->where('responsavels.id_processo','=',$request->id_processo)
+                ->get();
+                if(isset($resp)){
+                    $teste="ERRO";
+                }else{
+                    Responsavel::whereId($id)->update($request->except('_token','filtroId_processo','filtroUsuario'));
+                }
+            }else{
+                Responsavel::whereId($id)->update($request->except('_token','filtroId_processo','filtroUsuario'));
+            }
+
+        }else{
+            Responsavel::whereId($id)->update($request->except('_token','filtroId_processo','filtroUsuario'));
+        }
+        
         //return redirect()->action('ResponsavelController@lista')->withInput(Request::only('page',$page));
         //return redirect()->action('ResponsavelController@lista',['page'=>$page]);
         $filtroId_processo = $request->filtroId_processo;
         $filtroUsuario = $request->filtroUsuario;
         $data=['filtroId_processo' =>$filtroId_processo ,
-               'filtroUsuario' =>  $filtroUsuario];
+               'filtroUsuario' =>  $filtroUsuario,
+               'teste'=>$teste];
         return redirect()->route('responsavel.filtro',$data);
 
     }
 
     public function adiciona(ResponsavelRequest $request){
-        Responsavel::create($request->all());
+        $teste='OK';
+        if(Processo::find($request->id_processo)->tipo==3){
+            $resp = DB::table('responsavels')
+            ->select('responsavels.id')
+            ->where('responsavels.id_processo','=',$request->id_processo)
+            ->get();
+            if(isset($resp)){
+                $teste="ERRO";
+            }else{
+                Responsavel::create($request->all());
+            }
+        }else{
+            Responsavel::create($request->all());
+        }
+     
+        //Responsavel::create($request->all());
         //return redirect()->action('ResponsavelController@lista')->withInput(Request::only('usuario'));
         $filtroId_processo = $request->filtroId_processo;
         $filtroUsuario = $request->filtroUsuario;
         $data=['filtroId_processo' =>$filtroId_processo ,
-               'filtroUsuario' =>  $filtroUsuario];
+               'filtroUsuario' =>  $filtroUsuario,
+               'teste'=>$teste];
         return redirect()->route('responsavel.filtro',$data);
     }
 
