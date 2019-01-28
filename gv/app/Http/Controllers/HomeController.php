@@ -201,6 +201,14 @@ class HomeController extends Controller
         }
         $processosSelecEx = array_map('intval', explode(',', $request->processosSelec));
         $processosSelec = $processosSelecEx;
+        $textoProc = "";
+        foreach($processosSelec as $p){
+            if($textoProc==""){     
+                $textoProc = "'".$p."'";
+            }else{
+                $textoProc = $textoProc.",'".$p."'";
+            }
+        }
 
         $data = DB::table('historico_indic')
         ->join('processos', 'historico_indic.processo_id', '=', 'processos.id')
@@ -210,11 +218,13 @@ class HomeController extends Controller
                              from historico_indic 
                              where status = 'No Prazo' 
                              and data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "' 
+                             and processo_id in (".$textoProc.") 
                              group by user_id) as NoPrazo"), function($join) {$join->on('historico_indic.user_id', '=', 'NoPrazo.user_id'); })
         ->leftjoin(DB::raw("(select user_id, 
                                     count(*) as Total 
                              from historico_indic 
                              where data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "' 
+                             and processo_id in (".$textoProc.") 
                              group by user_id) as Total"), function($join) {$join->on('historico_indic.user_id', '=', 'Total.user_id'); })                     
         ->select(DB::raw("distinct users.email as arg, round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0) * 100,2)  as val, '' as parentID, '' as parentID2"))
         ->whereBetween('historico_indic.data_informada', [$request->dataInicial, $request->dataFinal])
@@ -234,13 +244,15 @@ class HomeController extends Controller
                                         count(*) as Prazo 
                                 from historico_indic 
                                 where status = 'No Prazo'   
-                                and data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "'                     
+                                and data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "' 
+                                and processo_id in (".$textoProc.")                     
                                 group by user_id, data_informada) as NoPrazo"), function($join) {$join->on('historico_indic.user_id', '=', 'NoPrazo.user_id'); $join->on('historico_indic.data_informada', '=', 'NoPrazo.data_informada'); })
             ->leftjoin(DB::raw("(select user_id, 
                                         data_informada,
                                         count(*) as Total 
                                 from historico_indic 
                                 where data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "' 
+                                and processo_id in (".$textoProc.") 
                                 group by user_id, data_informada) as Total"), function($join) {$join->on('historico_indic.user_id', '=', 'Total.user_id'); $join->on('historico_indic.data_informada', '=', 'Total.data_informada'); })                     
             ->select(DB::raw("distinct historico_indic.data_informada as arg, round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0) * 100,2)  as val, users.email as parentID, '' as parentID2"))
             ->whereBetween('historico_indic.data_informada', [$request->dataInicial, $request->dataFinal])
@@ -258,14 +270,16 @@ class HomeController extends Controller
                                         count(*) as Prazo 
                                 from historico_indic 
                                 where status = 'No Prazo' 
-                                and data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "'                                                        
+                                and data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "'  
+                                and processo_id in (".$textoProc.")                                                       
                                 group by user_id,data_informada,processo_id) as NoPrazo"), function($join) {$join->on('historico_indic.user_id', '=', 'NoPrazo.user_id'); $join->on('historico_indic.data_informada', '=', 'NoPrazo.data_informada'); $join->on('historico_indic.processo_id', '=', 'NoPrazo.processo_id'); })
             ->leftjoin(DB::raw("(select user_id, 
                                         processo_id,
                                         data_informada,
                                         count(*) as Total 
                                 from historico_indic 
-                                where data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "'       
+                                where data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "' 
+                                and processo_id in (".$textoProc.")       
                                 group by user_id,data_informada,processo_id) as Total"), function($join) {$join->on('historico_indic.user_id', '=', 'Total.user_id'); $join->on('historico_indic.data_informada', '=', 'Total.data_informada'); $join->on('historico_indic.processo_id', '=', 'Total.processo_id'); })                     
             ->select(DB::raw("distinct processos.nome as arg, round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0) * 100,2)  as val, users.email as parentID, historico_indic.data_informada as parentID2"))
             ->whereBetween('historico_indic.data_informada', [$request->dataInicial, $request->dataFinal])
@@ -283,13 +297,15 @@ class HomeController extends Controller
                                         count(*) as Prazo 
                                 from historico_indic 
                                 where status = 'No Prazo'     
-                                and data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "'                         
+                                and data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "'  
+                                and processo_id in (".$textoProc.")                        
                                 group by user_id, processo_id) as NoPrazo"), function($join) {$join->on('historico_indic.user_id', '=', 'NoPrazo.user_id'); $join->on('historico_indic.processo_id', '=', 'NoPrazo.processo_id'); })
             ->leftjoin(DB::raw("(select user_id, 
                                         processo_id,
                                         count(*) as Total 
                                 from historico_indic 
-                                where data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "'       
+                                where data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "' 
+                                and processo_id in (".$textoProc.")       
                                 group by user_id, processo_id) as Total"), function($join) {$join->on('historico_indic.user_id', '=', 'Total.user_id'); $join->on('historico_indic.processo_id', '=', 'Total.processo_id'); })                     
             ->select(DB::raw("distinct processos.nome as arg, round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0) * 100,2)  as val, users.email as parentID, '' as parentID2"))
             ->whereBetween('historico_indic.data_informada', [$request->dataInicial, $request->dataFinal])
@@ -307,14 +323,16 @@ class HomeController extends Controller
                                         count(*) as Prazo 
                                 from historico_indic 
                                 where status = 'No Prazo'   
-                                and data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "'                                                      
+                                and data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "' 
+                                and processo_id in (".$textoProc.")                                                      
                                 group by user_id,data_informada,processo_id) as NoPrazo"), function($join) {$join->on('historico_indic.user_id', '=', 'NoPrazo.user_id'); $join->on('historico_indic.data_informada', '=', 'NoPrazo.data_informada'); $join->on('historico_indic.processo_id', '=', 'NoPrazo.processo_id'); })
             ->leftjoin(DB::raw("(select user_id, 
                                         processo_id,
                                         data_informada,
                                         count(*) as Total 
                                 from historico_indic 
-                                where data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "'       
+                                where data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "'  
+                                and processo_id in (".$textoProc.")      
                                 group by user_id,data_informada,processo_id) as Total"), function($join) {$join->on('historico_indic.user_id', '=', 'Total.user_id'); $join->on('historico_indic.data_informada', '=', 'Total.data_informada'); $join->on('historico_indic.processo_id', '=', 'Total.processo_id'); })                     
             ->select(DB::raw("distinct historico_indic.data_informada as arg, round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0) * 100,2)  as val, users.email as parentID, processos.nome as parentID2"))
             ->whereBetween('historico_indic.data_informada', [$request->dataInicial, $request->dataFinal])
