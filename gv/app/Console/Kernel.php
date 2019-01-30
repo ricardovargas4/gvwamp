@@ -28,11 +28,9 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('ProcIndicador:indicador')
-                 ->withoutOverlapping()
                  ->weekdays()
                  ->dailyAt('10:00');
         $schedule->call('gv\Http\Controllers\EmailController@envioAtividadesAcimaDoTempo')
-                 ->withoutOverlapping()
                  ->weekdays()
                  ->dailyAt('22:00');
     }
