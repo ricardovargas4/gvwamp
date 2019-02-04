@@ -103,7 +103,7 @@ class ResponsavelController extends Controller
                 ->select('responsavels.id')
                 ->where('responsavels.id_processo','=',$request->id_processo)
                 ->get();
-                if(isset($resp)){
+                if(!$resp->isEmpty()){
                     $teste="ERRO";
                 }else{
                     Responsavel::whereId($id)->update($request->except('_token','filtroId_processo','filtroUsuario'));
@@ -134,7 +134,7 @@ class ResponsavelController extends Controller
             ->select('responsavels.id')
             ->where('responsavels.id_processo','=',$request->id_processo)
             ->get();
-            if(isset($resp)){
+            if(!$resp->isEmpty()){
                 $teste="ERRO";
             }else{
                 Responsavel::create($request->all());
