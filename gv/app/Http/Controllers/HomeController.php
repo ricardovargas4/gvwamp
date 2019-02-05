@@ -281,7 +281,7 @@ class HomeController extends Controller
                                 where data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "' 
                                 and processo_id in (".$textoProc.")       
                                 group by user_id,data_informada,processo_id) as Total"), function($join) {$join->on('historico_indic.user_id', '=', 'Total.user_id'); $join->on('historico_indic.data_informada', '=', 'Total.data_informada'); $join->on('historico_indic.processo_id', '=', 'Total.processo_id'); })                     
-            ->select(DB::raw("distinct processos.nome as arg, round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0) * 100,2)  as val, users.email as parentID, historico_indic.data_informada as parentID2"))
+            ->select(DB::raw("distinct processos.nome as arg, round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0),2)  as val, users.email as parentID, historico_indic.data_informada as parentID2"))
             ->whereBetween('historico_indic.data_informada', [$request->dataInicial, $request->dataFinal])
             ->where('processos.coordenacao','like',$coordenacaoID)
             ->whereIn('processos.id',$processosSelec)
@@ -334,7 +334,7 @@ class HomeController extends Controller
                                 where data_informada between '" . $request->dataInicial . "'  and  '" .  $request->dataFinal .  "'  
                                 and processo_id in (".$textoProc.")      
                                 group by user_id,data_informada,processo_id) as Total"), function($join) {$join->on('historico_indic.user_id', '=', 'Total.user_id'); $join->on('historico_indic.data_informada', '=', 'Total.data_informada'); $join->on('historico_indic.processo_id', '=', 'Total.processo_id'); })                     
-            ->select(DB::raw("distinct historico_indic.data_informada as arg, round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0) * 100,2)  as val, users.email as parentID, processos.nome as parentID2"))
+            ->select(DB::raw("distinct historico_indic.data_informada as arg, round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0),2)  as val, users.email as parentID, processos.nome as parentID2"))
             ->whereBetween('historico_indic.data_informada', [$request->dataInicial, $request->dataFinal])
             ->where('processos.coordenacao','like',$coordenacaoID)
             ->whereIn('processos.id',$processosSelec)

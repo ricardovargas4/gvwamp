@@ -213,7 +213,7 @@ class Historico_indicController extends Controller
     }
 
     public function RelatorioIndicadorMensalProc(Historico_indicRequest $request) {
-
+/*
         $NoPrazo= DB::table('historico_indic')
         ->select(DB::raw(" user_id , count(*) as Indic,processo_id, MONTH(historico_indic.data_informada) as mes, year(historico_indic.data_informada) ano"))
         ->whereBetween('historico_indic.data_informada', [$request->data_inicial, $request->data_final])
@@ -247,8 +247,37 @@ class Historico_indicController extends Controller
             unset($i->Indic);
             unset($i->processo_id);
             return $i;
-        });
-        $dados= json_decode( json_encode($Total), true);
+        });*/
+
+        $dados = DB::table('historico_indic')
+            ->join('processos', 'historico_indic.processo_id', '=', 'processos.id')
+            ->join('users', 'users.id', '=', 'historico_indic.user_id')
+            ->leftjoin(DB::raw("(select user_id, 
+                                        processo_id,
+                                        count(*) as Prazo 
+                                from historico_indic 
+                                where status = 'No Prazo'     
+                                and data_informada between '" . $request->data_inicial . "'  and  '" .  $request->data_final .  "'  
+                                group by user_id, processo_id) as NoPrazo"), function($join) {$join->on('historico_indic.user_id', '=', 'NoPrazo.user_id'); $join->on('historico_indic.processo_id', '=', 'NoPrazo.processo_id'); })
+            ->leftjoin(DB::raw("(select user_id, 
+                                        processo_id,
+                                        count(*) as Total 
+                                from historico_indic 
+                                where data_informada between '" . $request->data_inicial . "'  and  '" .  $request->data_final .  "' 
+                                group by user_id, processo_id) as Total"), function($join) {$join->on('historico_indic.user_id', '=', 'Total.user_id'); $join->on('historico_indic.processo_id', '=', 'Total.processo_id'); })                     
+            ->leftjoin(DB::raw("(select user_id, 
+                                count(*) as Total_Geral
+                        from historico_indic 
+                        where data_informada between '" . $request->data_inicial . "'  and  '" .  $request->data_final .  "' 
+                        group by user_id) as Geral"), function($join) {$join->on('historico_indic.user_id', '=', 'Geral.user_id'); })                     
+            ->select(DB::raw("distinct users.email as email, processos.nome as processo, month(data_informada) as mes, year(data_informada) as ano, REPLACE(CAST(round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0) * 100 * ifnull(Total.Total,0) / ifnull(Geral.Total_Geral,0),2) AS CHAR), '.', ',')  as indicador "))
+            ->whereBetween('historico_indic.data_informada', [$request->data_inicial, $request->data_final])
+            ->orderby('email')
+            ->orderby('processo')
+            ->orderby('ano')
+            ->orderby('mes')
+            ->get();
+        $dados= json_decode( json_encode($dados), true);
         $tam = count($dados) + 1;
 
         Excel::create('Relatório Indicador Mensal por Processo', function($excel) use ($dados, $tam) {

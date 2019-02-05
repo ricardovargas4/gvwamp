@@ -149,6 +149,27 @@ $(document).ready(function () {
                         tempo.push(entry.val);
                         usuarios.push(entry.arg);
                     });
+                    myChart.options.scales = {   xAxes: [{
+                                                    stacked: false,
+                                                    beginAtZero: true, 
+                                                    suggestedMin: 0,
+                                                    scaleLabel: {
+                                                        labelString: 'Month'
+                                                    },
+                                                    ticks: {
+                                                        stepSize: 1,
+                                                        min: 0,
+                                                        autoSkip: false
+                                                    }
+                                                }],
+                                                yAxes: [{
+                                                    beginAtZero: true, 
+                                                    suggestedMin: 0,
+                                                    ticks: {
+                                                        min: 0,
+                                                        stepSize: 1
+                                                    }
+                                                }]};
                     myChart.update();
                     document.getElementById("data").innerHTML = "Data: " + parent[parent.length - 1];
                 }
@@ -196,6 +217,26 @@ $(document).ready(function () {
                     tempo.push(entry.val);
                     usuarios.push(entry.arg);
                 });
+                myChart.options.scales = {xAxes: [{
+                                          stacked: false,
+                                          beginAtZero: true, 
+                                          suggestedMin: 0,
+                                          scaleLabel: {
+                                              labelString: 'Month'
+                                          },
+                                          ticks: {
+                                              stepSize: 1,
+                                              min: 0,
+                                              autoSkip: false
+                                          }
+                                      }],
+                                      yAxes: [{
+                                          beginAtZero: true, 
+                                          suggestedMin: 0,
+                                          ticks: {
+                                              min: 0
+                                          }
+                                      }]};
                 myChart.update();
                 document.getElementById("data").innerHTML = parent[parent.length - 2];
                 }           
