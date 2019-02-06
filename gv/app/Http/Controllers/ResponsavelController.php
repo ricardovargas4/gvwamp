@@ -158,9 +158,10 @@ class ResponsavelController extends Controller
         //$dados = Responsavel::all();
         $dados = DB::table('responsavels')
         ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
+        ->join('tipos', 'processos.tipo', '=', 'tipos.id')
         ->join('users', 'users.id', '=', 'responsavels.usuario')
         ->join('coordenacaos', 'processos.coordenacao', '=', 'coordenacaos.id')
-        ->select('processos.nome as processo', 'users.email as usuario', 'coordenacaos.nome as coordenacao')
+        ->select('processos.nome as processo','tipos.nome as tipo', 'users.email as usuario', 'coordenacaos.nome as coordenacao')
         ->orderBy('processos.nome','ASC')
         ->orderBy('users.email','ASC')
         ->get();
