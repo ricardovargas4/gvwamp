@@ -52,7 +52,7 @@ class Historico_indicController extends Controller
         $historico->delete();
         $data=['data_inicial' =>$data_inicial,
                'data_final' => $data_final];
-        return redirect()->route('hist.filtro',$data);
+        return redirect()->route('historico.filtro',$data);
     }
 
     public function salvaAlt(Historico_indicRequest $request){
@@ -63,7 +63,7 @@ class Historico_indicController extends Controller
         $data_final = $request->data_final;
         $data=['data_inicial' =>$data_inicial,
                'data_final' => $data_final];
-        return redirect()->route('hist.filtro',$data);
+        return redirect()->route('historico.filtro',$data);
     }
 
     public function adiciona(Historico_indicRequest $request){
