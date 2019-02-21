@@ -33,6 +33,7 @@
                                                 @endcan
                                                 <option value="2">Gestor</option>
                                                 <option value="3">Analista</option>
+                                                <option value="4">Terceiro</option>
                                         </select>
                                     </div>
                                     <button type="submit" class="btn waves-effect light-green accent-3"> Salvar</button>
@@ -62,6 +63,8 @@
                                     <td>Gestor</td> 
                                 @elseif($u->nivel == 3 )
                                     <td>Analista</td>
+                                @elseif($u->nivel == 4 )
+                                    <td>Terceiro</td> 
                                 @else
                                     <td></td>
                                 @endif
@@ -92,6 +95,8 @@
                                                                     Gestor 
                                                                 @elseif($u->nivel == 3 )
                                                                     Analista
+                                                                @elseif($u->nivel == 4 )
+                                                                    Terceiro
                                                                 @endif
                                                             </option>
                                                                 @can('checkDev')    
@@ -99,6 +104,7 @@
                                                                 @endcan
                                                                 <option value="2">Gestor</option>
                                                                 <option value="3">Analista</option>
+                                                                <option value="4">Terceiro</option>
                                                         </select>
                                                     </div>
                                                     <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>

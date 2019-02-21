@@ -15,6 +15,7 @@
                                 <th>Data</th>
                                 <th>Processo </th>
                                 <th>Status </th>
+                                <th>Solicitante </th>
                                 <th>Aprovador </th>
                                 <th>Comentário </th>
                                 @if($nivel==1)
@@ -40,7 +41,7 @@
                                 @else
                                     <td></td>
                                 @endif
-                                
+                                <td>{{$e->id_usuario_solicitante_FK->email}}</td>
                                 <td>{{$e->id_usuario_aprovador_FK->email}}</td>
                                 <td>@php echo $e['comentario'] @endphp</td>
                                 @if($nivel<=2)

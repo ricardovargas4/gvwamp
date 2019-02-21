@@ -11,10 +11,9 @@ class EmailController extends Controller
     public function envioAtividadesAcimaDoTempo(){
         $data = DB::table('atividades')
         ->select(DB::raw('distinct usuario'))
-        ->groupBy('id','usuario', 'data_conciliacao')
+        ->groupBy('usuario', 'data_conciliacao')
         ->havingRaw('sum(TIMESTAMPDIFF(second,hora_inicio,hora_fim)/3600) > 10')
         ->get();
-
         $texto = "";
         foreach ($data as $usuario) {
             //dd($ativ);
@@ -39,7 +38,11 @@ class EmailController extends Controller
             $template_path = 'emails.email_template';
             Mail::send(['html'=> $template_path ], ['dados' => $data], function($message) use ($user) {
                 // Set the receiver and subject of the mail.
-                $message->to($user->email."@sicredi.com.br", $user->nome)->subject('Atividades Com Tempo Excessivo');
+                if ($user->nivel==4){
+                    $message->to($user->email."@terceiros.sicredi.com.br", $user->nome)->subject('Atividades Com Tempo Excessivo');    
+                }else{
+                    $message->to($user->email."@sicredi.com.br", $user->nome)->subject('Atividades Com Tempo Excessivo');
+                }
                 //$message->cc($gestor->email."@sicredi.com.br", $gestor->name);
                 // Set the sender
                 $message->from('noreply@sicredi.com.br', 'No-Reply');
