@@ -93,7 +93,7 @@
                                                 <form action="{{ route('processo.salvaAlt') }}" method="post">
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                 <input type="hidden" name="id" value="{{{ $p->id }}}" />
-                                                <input type="hidden" name="page" value="{{{ is_null($_GET['page']) ? $_GET['page'] : 1}}}" />
+                                                <input type="hidden" name="page" value="@if(is_null($_GET['page'])) {{$_GET['page']}} @else {{$_GET['page']}} @endif" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
                                                     <div class="form-group">
                                                         <label for="nome">Nome</label>
