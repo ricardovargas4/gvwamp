@@ -67,7 +67,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/atividade/adiciona',['uses'=>'AtividadeController@adiciona', 'as'=>'atividade.adiciona']);
     Route::get('/atividade',['uses'=>'AtividadeController@filtro', 'as'=>'atividade.filtro']);
     Route::match(array('GET', 'POST'),'/atividade/filtro',['uses'=>'AtividadeController@filtro','as'=>'atividade.filtro']);
-    Route::get('/atividade/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}', ['uses'=>'AtividadeController@remove','as'=>'atividade.remove']);
+    Route::get('/atividade/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}/page/{page}', ['uses'=>'AtividadeController@remove','as'=>'atividade.remove']);
     Route::post('/atividade/salvaAlt',['uses'=>'AtividadeController@salvaAlt','as'=>'atividade.salvaAlt']);
 
     //Historico_Indicador
@@ -126,7 +126,7 @@ Route::group(['middleware'=>'auth'],function(){
         //Historico_Indicador
         Route::post('/historico_indic/adiciona',['uses'=>'Historico_indicController@adiciona', 'as'=>'historico.adiciona']);
         Route::post('/historico_indic/salvaAlt',['uses'=>'Historico_indicController@salvaAlt', 'as'=>'historico.salvaAlt']);
-        Route::get('/historico_indic/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}', ['uses'=>'Historico_indicController@remove', 'as'=>'historico.remove']);
+        Route::get('/historico_indic/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}/page/{page}', ['uses'=>'Historico_indicController@remove', 'as'=>'historico.remove']);
 
         //Classificacao
         Route::get('/classificacao', ['uses'=>'ClassificacaoController@lista', 'as'=>'classificacao.lista']);

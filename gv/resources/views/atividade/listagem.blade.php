@@ -138,7 +138,8 @@
                                                     <!--<input type="hidden" name="_method" value="put">-->
                                                 <input type="hidden" name="data_inicial" value="{{{$data_inicial}}}" />
                                                 <input type="hidden" name="data_final" value="{{{$data_final}}}" />    
-                                                    <div class="form-group">
+                                                <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
+                                                <div class="form-group">
                                                         <label for="id_processo">Processo</label>
                                                         <select name="id_processo" class="form-control">
                                                             <option value="{{{ $a->processo_ID }}}" disabled selected>{{{$a->processo_Nome }}}</option>
@@ -204,7 +205,7 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('AtividadeController@remove',  [$a->id,$data_inicial, $data_final])}}' : false)">Deletar</a>
+                                        <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('AtividadeController@remove',  [$a->id,$data_inicial, $data_final,empty($_GET['page']) ? 1 : $_GET['page']])}}' : false)">Deletar</a>
                                     </div>
                                 </td>
                             </tr>

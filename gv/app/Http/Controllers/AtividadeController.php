@@ -17,6 +17,7 @@ use gv\Observacao;
 use gv\User;
 use Carbon\Carbon;
 use Excel;
+use Illuminate\Pagination\Paginator;
 
 class AtividadeController extends Controller
 {
@@ -261,6 +262,12 @@ class AtividadeController extends Controller
             }else{
                 $userFiltro = $usuario;
             }
+            if(isset($request->page)){
+                $page=$request->page;
+            }else{
+                $page=1;
+            }
+            
             $atividades = DB::table('atividades')
             ->join('processos', 'processos.id', '=', 'atividades.id_processo')
             ->join('users', 'users.id', '=', 'atividades.usuario')
@@ -275,7 +282,10 @@ class AtividadeController extends Controller
             ->where('atividades.data_conciliacao','<=',$request->data_final)
             ->where('atividades.usuario','like',$userFiltro)
             ->orderBy('hora_inicio', 'ASC')
-            ->paginate(15);
+            //->paginate(15);
+            /** */
+            ->paginate(15, ['*'], 'page', $page);
+            /** */
             $atividades->appends(Input::except('page'));
             $filtro = count($atividades);
             return  view('atividade.listagem',compact('atividades','users','processos','usuario','filtro','data_inicial','data_final','classificacoes'));
@@ -289,24 +299,30 @@ class AtividadeController extends Controller
        
     }
     
-    public function remove($id,$data_inicial=null,$data_final=null){
+    public function remove($id,$data_inicial=null,$data_final=null,$page=null){
         $atividade = Atividade::find($id);
         $atividade->delete();
         $filtro = null;
         $data=['data_inicial' =>$data_inicial,
-        'data_final' => $data_final];
+        'data_final' => $data_final,
+        'page' => $page];
         return redirect()->route('atividade.filtro',$data);   
     }
     
     public function salvaAlt(AtividadeRequest $request){
-        
+        if(isset($request->page)){
+            $page=$request->page;
+        }else{
+            $page=1;
+        }
         $id = $request->id;
-        Atividade::whereId($id)->update($request->except('_token','data_inicial','data_final','observacao','classificacao','volumetria'));
+        Atividade::whereId($id)->update($request->except('_token','data_inicial','data_final','observacao','classificacao','volumetria','page'));
         $filtro = null;
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
         $data=['data_inicial' =>$data_inicial,
-               'data_final' => $data_final];
+               'data_final' => $data_final,
+                'page' => $page];
         
         $id_obs=Observacao::where('id_atividade','=',$id)->get();
         if($id_obs->count()>0){

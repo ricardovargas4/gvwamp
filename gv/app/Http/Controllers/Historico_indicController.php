@@ -13,6 +13,7 @@ use gv\User;
 use \Datetime;
 use Auth;
 use Excel;
+use Illuminate\Pagination\Paginator;
 
 class Historico_indicController extends Controller
 {
@@ -34,10 +35,16 @@ class Historico_indicController extends Controller
             }else{
                 $userFiltro = $usuario;
             }
+            if(isset($request->page)){
+                $page=$request->page;
+            }else{
+                $page=1;
+            }
             $historicos = Historico_indic::where('historico_indic.data_informada','>=',date('Y-m-d', strtotime($request->data_inicial)))
             ->where('historico_indic.data_informada','<=',date('Y-m-d', strtotime($request->data_final)))
             ->where('historico_indic.user_id','like',$userFiltro)
-            ->paginate(15);
+            //->paginate(15);
+            ->paginate(15, ['*'], 'page', $page);
             $historicos->appends(Input::except('page'));
             $filtro = count($historicos);
             return view('historico_indic.listagem',compact('historicos','periodicidades','processos','users','filtro','data_inicial','data_final'));
@@ -47,22 +54,29 @@ class Historico_indicController extends Controller
         }
     }
 
-    public function remove($id,$data_inicial=null,$data_final=null){
+    public function remove($id,$data_inicial=null,$data_final=null,$page=null){
         $historico = Historico_indic::find($id);
         $historico->delete();
         $data=['data_inicial' =>$data_inicial,
-               'data_final' => $data_final];
+               'data_final' => $data_final,
+               'page' => $page];
         return redirect()->route('historico.filtro',$data);
     }
 
     public function salvaAlt(Historico_indicRequest $request){
         $id = $request->id;
-        Historico_indic::whereId($id)->update($request->except('_token','data_inicial','data_final'));
+        if(isset($request->page)){
+            $page=$request->page;
+        }else{
+            $page=1;
+        }
+        Historico_indic::whereId($id)->update($request->except('_token','data_inicial','data_final','page'));
         $filtro = null;
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
         $data=['data_inicial' =>$data_inicial,
-               'data_final' => $data_final];
+               'data_final' => $data_final,
+               'page' => $page];
         return redirect()->route('historico.filtro',$data);
     }
 

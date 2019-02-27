@@ -92,7 +92,6 @@
                                                     <form action="{{ route('expurgo.adiciona') }}" method="post">
                                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                     <input type="hidden" name="id_historico_indic" value="{{{ $h->id }}}" />
-                                                    
                                                     <div class="form-group">
                                                         <label for="justificativa">Justificativa</label>
                                                         <textarea class="materialize-textarea" name="comentario"></textarea>
@@ -119,6 +118,7 @@
                                                     
                                                     <input type="hidden" name="data_inicial" value="{{{$data_inicial}}}" />
                                                     <input type="hidden" name="data_final" value="{{{$data_final}}}" />
+                                                    <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
                                                     <div class="form-group">
                                                         <label for="processo_id">Nome Processo</label>
                                                         <select name="processo_id" class="form-control">
@@ -174,7 +174,7 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                            <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('Historico_indicController@remove', [$h->id,$data_inicial, $data_final])}}' : false)">Deletar</a>
+                                            <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('Historico_indicController@remove', [$h->id,$data_inicial, $data_final,empty($_GET['page']) ? 1 : $_GET['page']])}}' : false)">Deletar</a>
                                         </div>
                                     </td>
                                 @endcan
