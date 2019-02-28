@@ -48,7 +48,7 @@
       <tbody>
         @foreach ($atividades as $index => $a)
           <tr>
-              <td> {{$a->tipoNome}} <input type="hidden" name="tipoId[{{{$index}}}]" value="{{{ $a->tipoId }}}" /> </td>
+              <td> {{$a->tipoNome}} <input type="hidden" id='Tipo{{{ $a->processoId }}}' name="tipoId[{{{$index}}}]" value="{{{ $a->tipoId }}}" /> </td>
               <td> {{$a->processoNome}} <input type="hidden" name="id_processo[{{{$index}}}]" value="{{{ $a->processoId }}}" /> </td>
               <td>
                 @if($a->tipoId == 3)

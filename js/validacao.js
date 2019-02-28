@@ -7,10 +7,11 @@ $(document).ready(function () {
                 var text = this.id;
                 myString = text.replace(/\D/g,'');
                 var teste = document.getElementById("DtConc"+myString).value;
+                var tipo = document.getElementById("Tipo"+myString).value;
                 if (teste == "") {
                     alert("É necessário preencher a Data Conciliada.");
                     return false;
-                }else {
+                }else if(tipo==3) {
                     var currentTime = new Date();
                     var parts = teste.split('/');
                     var mydate = new Date(parts[2], parts[1]-1,parts[0]); 
