@@ -101,7 +101,8 @@ Route::group(['middleware'=>'auth'],function(){
 
         //Processo
         Route::get('/processo', ['uses'=>'ProcessoController@lista', 'as'=>'processo.lista']);
-        Route::get('/processo?page={?}', ['uses'=>'ProcessoController@lista', 'as'=>'processo.lista']);
+        //Route::get('/processo?page={?}', ['uses'=>'ProcessoController@lista', 'as'=>'processo.lista']);
+        Route::match(array('GET', 'POST'),'/processo/filtro',['uses'=>'ProcessoController@filtro','as'=>'processo.filtro']);
         Route::post('/processo/adiciona', ['uses'=>'ProcessoController@adiciona', 'as'=>'processo.adiciona']);
         Route::post('/processo/salvaAlt',['uses'=>'ProcessoController@salvaAlt', 'as'=>'processo.salvaAlt']);
         
@@ -154,8 +155,9 @@ Route::group(['middleware'=>'auth'],function(){
     Route::group(['middleware'=>'Verifica.Desenvolvedor'],function(){
     //Adm
     //Processo
-        Route::get('/processo/remove/{id}/{page?}',  ['uses'=>'ProcessoController@remove', 'as'=>'processo.remove']);
-
+        //Route::get('/processo/remove/{id}/{page?}',  ['uses'=>'ProcessoController@remove', 'as'=>'processo.remove']);
+        Route::post('/processo/remove', ['uses'=>'ProcessoController@remove','as'=>'processo.remove']);
+        //Route::get('/processo/remove/id/{id}/filtroProcesso/{filtroProcesso}/filtroTipo/{filtroTipo}/filtroCoordenacao/{filtroCoordenacao}/page/{page}', ['uses'=>'ProcessoController@remove', 'as'=>'processo.remove']);
         //Tipo
         Route::get('/tipo/novo', ['uses'=>'TipoController@novo', 'as'=>'tipo.novo']);
         Route::post('/tipo/adiciona',['uses'=>'TipoController@adiciona', 'as'=>'tipo.adiciona']);
