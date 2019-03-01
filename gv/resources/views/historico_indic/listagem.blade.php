@@ -14,7 +14,31 @@
         <label>Data Final</label>
         <input type="date" name="data_final" class="form-control" @if(isset($data_final)) value="{{{$data_final}}}" @else value = "{{{date('Y-m-d')}}}" @endif placeholder="dd/mm/aaaa"/>
     </div>
-    <div class= "botaoFiltro">
+
+    @can('checkGestor')
+        <div class="form-group">
+            <div class = "filtroExpListaUsuario">
+                <label for="filtroUsuario">Usuários</label>
+                <select name="filtroUsuario" class="form-control">
+                    <option @if(isset($filtroUsuario)) value="{{{$filtroUsuario->id}}}" @else value = "" @endif>@if(isset($filtroUsuario)) {{$filtroUsuario->email}} @else  @endif</option>
+                    @if(isset($filtroUsuario))
+                        <option value="" ></option>
+                    @endif
+                    @foreach($users as $u)
+                        @if(isset($filtroUsuario->id))
+                            @if($filtroUsuario->id!=$u->id)
+                                <option value="{{$u->id}}">{{$u->email}}</option>
+                            @endif
+                        @else
+                            <option value="{{$u->id}}">{{$u->email}}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+        </div>
+    @endcan
+
+    <div class= "botaoFiltroExpLista">
         <button type="submit" class="btn waves-effect light-green accent-3"> Filtrar</button>
     </div>
     </form>
@@ -73,6 +97,7 @@
                             </tr>
                         </thead>
                           <tbody>
+                              <!--dd($historicos[1]->expurgo_Rel->STATUS)}}-->
                           @foreach ($historicos as $h)
                             <tr>
                                 <td scope="row">{{$h->id}}</td>
@@ -84,25 +109,38 @@
                                 <td> {{$h->periodiciade_id_FK->nome}} </td>
                                 <td> {{$h->status}} </td>
                                 @if($h->status!="No Prazo")
-                                    <td>
-                                        <div class="row">
-                                            <a class="waves-effect waves-light btn grey accent-3  modal-trigger" href="#modalJ1{{$h->id}}">Expurgar</a>
-                                            <div id="modalJ1{{$h->id}}" class="modal">
-                                                <div class="modal-content">
-                                                    <form action="{{ route('expurgo.adiciona') }}" method="post">
-                                                    <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
-                                                    <input type="hidden" name="id_historico_indic" value="{{{ $h->id }}}" />
-                                                    <div class="form-group">
-                                                        <label for="justificativa">Justificativa</label>
-                                                        <textarea class="materialize-textarea" name="comentario"></textarea>
+                                   @if(isset($h->expurgo_Rel->STATUS))
+                                        @if($h->expurgo_Rel->STATUS==1)
+                                            <td>Expurgo Pendente</td>
+                                        @else
+                                            <td>Expurgo Reprovado</td>
+                                        @endif
+                                    @else
+                                        <td>
+                                            <div class="row">
+                                                <a class="waves-effect waves-light btn grey accent-3  modal-trigger" href="#modalJ1{{$h->id}}">Expurgar</a>
+                                                <div id="modalJ1{{$h->id}}" class="modal">
+                                                    <div class="modal-content">
+                                                        <form action="{{ route('expurgo.adiciona') }}" method="post">
+                                                        <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+                                                        <input type="hidden" name="id_historico_indic" value="{{{ $h->id }}}" />
+                                                        <input type="hidden" name="data_inicial" value="{{{$data_inicial}}}" />
+                                                        <input type="hidden" name="data_final" value="{{{$data_final}}}" />
+                                                        <input type="hidden" name="filtroUsuario" value="@if(isset($filtroUsuario)) {{$filtroUsuario->id}} @else  @endif" /> 
+                                                        <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
+                                                        <div class="form-group">
+                                                            <label for="justificativa">Justificativa</label>
+                                                            <textarea class="materialize-textarea" name="comentario"></textarea>
+                                                        </div>
+                                                            <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
+                                                            <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
+                                                        </form>
                                                     </div>
-                                                        <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
-                                                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
-                                                    </form>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
+                                        </td>
+
+                                   @endif
                                 @else
                                     <td></td>
                                 @endif
@@ -118,6 +156,7 @@
                                                     
                                                     <input type="hidden" name="data_inicial" value="{{{$data_inicial}}}" />
                                                     <input type="hidden" name="data_final" value="{{{$data_final}}}" />
+                                                    <input type="hidden" name="filtroUsuario" value="@if(isset($filtroUsuario)) {{$filtroUsuario->id}} @else  @endif" /> 
                                                     <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
                                                     <div class="form-group">
                                                         <label for="processo_id">Nome Processo</label>
@@ -174,7 +213,7 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                            <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('Historico_indicController@remove', [$h->id,$data_inicial, $data_final,empty($_GET['page']) ? 1 : $_GET['page']])}}' : false)">Deletar</a>
+                                            <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('Historico_indicController@remove', [$h->id,$data_inicial, $data_final,empty($filtroUsuario) ?  : $filtroUsuario->id,empty($_GET['page']) ? 1 : $_GET['page']])}}' : false)">Deletar</a>
                                         </div>
                                     </td>
                                 @endcan

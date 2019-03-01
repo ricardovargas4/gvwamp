@@ -99,6 +99,7 @@
             
                         </tbody>
                     </table>
+                    {{ $expurgos->links() }}
                 </div>   
             </div>
         </div>

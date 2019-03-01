@@ -348,3 +348,18 @@ a:hover {
   left: 83.5%;
   font-size: 18px;
 }
+
+
+.filtroExpListaUsuario{
+  position: absolute;
+  top: 0%;
+  left: 47%;
+  font-size: 18px;
+  width: 21%;
+}
+.botaoFiltroExpLista{
+  position: absolute;
+  top: 40%;
+  left: 77%;
+  font-size: 18px;
+}

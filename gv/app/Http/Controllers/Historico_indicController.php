@@ -14,12 +14,14 @@ use \Datetime;
 use Auth;
 use Excel;
 use Illuminate\Pagination\Paginator;
+use gv\Expurgo_Indicador;
 
 class Historico_indicController extends Controller
 {
     public function lista(){
         $filtro = null;
-        return  view('historico_indic.listagem',compact('filtro'));
+        $users = User::orderBy('email')->get();
+        return  view('historico_indic.listagem',compact('filtro','users'));
     }
     public function filtro(Historico_indicRequest $request,$data=null){
         $user = Auth::user();
@@ -30,36 +32,46 @@ class Historico_indicController extends Controller
             $users = User::orderBy('email')->get();
             $processos = Processo::orderBy('nome')->get();
             $usuario =  Auth::user()->id;
-            if($user->can('checkGestor')){
-                $userFiltro = '%';
+            if(isset($request->filtroUsuario)){
+                $userFiltro = $request->filtroUsuario;
+                $filtroUsuario = User::find($userFiltro);
             }else{
-                $userFiltro = $usuario;
+                if($user->can('checkGestor')){
+                    $userFiltro = '%';
+                }else{
+                    $userFiltro = $usuario;
+                }
             }
+
             if(isset($request->page)){
                 $page=$request->page;
             }else{
                 $page=1;
             }
+          
             $historicos = Historico_indic::where('historico_indic.data_informada','>=',date('Y-m-d', strtotime($request->data_inicial)))
             ->where('historico_indic.data_informada','<=',date('Y-m-d', strtotime($request->data_final)))
             ->where('historico_indic.user_id','like',$userFiltro)
-            //->paginate(15);
             ->paginate(15, ['*'], 'page', $page);
+
             $historicos->appends(Input::except('page'));
             $filtro = count($historicos);
-            return view('historico_indic.listagem',compact('historicos','periodicidades','processos','users','filtro','data_inicial','data_final'));
+            return view('historico_indic.listagem',compact('historicos','periodicidades','processos','users','filtro','data_inicial','data_final','filtroUsuario'));
         }else{
             $filtro = null;
-            return  view('historico_indic.listagem',compact('filtro'));
+            $users = User::orderBy('email')->get();
+            return  view('historico_indic.listagem',compact('filtro','users'));
         }
     }
 
-    public function remove($id,$data_inicial=null,$data_final=null,$page=null){
+    public function remove($id,$data_inicial=null,$data_final=null,$filtroUsuario=null,$page=null){
         $historico = Historico_indic::find($id);
+        $filtroUsuario = User::find($filtroUsuario);
         $historico->delete();
         $data=['data_inicial' =>$data_inicial,
                'data_final' => $data_final,
-               'page' => $page];
+               'filtroUsuario' => $filtroUsuario,
+               'page' => $page,];
         return redirect()->route('historico.filtro',$data);
     }
 
@@ -70,12 +82,14 @@ class Historico_indicController extends Controller
         }else{
             $page=1;
         }
-        Historico_indic::whereId($id)->update($request->except('_token','data_inicial','data_final','page'));
+        Historico_indic::whereId($id)->update($request->except('_token','data_inicial','data_final','page','filtroUsuario'));
         $filtro = null;
+        $filtroUsuario = User::find($request->filtroUsuario);
         $data_inicial = $request->data_inicial;
         $data_final = $request->data_final;
         $data=['data_inicial' =>$data_inicial,
                'data_final' => $data_final,
+               'filtroUsuario' => $filtroUsuario,
                'page' => $page];
         return redirect()->route('historico.filtro',$data);
     }

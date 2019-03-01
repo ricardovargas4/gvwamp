@@ -19,7 +19,7 @@
               <li><a href="{{ route('responsavel.lista') }}">Responsaveis</a></li>
               <li><a href="{{ route('historico.filtro') }}">Histórico Indicadores</a></li>
               <li><a href="{{ route('expurgo.tela') }}">Expurgo Indicador</a></li>
-              <li><a href="{{ route('expurgo.lista') }}">Expurgo Indicador Lista</a></li>
+              <li><a href="{{ route('expurgo.filtro') }}">Expurgo Indicador Lista</a></li>
               <li><a href="{{ route('demanda.lista') }}">Demandas</a></li>
               @can('checkGestor')
                 <li><a href="{{ route('processo.lista') }}">Processos</a></li>

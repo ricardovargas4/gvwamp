@@ -19,6 +19,9 @@ class historico_indic extends Model
     public function periodiciade_id_FK(){
         return $this->belongsTo('gv\Periodicidade','periodicidade_id');
     }
+    public function expurgo_Rel(){
+        return $this->hasOne('gv\Expurgo_Indicador', 'id_historico_indic', 'id');
+    }
 }
 
 

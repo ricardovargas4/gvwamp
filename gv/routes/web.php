@@ -79,7 +79,11 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/demanda', ['uses'=>'DemandaController@lista', 'as'=>'demanda.lista']);
 
     //Expurgo
-    Route::get('/expurgo_indicador', ['uses'=>'Expurgo_IndicadorController@lista', 'as'=>'expurgo.lista']);
+    //Route::get('/expurgo_indicador', ['uses'=>'Expurgo_IndicadorController@lista', 'as'=>'expurgo.lista']);
+    //Route::get('/expurgo_indicador', ['uses'=>'Expurgo_IndicadorController@lista', 'as'=>'expurgo.lista']);
+    Route::get('/expurgo_indicador',['uses'=>'Expurgo_IndicadorController@filtro', 'as'=>'expurgo.filtro']);
+    Route::match(array('GET', 'POST'),'/expurgo_indicador/filtro',['uses'=>'Expurgo_IndicadorController@filtro','as'=>'expurgo.filtro']);
+
     Route::get('/expurgo_indicador/tela', ['uses'=>'Expurgo_IndicadorController@tela', 'as'=>'expurgo.tela']);
     Route::post('/expurgo_indicador/adiciona', ['uses'=>'Expurgo_IndicadorController@adiciona', 'as'=>'expurgo.adiciona']);
 
