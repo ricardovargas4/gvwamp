@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Request;
 use gv\User;
+use gv\historico_indic;
 
 class EmailController extends Controller
 {
@@ -20,12 +21,12 @@ class EmailController extends Controller
             $user = User::find($usuario->usuario);
             
             $gestor= DB::table('responsavels')
-            ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
-            ->join('coordenacaos','processos.coordenacao','=','coordenacaos.id')
-            ->join('users', 'users.id', '=', 'coordenacaos.id_gestor')
-            ->select(DB::RAW('users.email,users.name'))
-            ->where('responsavels.usuario', User::find($usuario->usuario)->id)
-            ->first();
+                ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
+                ->join('coordenacaos','processos.coordenacao','=','coordenacaos.id')
+                ->join('users', 'users.id', '=', 'coordenacaos.id_gestor')
+                ->select(DB::RAW('users.email,users.name'))
+                ->where('responsavels.usuario', User::find($usuario->usuario)->id)
+                ->first();
 
             $data = DB::table('atividades')
                 ->join('users', 'users.id', '=', 'atividades.usuario')
@@ -43,12 +44,50 @@ class EmailController extends Controller
                 }else{
                     $message->to($user->email."@sicredi.com.br", $user->nome)->subject('Atividades Com Tempo Excessivo');
                 }
-                //$message->cc($gestor->email."@sicredi.com.br", $gestor->name);
                 // Set the sender
                 $message->from('noreply@sicredi.com.br', 'No-Reply');
             }); 
-           
         }
-        
+    }
+
+    public function envioIndicadorAtrasado(){
+        $data_informada = DB::table(DB::raw('DUAL'))->select(DB::raw("FLOAT_DIAS_UTEIS(now(),-1) data"))->first([DB::raw(1)]);
+        $data = DB::table('historico_indic')
+            ->where('data_informada','=',$data_informada->data)
+            ->where('status','=','Em Atraso')
+            ->select(DB::raw('distinct user_id'))
+            ->groupBy('user_id')
+            ->get();
+
+        $texto = "";
+        foreach ($data as $usuario) {
+            $user = User::find($usuario->user_id);
+           
+            $gestor= DB::table('responsavels')
+                ->join('processos', 'responsavels.id_processo', '=', 'processos.id')
+                ->join('coordenacaos','processos.coordenacao','=','coordenacaos.id')
+                ->join('users', 'users.id', '=', 'coordenacaos.id_gestor')
+                ->select(DB::RAW('users.email,users.name'))
+                ->where('responsavels.usuario', $user->id)
+                ->first();
+
+            $data = historico_indic::where('user_id','=',$user->id)
+                ->where('data_informada','=',$data_informada->data)
+                ->where('status','=','Em Atraso')
+                ->get();
+
+            $template_path = 'emails.email_template_indicador';
+            Mail::send(['html'=> $template_path ], ['dados' => $data], function($message) use ($user) {
+                // Set the receiver and subject of the mail.
+                if ($user->nivel==4){
+                    $message->to($user->email."@terceiros.sicredi.com.br", $user->nome)->subject('Atividades Com Indicador Atrasado');    
+                }else{
+                    $message->to($user->email."@sicredi.com.br", $user->nome)->subject('Atividades Com Indicador Atrasado');
+                }
+                $message->cc($gestor->email."@sicredi.com.br", $gestor->name);
+                // Set the sender
+                $message->from('noreply@sicredi.com.br', 'No-Reply');
+            }); 
+        }
     }
 }

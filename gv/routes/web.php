@@ -25,6 +25,7 @@ Auth::routes();
 
 Route::post('/loginLdap', ['uses'=>'Auth\AuthController@login', 'as'=>'loginLdap']);
 Route::get('/emailAtividades', 'EmailController@envioAtividadesAcimaDoTempo');
+Route::get('/emailIndicadorAtrasado', 'EmailController@envioIndicadorAtrasado');
 Route::get('/teste', 'AtividadeController@teste');
 Route::get('/login',  ['uses'=>'Auth\AuthController@telaLogin', 'as'=>'telaLogin']);
 Route::get('/', function () {
