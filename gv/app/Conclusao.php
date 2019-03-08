@@ -10,8 +10,8 @@ class conclusao extends Model
     public $timestamps = true;
     protected $fillable = array('id_processo','data_conciliada','data_conciliacao');
 
-    public function processos(){
-        return $this->hasMany('gv\Processo');
+    public function processos_FK(){
+        return $this->belongsTo('gv\Processo','id_processo');
     }
 
 }

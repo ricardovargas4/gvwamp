@@ -31,4 +31,7 @@ class processo extends Model
     public function demandaFK(){
         return $this->hasMany('gv\Demanda');
     }
+    public function conclusao(){
+        return $this->hasMany('gv\Conclusao');
+    }
 }

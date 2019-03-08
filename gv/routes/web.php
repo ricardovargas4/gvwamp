@@ -154,6 +154,14 @@ Route::group(['middleware'=>'auth'],function(){
         Route::post('/usuario/adiciona',['uses'=>'UserController@adiciona', 'as'=>'usuario.adiciona']);
         Route::post('/usuario/salvaAlt',['uses'=>'UserController@salvaAlt', 'as'=>'usuario.salvaAlt']);
         Route::get('/usuario', ['uses'=>'UserController@lista', 'as'=>'usuario.lista']);
+
+        //Conclusoes
+        Route::get('/conclusao', ['uses'=>'ConclusaoController@filtro','as'=>'conclusao.filtro']);
+        Route::match(array('GET', 'POST'),'/conclusao/filtro',['uses'=>'ConclusaoController@filtro','as'=>'conclusao.filtro']);
+        Route::post('/conclusao/adiciona',['uses'=>'ConclusaoController@adiciona', 'as'=>'conclusao.adiciona']);
+        Route::post('/conclusao/salvaAlt',['uses'=>'ConclusaoController@salvaAlt', 'as'=>'conclusao.salvaAlt']);
+        Route::get('/conclusao/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}/page/{page}', ['uses'=>'ConclusaoController@remove', 'as'=>'conclusao.remove']);
+
     });
 
 

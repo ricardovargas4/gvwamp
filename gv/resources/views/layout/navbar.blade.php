@@ -28,6 +28,7 @@
                 <li><a href="{{ route('coordenacao.lista') }}">Coordenações</a></li>
                 <li><a href="{{ route('classificacao.lista') }}">Classificações</a></li>
                 <li><a href="{{ route('usuario.lista') }}">Usuários</a></li>
+                <li><a href="{{ route('conclusao.filtro') }}">Conclusões</a></li>
               @endcan
               <!--<li class="divider"></li>-->
             </ul>

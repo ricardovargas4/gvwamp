@@ -363,3 +363,33 @@ a:hover {
   left: 77%;
   font-size: 18px;
 }
+
+
+.dataIniConc{
+  position: absolute;
+  top: 0%;
+  left: 10%;
+  font-size: 18px;
+}
+
+.dataFimConc{
+  position: absolute;
+  top: 0%;
+  left: 23%;
+  font-size: 18px;
+}
+
+.filtroConcListaProcessos{
+  position: absolute;
+  top: 0%;
+  left: 36%;
+  font-size: 18px;
+  width: 43%;
+}
+
+.botaoFiltroConcLista{
+  position: absolute;
+  top: 39%;
+  left: 83.5%;
+  font-size: 18px;
+}
