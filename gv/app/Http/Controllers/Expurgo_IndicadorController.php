@@ -118,7 +118,8 @@ class Expurgo_IndicadorController extends Controller
         $data=['data_inicial' =>$data_inicial,
                'data_final' => $data_final,
                'filtroUsuario' => $filtroUsuario,
-               'page' => $page];
+               'page' => $page,
+               'filtroPrazo'=> $request->filtroPrazo];
         
 
 

@@ -393,3 +393,20 @@ a:hover {
   left: 83.5%;
   font-size: 18px;
 }
+
+.filtroHistListaPrazo{
+  position: absolute;
+  top: 0%;
+  left: 70%;
+  font-size: 18px;
+  width: 10%;
+}
+
+.botaoFiltroHistLista{
+  
+  position: absolute;
+  top: 39%;
+  left: 83.5%;
+  font-size: 18px;
+
+}

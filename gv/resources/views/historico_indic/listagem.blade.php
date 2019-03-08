@@ -38,7 +38,29 @@
         </div>
     @endcan
 
-    <div class= "botaoFiltroExpLista">
+    <div class="form-group">
+        <div class = "filtroHistListaPrazo">
+            <label for="filtroPrazo">Status</label>
+            <select name="filtroPrazo" class="form-control">
+                <option @if(isset($filtroPrazo)) value="{{{$filtroPrazo}}}" @else value = "" @endif>@if(isset($filtroPrazo)) {{$filtroPrazo}} @else  @endif</option>
+                @if(isset($filtroPrazo))
+                    <option value="" ></option>
+                @endif
+                @if(isset($filtroPrazo))
+                    @if($filtroPrazo!="No Prazo")
+                        <option value="No Prazo">No Prazo</option>
+                    @endif   
+                    @if($filtroPrazo!="Em Atraso")
+                        <option value="Em Atraso">Em Atraso</option>
+                    @endif   
+                @else
+                    <option value="No Prazo">No Prazo</option>
+                    <option value="Em Atraso">Em Atraso</option>
+                @endif
+            </select>
+        </div>
+    </div>
+    <div class= "botaoFiltroHistLista">
         <button type="submit" class="btn waves-effect light-green accent-3"> Filtrar</button>
     </div>
     </form>
@@ -60,6 +82,9 @@
                                         <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                         <input type="hidden" name="data_inicial" @if(isset($data_inicial)) value="{{{$data_inicial}}}" @else value = "{{{date('Y-m-d', strtotime('-15 day', strtotime(date('Y-m-d'))))}}}" @endif />
                                         <input type="hidden" name="data_final" @if(isset($data_final)) value="{{{$data_final}}}" @else value = "{{{date('Y-m-d')}}}" @endif />
+                                        <input type="hidden" name="filtroUsuario" value="@if(isset($filtroUsuario)) {{$filtroUsuario->id}} @else  @endif" /> 
+                                        <input type="hidden" name="filtroPrazo" @if(isset($filtroPrazo)) value="{{{$filtroPrazo}}}" @else value = "" @endif />
+                                        <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
                                         <div class="form-group">
                                             <label for="data_informada">Data Informada</label>
                                             <input type = "date" name="data_informada" class="form-control"/>
@@ -127,6 +152,7 @@
                                                         <input type="hidden" name="data_inicial" value="{{{$data_inicial}}}" />
                                                         <input type="hidden" name="data_final" value="{{{$data_final}}}" />
                                                         <input type="hidden" name="filtroUsuario" value="@if(isset($filtroUsuario)) {{$filtroUsuario->id}} @else  @endif" /> 
+                                                        <input type="hidden" name="filtroPrazo" @if(isset($filtroPrazo)) value="{{{$filtroPrazo}}}" @else value = "" @endif />
                                                         <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
                                                         <div class="form-group">
                                                             <label for="justificativa">Justificativa</label>
@@ -157,6 +183,7 @@
                                                     <input type="hidden" name="data_inicial" value="{{{$data_inicial}}}" />
                                                     <input type="hidden" name="data_final" value="{{{$data_final}}}" />
                                                     <input type="hidden" name="filtroUsuario" value="@if(isset($filtroUsuario)) {{$filtroUsuario->id}} @else  @endif" /> 
+                                                    <input type="hidden" name="filtroPrazo" @if(isset($filtroPrazo)) value="{{{$filtroPrazo}}}" @else value = "" @endif />
                                                     <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
                                                     <div class="form-group">
                                                         <label for="processo_id">Nome Processo</label>
