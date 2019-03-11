@@ -24,7 +24,7 @@
                     <option value="" ></option>
                 @endif
                 @foreach($processos as $p)
-                    @if(isset($processoFiltro->id))
+                    @if(isset($filtroProcesso->id))
                         @if($filtroProcesso->id!=$p->id)
                             <option value="{{$p->id}}">{{$p->nome}}</option>
                         @endif
