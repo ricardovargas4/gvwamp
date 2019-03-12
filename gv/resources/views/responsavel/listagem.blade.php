@@ -27,27 +27,28 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group">
-                <div class = "filtroUsuario">
-                    <label for="filtroUsuario">Usuários</label>
-                    <select name="filtroUsuario" class="form-control">
-                        <option @if(isset($filtroUsuario)) value="{{{$filtroUsuario->id}}}" @else value = "" @endif>@if(isset($filtroUsuario)) {{$filtroUsuario->email}} @else  @endif</option>
-                        @if(isset($filtroUsuario))
-                            <option value="" ></option>
-                        @endif
-                        @foreach($users as $u)
-                            @if(isset($filtroUsuario->id))
-                                @if($filtroUsuario->id!=$u->id)
+            @can('checkGestor')
+                <div class="form-group">
+                    <div class = "filtroUsuario">
+                        <label for="filtroUsuario">Usuários</label>
+                        <select name="filtroUsuario" class="form-control">
+                            <option @if(isset($filtroUsuario)) value="{{{$filtroUsuario->id}}}" @else value = "" @endif>@if(isset($filtroUsuario)) {{$filtroUsuario->email}} @else  @endif</option>
+                            @if(isset($filtroUsuario))
+                                <option value="" ></option>
+                            @endif
+                            @foreach($users as $u)
+                                @if(isset($filtroUsuario->id))
+                                    @if($filtroUsuario->id!=$u->id)
+                                        <option value="{{$u->id}}">{{$u->email}}</option>
+                                    @endif
+                                @else
                                     <option value="{{$u->id}}">{{$u->email}}</option>
                                 @endif
-                            @else
-                                <option value="{{$u->id}}">{{$u->email}}</option>
-                            @endif
-                        @endforeach
-                    </select>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-            </div>
-        
+            @endcan
             <div class= "botaoFiltroResp">
                 <button type="submit" class="btn waves-effect light-green accent-3"> Filtrar</button>
             </div>
@@ -70,6 +71,7 @@
                                             <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                             <input type="hidden" name="filtroId_processo" @if(isset($filtroId_processo)) value="{{{$filtroId_processo}}}" @endif />
                                             <input type="hidden" name="filtroUsuario" @if(isset($filtroUsuario)) value="{{{$filtroUsuario}}}"  @endif />
+                                            <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
                                             <div class="form-group">
                                                 <label for="id_processo">Nome Processo</label>
                                                 <select name="id_processo" class="form-control">
@@ -101,10 +103,6 @@
                                 O processo é de conciliação e já cadastrado para outro usuário.<BR>
                                 Cadastro não realizado.
                             </div>       
-                        @elseif (!isset($filtro))
-                            <div class="container">
-                                Selecione um dos filtros.
-                            </div>    
                         @elseif($filtro==0)
                             <div class="container">
                                 Sem dados para os filtros selecionados.
@@ -117,6 +115,9 @@
                                         <th> ID </th>
                                         <th> Processo </th>
                                         <th> Usuário </th>
+                                        @if($nivel>2)
+                                            <th> Direcionar </th>
+                                        @endif
                                         @can('checkGestor')
                                             <th> Alterar/Excluir </th>
                                         @endcan
@@ -128,6 +129,44 @@
                                         <td scope="row">{{$r->id}}</td>
                                         <td> {{$r->procNome}} </td>
                                         <td> {{$r->email}} </td>
+                                        @if($nivel>2)
+                                            <td>
+                                                <div class="row">
+                                                    <a class="waves-effect waves-light btn green accent-3  modal-trigger" href="#modal3{{$r->id}}">Alterar</a>
+                                                    <div id="modal3{{$r->id}}" class="modal">
+                                                        <div class="modal-content">
+                                                            <form action="{{ route('responsavel.direcionar') }}" method="post">
+                                                            <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+                                                            <input type="hidden" name="id" value="{{{ $r->id }}}" />
+                                                            <input type="hidden" name="filtroId_processo" @if(isset($filtroId_processo)) value="{{{$filtroId_processo}}}" @endif />
+                                                            <input type="hidden" name="filtroUsuario" @if(isset($filtroUsuario)) value="{{{$filtroUsuario}}}"  @endif />
+                                                            <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
+                                                                <!--<input type="hidden" name="_method" value="put">-->
+                                                                <div class="form-group">
+                                                                    <label for="id_processo">Nome Processo</label>
+                                                                    <select name="id_processo" class="form-control">
+                                                                        <option value="{{{ $r->id_processo }}}" selected>{{{$r->procNome}}}</option>
+                                                                     </select>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="usuario">Usuários</label>
+                                                                    <select name="usuario" class="form-control">
+                                                                        <option value="{{{ $r->usuario }}}" disabled selected>{{{$r->email}}}</option>
+                                                                        @foreach($users as $u)
+                                                                            <option value="{{$u->id}}">{{$u->email}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                                            
+                                                                <button type="submit" class="waves-effect waves-light btn green accent-3 ">Atualizar</button>
+                                                                <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        @endif
                                         @can('checkGestor')
                                             <td>
                                                 <div class="row">
@@ -139,6 +178,7 @@
                                                             <input type="hidden" name="id" value="{{{ $r->id }}}" />
                                                             <input type="hidden" name="filtroId_processo" @if(isset($filtroId_processo)) value="{{{$filtroId_processo}}}" @endif />
                                                             <input type="hidden" name="filtroUsuario" @if(isset($filtroUsuario)) value="{{{$filtroUsuario}}}"  @endif />
+                                                            <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
                                                                 <!--<input type="hidden" name="_method" value="put">-->
                                                                 <div class="form-group">
                                                                     <label for="id_processo">Nome Processo</label>
@@ -174,6 +214,7 @@
                                                             <input type="hidden" name="id" value="{{{ $r->id }}}" />
                                                             <input type="hidden" name="filtroId_processo" @if(isset($filtroId_processo)) value="{{{$filtroId_processo}}}" @endif />
                                                             <input type="hidden" name="filtroUsuario" @if(isset($filtroUsuario)) value="{{{$filtroUsuario}}}"  @endif />
+                                                            <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
                                                                 <div>
                                                                     Realmente deseja excluir o registro?
                                                                 </div>
@@ -190,6 +231,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            {{ $resp->links() }}
                         @endif
                     </div>   
                 </div>

@@ -87,6 +87,9 @@ Route::group(['middleware'=>'auth'],function(){
 
     Route::get('/expurgo_indicador/tela', ['uses'=>'Expurgo_IndicadorController@tela', 'as'=>'expurgo.tela']);
     Route::post('/expurgo_indicador/adiciona', ['uses'=>'Expurgo_IndicadorController@adiciona', 'as'=>'expurgo.adiciona']);
+    
+    //Responsavel
+    Route::post('/responsavel/direcionar',['uses'=>'ResponsavelController@direcionar','as'=>'responsavel.direcionar']);
 
     Route::group(['middleware'=>'Verifica.Gestor'],function(){
     //Gestor
