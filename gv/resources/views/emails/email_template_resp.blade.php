@@ -23,4 +23,3 @@
     <p>Gerência Contábil - GCT</p>
     <p>Superintendência de Controladoria - SUC</p>
     <p>CAS-Confederação Sicredi-Porto Alegre</p>
-{{dd('1')}}
