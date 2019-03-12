@@ -36,6 +36,9 @@ class Kernel extends ConsoleKernel
         $schedule->call('gv\Http\Controllers\EmailController@envioIndicadorAtrasado')
                  ->weekdays()
                  ->dailyAt('13:00');                 
+        $schedule->call('gv\Http\Controllers\EmailController@envioAlteracaoResp')
+                 ->weekdays()
+                 ->dailyAt('09:00');                   
     }
 
     /**

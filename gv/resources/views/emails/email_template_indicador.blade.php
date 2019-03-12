@@ -1,5 +1,5 @@
 <div>
-    <h2>Olá, </h2>
+    <h2 style="font-weight:normal;font-size: 20px;">Olá, </h2>
     <p>Seguem abaixo as atividades com indicador não atingido:</p>
     <table border="2"  style="border: 1px solid black; border-collapse: collapse; padding: 5px; width:80%">
         <tr>

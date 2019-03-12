@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Mail;
 use Request;
 use gv\User;
 use gv\historico_indic;
+use gv\LogResp;
 
 class EmailController extends Controller
 {
@@ -85,6 +86,41 @@ class EmailController extends Controller
                     $message->to($user->email."@sicredi.com.br", $user->nome)->subject('Atividades Com Indicador Atrasado');
                 }
                 $message->cc($gestor->email."@sicredi.com.br", $gestor->name);
+                // Set the sender
+                $message->from('noreply@sicredi.com.br', 'No-Reply');
+            }); 
+        }
+    }
+
+    public function envioAlteracaoResp(){
+        $data_fim = DB::table(DB::raw('DUAL'))->select(DB::raw("DATE(now()) data"))->first([DB::raw(1)]);
+        $data_fim= json_decode( json_encode($data_fim), true);
+        $data_incio = DB::table(DB::raw('DUAL'))->select(DB::raw("FLOAT_DIAS_UTEIS(now(),-1) data"))->first([DB::raw(1)]);
+        $data_incio= json_decode( json_encode($data_incio), true);
+        $data = LogResp::where('data_alteracao','<',$data_fim)
+        ->where('DATA_ALTERACAO','>=',$data_incio)
+        ->select('usuario')
+        ->distinct('usuario')
+        ->get();
+        //->toSql();
+        //$data= json_decode( json_encode($data), true);
+        $texto = "";
+        foreach ($data as $usuario) {
+            //dd($ativ);
+            $user = User::find($usuario->usuario);
+            
+            $data = LogResp::where('data_alteracao','<',$data_fim)
+                ->where('DATA_ALTERACAO','>=',$data_incio)
+                ->where('usuario','=',$usuario->usuario)
+                ->get();   
+            $template_path = 'emails.email_template_resp';
+            Mail::send(['html'=> $template_path ], ['dados' => $data], function($message) use ($user) {
+                // Set the receiver and subject of the mail.
+                if ($user->nivel==4){
+                    $message->to($user->email."@terceiros.sicredi.com.br", $user->nome)->subject('Alteração de Responsabilidades');    
+                }else{
+                    $message->to($user->email."@sicredi.com.br", $user->nome)->subject('Alteração de Responsabilidades');
+                }
                 // Set the sender
                 $message->from('noreply@sicredi.com.br', 'No-Reply');
             }); 
