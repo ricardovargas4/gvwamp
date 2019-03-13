@@ -78,7 +78,7 @@ class EmailController extends Controller
                 ->get();
 
             $template_path = 'emails.email_template_indicador';
-            Mail::send(['html'=> $template_path ], ['dados' => $data], function($message) use ($user) {
+            Mail::send(['html'=> $template_path ], ['dados' => $data], function($message) use ($user,$gestor) {
                 // Set the receiver and subject of the mail.
                 if ($user->nivel==4){
                     $message->to($user->email."@terceiros.sicredi.com.br", $user->nome)->subject('Atividades Com Indicador Atrasado');    
