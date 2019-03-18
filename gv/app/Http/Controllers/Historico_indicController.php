@@ -183,18 +183,22 @@ class Historico_indicController extends Controller
     public function RelatorioIndicadorMensal(Historico_indicRequest $request) {
 
         $NoPrazo= DB::table('historico_indic')
-        ->select(DB::raw(" user_id , count(*) as Indic, MONTH(historico_indic.data_informada) as mes, year(historico_indic.data_informada) ano"))
+        ->join('processos','processos.id','=','historico_indic.processo_id')
+        ->join('coordenacaos','coordenacaos.id','=','processos.coordenacao')
+        ->select(DB::raw(" user_id, coordenacaos.nome as coordenacao, count(*) as Indic, MONTH(historico_indic.data_informada) as mes, year(historico_indic.data_informada) ano"))
         ->whereBetween('historico_indic.data_informada', [$request->data_inicial, $request->data_final])
         ->where('status','=','No Prazo')
-        ->groupBy('user_id','mes', 'ano')
+        ->groupBy('user_id','coordenacaos.nome','mes', 'ano')
         ->get()
         ;
         
         $Total= DB::table('historico_indic')
         ->join('users', 'users.id', '=', 'historico_indic.user_id')
-        ->select(DB::raw(" user_id,users.email , count(*) as Indic, MONTH(historico_indic.data_informada) as mes, year(historico_indic.data_informada) ano"))
+        ->join('processos','processos.id','=','historico_indic.processo_id')
+        ->join('coordenacaos','coordenacaos.id','=','processos.coordenacao')
+        ->select(DB::raw(" user_id,users.email ,coordenacaos.nome as coordenacao, count(*) as Indic, MONTH(historico_indic.data_informada) as mes, year(historico_indic.data_informada) ano"))
         ->whereBetween('historico_indic.data_informada', [$request->data_inicial, $request->data_final])
-        ->groupBy('user_id','users.email','mes', 'ano')
+        ->groupBy('user_id','users.email','coordenacaos.nome','mes', 'ano')
         ->orderBy('users.email')
         ->orderBy('mes')
         ->orderBy('ano')                
@@ -204,7 +208,7 @@ class Historico_indicController extends Controller
         foreach($Total as $T){
             $T->Indicador="0";
             foreach($NoPrazo as $P){
-                if($T->user_id == $P->user_id && $T->mes == $P->mes && $T->ano == $P->ano){     
+                if($T->user_id == $P->user_id && $T->coordenacao == $P->coordenacao && $T->mes == $P->mes && $T->ano == $P->ano){     
                     $T->Indicador = round($P->Indic / $T->Indic * 100,2);
                 }
             }
@@ -291,6 +295,7 @@ class Historico_indicController extends Controller
         $dados = DB::table('historico_indic')
             ->join('processos', 'historico_indic.processo_id', '=', 'processos.id')
             ->join('users', 'users.id', '=', 'historico_indic.user_id')
+            ->join('coordenacaos','coordenacaos.id','=','processos.coordenacao')
             ->leftjoin(DB::raw("(select user_id, 
                                         processo_id,
                                         count(*) as Prazo 
@@ -309,7 +314,7 @@ class Historico_indicController extends Controller
                         from historico_indic 
                         where data_informada between '" . $request->data_inicial . "'  and  '" .  $request->data_final .  "' 
                         group by user_id) as Geral"), function($join) {$join->on('historico_indic.user_id', '=', 'Geral.user_id'); })                     
-            ->select(DB::raw("distinct users.email as email, processos.nome as processo, month(data_informada) as mes, year(data_informada) as ano, REPLACE(CAST(round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0) * 100 * ifnull(Total.Total,0) / ifnull(Geral.Total_Geral,0),2) AS CHAR), '.', ',')  as indicador "))
+            ->select(DB::raw("distinct users.email as email, coordenacaos.nome as coordenacao, processos.nome as processo, month(data_informada) as mes, year(data_informada) as ano, REPLACE(CAST(round(ifnull(NoPrazo.Prazo,0) / ifnull(Total.Total,0) * 100 * ifnull(Total.Total,0) / ifnull(Geral.Total_Geral,0),2) AS CHAR), '.', ',')  as indicador "))
             ->whereBetween('historico_indic.data_informada', [$request->data_inicial, $request->data_final])
             ->orderby('email')
             ->orderby('processo')
