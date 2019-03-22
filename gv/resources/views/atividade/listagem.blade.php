@@ -14,7 +14,27 @@
             <label>Data Final</label>
             <input type="date" name="data_final" class="form-control" @if(isset($data_final)) value="{{{$data_final}}}" @else value = "{{{date('Y-m-d')}}}" @endif placeholder="dd/mm/aaaa"/>
         </div>
-        <div class= "botaoFiltro">
+        <div class="form-group">
+            <div class = "filtroId_processoAtiv">
+                <label for="filtroId_processo">Nome Processo</label>
+                <select name="filtroId_processo" class="form-control">
+                    <option @if(isset($filtroId_processo)) value="{{{$filtroId_processo->id}}}" @else value = "" @endif>@if(isset($filtroId_processo)) {{$filtroId_processo->nome}} @else  @endif</option>
+                    @if(isset($filtroId_processo))
+                        <option value="" ></option>
+                    @endif
+                    @foreach($processos as $p)
+                        @if(isset($filtroId_processo))
+                            @if($filtroId_processo->id!=$p->id)
+                                <option value="{{$p->id}}">{{$p->nome}}</option>
+                            @endif
+                        @else
+                            <option value="{{$p->id}}">{{$p->nome}}</option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class= "botaoFiltroAtiv">
             <button type="submit" class="btn waves-effect light-green accent-3"> Filtrar</button>
         </div>
     </form>
@@ -34,6 +54,10 @@
                                 <form action="{{ route('atividade.adiciona') }}" method="post">
                                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                     <input type="hidden" name="usuario" value="{{Auth::user()->id}}" />
+                                    <input type="hidden" name="data_inicial" @if(isset($data_inicial)) value="{{{$data_inicial}}}"  @endif/>
+                                    <input type="hidden" name="data_final" @if(isset($data_final)) value="{{{$data_final}}}" @else value = "{{{date('Y-m-d')}}}" @endif/>
+                                    <input type="hidden" name="filtroId_processo" @if(isset($filtroId_processo)) value="{{{$filtroId_processo}}}" @endif />
+                                    <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
 
                                     <div class="form-group">
                                         <label for="id_processo">Processo</label>
@@ -136,8 +160,9 @@
                                                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                                                 <input type="hidden" name="id" value="{{{ $a->id }}}" />
                                                     <!--<input type="hidden" name="_method" value="put">-->
-                                                <input type="hidden" name="data_inicial" value="{{{$data_inicial}}}" />
-                                                <input type="hidden" name="data_final" value="{{{$data_final}}}" />    
+                                                <input type="hidden" name="data_inicial" @if(isset($data_inicial)) value="{{{$data_inicial}}}"  @endif/>
+                                                <input type="hidden" name="data_final" @if(isset($data_final)) value="{{{$data_final}}}" @else value = "{{{date('Y-m-d')}}}" @endif/>
+                                                <input type="hidden" name="filtroId_processo" @if(isset($filtroId_processo)) value="{{{$filtroId_processo}}}" @endif />
                                                 <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" /> 
                                                 <div class="form-group">
                                                         <label for="id_processo">Processo</label>
@@ -205,7 +230,26 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <a class="waves-effect waves-light btn red accent-4" href="javascript:(confirm('Deletar esse registro?') ? window.location.href='{{action('AtividadeController@remove',  [$a->id,$data_inicial, $data_final,empty($_GET['page']) ? 1 : $_GET['page']])}}' : false)">Deletar</a>
+                                        
+                                        <a class="waves-effect waves-light btn red accent-4  modal-trigger" href="#modal2{{$a->id}}">DELETAR</a>
+                                        <div id="modal2{{$a->id}}" class="modal">
+                                            <div class="modal-content">
+                                                <form action="{{ route('atividade.remove') }}" method="post">
+                                                <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
+                                                <input type="hidden" name="id" value="{{{ $a->id }}}" />
+                                                <input type="hidden" name="data_inicial" @if(isset($data_inicial)) value="{{{$data_inicial}}}"  @endif />
+                                                <input type="hidden" name="data_final" @if(isset($data_final)) value="{{{$data_final}}}" @else value = "{{{date('Y-m-d')}}}" @endif />
+                                                <input type="hidden" name="filtroId_processo" @if(isset($filtroId_processo)) value="{{{$filtroId_processo}}}" @endif />
+                                                <input type="hidden" name="page" value="@if(isset($_GET['page'])) {{$_GET['page']}} @else 1 @endif" />                                                 
+                                                    <div>
+                                                        Realmente deseja excluir o registro?
+                                                    </div>
+                                                    <br>
+                                                    <button type="submit" class="waves-effect waves-light btn red accent-4">Excluir</button>
+                                                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Cancelar</a>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

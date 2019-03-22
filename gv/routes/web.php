@@ -69,7 +69,8 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/atividade/adiciona',['uses'=>'AtividadeController@adiciona', 'as'=>'atividade.adiciona']);
     Route::get('/atividade',['uses'=>'AtividadeController@filtro', 'as'=>'atividade.filtro']);
     Route::match(array('GET', 'POST'),'/atividade/filtro',['uses'=>'AtividadeController@filtro','as'=>'atividade.filtro']);
-    Route::get('/atividade/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}/page/{page}', ['uses'=>'AtividadeController@remove','as'=>'atividade.remove']);
+    //Route::get('/atividade/remove/{id}/data_inicial/{data_inicial}/data_final/{data_final}/page/{page}', ['uses'=>'AtividadeController@remove','as'=>'atividade.remove']);
+    Route::post('/atividade/remove', ['uses'=>'AtividadeController@remove','as'=>'atividade.remove']);
     Route::post('/atividade/salvaAlt',['uses'=>'AtividadeController@salvaAlt','as'=>'atividade.salvaAlt']);
 
     //Historico_Indicador

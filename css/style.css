@@ -410,3 +410,32 @@ a:hover {
   font-size: 18px;
 
 }
+
+.botaoFiltroHistAtiv{
+  
+  position: absolute;
+  top: 0%;
+  left: 83.5%;
+  font-size: 18px;
+  width: 10%;
+
+}
+
+.filtroId_processoAtiv{
+  
+  position: absolute;
+  top: 0%;
+  left: 45%;
+  font-size: 18px;
+  width: 33%;
+
+}
+
+.botaoFiltroAtiv{
+  
+  position: absolute;
+  top: 40%;
+  left: 83.5%;
+  font-size: 18px;
+
+}
