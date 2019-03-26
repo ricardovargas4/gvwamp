@@ -96,11 +96,13 @@ class AtividadeController extends Controller
         $total=0;
         $prazo=0;
         foreach ($atividades as $atividade) {
-            if(($atividade->ultima_data) >= ($atividade->data_meta)) {
-                $prazo ++;
-            };
-            $total ++;
+            if($atividade->tipoId==3){
+                if(($atividade->ultima_data) >= ($atividade->data_meta)) {
+                    $prazo ++;
+                };
+                $total ++;
             }
+        }
         if($total<>0) {
             $percPrazo = round($prazo/$total*100,2)."%";
         }else{
