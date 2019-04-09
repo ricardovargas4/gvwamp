@@ -1,6 +1,8 @@
 
 $(document).ready(function () {
-
+    $('.datepicker').datepicker({setDefaultDate:true,format:'dd/mm/yyyy'});
+    $('.collapsible').collapsible();
+    $('.dropdown-trigger').dropdown({hover: false,coverTrigger: false});
     $('.modal').modal();
     $('.modalNotify').modal();
     $('.dropdown-button').dropdown({

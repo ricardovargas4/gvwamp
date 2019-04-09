@@ -161,6 +161,8 @@ class HomeController extends Controller
     }
 
     public function indicador(IndicadorRequest $request){
+        //$new_date = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_inicial)));
+        
         if(isset($request->filtroProc)){
             $filtroProc = $request->filtroProc;
          }else{
@@ -184,8 +186,8 @@ class HomeController extends Controller
             $data_inicial = $request->data_inicial;
             $data_final = $request->data_final;
         }else{
-            $data_inicial = date('Y-m-d', strtotime('-15 day', strtotime(date('Y-m-d'))));
-            $data_final = date('Y-m-d');
+            $data_inicial = date('d/m/Y', strtotime('-15 day', strtotime(date('d/m/Y'))));
+            $data_final = date('d/m/Y');
         }    
         return view('graficos.indicador',compact('data_inicial','data_final','coordenacao','coordenacaos','processos','filtroProc','tipo_relatorio'));
        // $coordenacaos = null;

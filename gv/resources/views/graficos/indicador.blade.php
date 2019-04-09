@@ -23,7 +23,7 @@
             </div>        
             <div class="dataIniChart">    
                 <label>Data Inicial</label>
-                <input id = "dataInicial" type="date"  name="data_inicial" class="form-control" value="{{{$data_inicial}}}" placeholder="dd/mm/aaaa"/>
+                <input id = "dataInicial" type="text"  name="data_inicial" class="datepicker" value="{{{$data_inicial}}}" />
             </div>
             <div class="dataFimChart">    
                 <label>Data Final</label>

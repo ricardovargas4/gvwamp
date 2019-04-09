@@ -59,9 +59,14 @@ canvas {
   position: relative;*/
 }
 
-.dropdown-content li > a, .dropdown-content li > span{
+.dropdown-content li > a, .dropdown-content li > span, .dropdown-trigger li > a, .dropdown-trigger li > span {
   color: #333;
   text-decoration: none;
+}
+
+.dropdown-trigger {
+  text-decoration: none;
+  color: white;
 }
 
 a.navBarMenu:focus {
