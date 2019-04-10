@@ -64,10 +64,6 @@ canvas {
   text-decoration: none;
 }
 
-.dropdown-trigger {
-  text-decoration: none;
-  color: white;
-}
 
 a.navBarMenu:focus {
   text-decoration: none;
@@ -444,3 +440,4 @@ a:hover {
   font-size: 18px;
 
 }
+

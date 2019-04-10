@@ -162,18 +162,17 @@ class HomeController extends Controller
 
     public function indicador(IndicadorRequest $request){
         //$new_date = date('Y-m-d', strtotime(str_replace('/', '-', $request->data_inicial)));
-        
         if(isset($request->filtroProc)){
             $filtroProc = $request->filtroProc;
-         }else{
+        }else{
             $filtroProc=null; 
-         }     
-         if(isset($request->tipo_relatorio)){
+        }     
+        if(isset($request->tipo_relatorio)){
             $tipo_relatorio = $request->tipo_relatorio;
-         }else{
+        }else{
             $tipo_relatorio=null; 
-         }  
-         //dd($request->filtroProc->to_array());
+        }  
+        //dd($request->filtroProc->to_array());
         $coordenacaos = Coordenacao::orderBy('nome')->get();
         if(isset($request->coordenacao)){
             $coordenacao = Coordenacao::find($request->coordenacao);
@@ -186,8 +185,9 @@ class HomeController extends Controller
             $data_inicial = $request->data_inicial;
             $data_final = $request->data_final;
         }else{
-            $data_inicial = date('d/m/Y', strtotime('-15 day', strtotime(date('d/m/Y'))));
-            $data_final = date('d/m/Y');
+            //$data_inicial = date('d/m/Y', strtotime('-15 day', strtotime(date('m/d/Y'))));
+            $data_inicial = date('d/m/Y', strtotime('-15 day', strtotime(date('m/d/Y'))));
+            $data_final = date('d/m/Y', strtotime('0 day', strtotime(date('m/d/Y'))));
         }    
         return view('graficos.indicador',compact('data_inicial','data_final','coordenacao','coordenacaos','processos','filtroProc','tipo_relatorio'));
        // $coordenacaos = null;

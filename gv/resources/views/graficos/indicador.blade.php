@@ -27,7 +27,7 @@
             </div>
             <div class="dataFimChart">    
                 <label>Data Final</label>
-                <input id = "dataFinal" type="date" name="data_final" class="form-control" value="{{{$data_final}}}" placeholder="dd/mm/aaaa"/>
+                <input id = "dataFinal" type="text" name="data_final" class="datepicker" value="{{{$data_final}}}"/>
             </div>
             <div class="filtroCoordChart">
                     <label for="coordenacao">Coordenação</label>
