@@ -23,20 +23,23 @@ $(document).ready(function () {
       labelMonthPrev: 'Mês anterior',
       labelMonthSelect: 'Selecione um mês',
       labelYearSelect: 'Selecione um ano',
-      //clear: 'Limpar',
+      clear: 'Limpar',
       cancel: 'Cancelar',
+      setDefaultDate: true,
+      defaultDate: Date.now(),
     },
     format: 'dd/mm/yyyy',
+    //format: 'yyyy/mm/dd',
     setDefaultDate: true,
-      selectMonths: true, // Creates a dropdown to control month
-      selectYears: 15, // Creates a dropdown of 15 years to control year,
-      //clear: 'Clear',
-      done: 'Ok',
-      closeOnSelect: true, // Close upon selecting a date,
-      //container: undefined, // ex. 'body' will append picker to body
-      showClearBtn: true,
-    });
-   
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15, // Creates a dropdown of 15 years to control year,
+    //clear: 'Clear',
+    done: 'Ok',
+    autoClose: true, // Close upon selecting a date,
+    //container: undefined, // ex. 'body' will append picker to body
+    showClearBtn: true,
+     });
+    $('.datepicker').datepicker('setDate', new Date());
  });
     
   

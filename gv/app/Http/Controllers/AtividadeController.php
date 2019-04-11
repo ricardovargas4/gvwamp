@@ -165,8 +165,10 @@ class AtividadeController extends Controller
             $ultima_dataCalc = $request->ultima_data[$request->submit];
         }
         
+        $krr    = explode('/',  $request->data_conciliada[$request->submit]);
+        $data_conciliada = $krr[2]."/".$krr[1]."/".$krr[0];
         //conversão da data conciliada para o formato do DB
-        $data_conciliada = \DateTime::createFromFormat('d/m/Y', $request->data_conciliada[$request->submit]);
+        //$data_conciliada = \DateTime::createFromFormat('d/m/Y', $data_conciliada);
 
 
         Atividade::create(['id_processo'=>$request->id_processo[$request->submit],
@@ -174,7 +176,7 @@ class AtividadeController extends Controller
                             'data_conciliacao'=>date('Y-m-d H:i:s'),
                             'hora_inicio'=>date('Y-m-d H:i:s'),
                             'data_meta'=>$data_metaCalc,
-                            'data_conciliada'=>$data_conciliada->format('Y-m-d'),
+                            'data_conciliada'=>$data_conciliada, //$data_conciliada->format('Y-m-d'),
                             'ultima_data'=>$ultima_dataCalc]);
         return redirect()->action('AtividadeController@home');
     }

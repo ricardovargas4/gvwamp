@@ -23,11 +23,11 @@
             </div>        
             <div class="dataIniChart">    
                 <label>Data Inicial</label>
-                <input id = "dataInicial" type="text"  name="data_inicial" class="datepicker" value="{{{$data_inicial}}}" />
+                <input id = "dataInicial" type="date"  name="data_inicial" class="form-control" value="{{{$data_inicial}}}" />
             </div>
             <div class="dataFimChart">    
                 <label>Data Final</label>
-                <input id = "dataFinal" type="text" name="data_final" class="datepicker" value="{{{$data_final}}}"/>
+                <input id = "dataFinal" type="date" name="data_final" class="form-control" value="{{{$data_final}}}"/>
             </div>
             <div class="filtroCoordChart">
                     <label for="coordenacao">Coordenação</label>
@@ -45,10 +45,10 @@
             </div>
             <div class="filtroProcChart">
                 @foreach($processos as $p)
-                    <p>
+                    <label>
                         <input type="checkbox" id="processo{{$p->id}}" value="{{$p->id}}" name="filtroProc[]"  {{ (is_array($filtroProc) && in_array($p->id, $filtroProc)) ? ' checked' : '' }} > 
-                        <label for="processo{{$p->id}}">{{$p->nome}}</label>
-                    </p>
+                        <span for="processo{{$p->id}}">{{$p->nome}}</span>
+                    </label>
                 @endforeach
             </div>
             <div class= "botaoFiltroChart">

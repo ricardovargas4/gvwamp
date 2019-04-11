@@ -91,7 +91,11 @@
               @if($a->tipoId==4)
                 <td> <input type="hidden" id='DtConc{{{ $a->processoId }}}' name="data_conciliada[{{{$index}}}]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
               @else
-                <td> <input type="text" class="datepicker" placeholder="DD/MM/AAAA" id='DtConc{{{ $a->processoId }}}' name="data_conciliada[{{{$index}}}]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
+                @if (($a->aberta)==1)  
+                  <td><input type="date" id='DtConc{{{ $a->processoId }}}' name="data_conciliada[{{{$index}}}]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
+                @else
+                  <td> <input type="text" class="datepicker" placeholder="DD/MM/AAAA" id='DtConc{{{ $a->processoId }}}' name="data_conciliada[{{{$index}}}]" value="{{{ $a->data_conciliada }}}" <?php if (!$aberta->isEmpty()){ ?> readonly <?php   } ?>/> </td>
+                @endif
               @endif
               @if (($a->aberta)==1)
                 <td>  

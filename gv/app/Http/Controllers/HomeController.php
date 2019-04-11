@@ -63,12 +63,16 @@ class HomeController extends Controller
             $processos = Processo::orderby('nome')->get();
         }    
         if(isset($request->data_inicial)){
+            /*$krr    = explode('/',  $request->data_inicial);
+            $data_inicial = $krr[2]."/".$krr[1]."/".$krr[0];
+            $krr    = explode('/',  $request->data_final);
+            $data_final = $krr[2]."/".$krr[1]."/".$krr[0];*/
             $data_inicial = $request->data_inicial;
             $data_final = $request->data_final;
         }else{
-            $data_inicial = date('Y-m-d', strtotime('-15 day', strtotime(date('Y-m-d'))));
-            $data_final = date('Y-m-d');
-        }    
+            $data_inicial = date('Y-m-d', strtotime('-15 day', strtotime(date('Y/m/d'))));
+            $data_final = date('Y-m-d', strtotime('0 day', strtotime(date('Y/m/d'))));
+        }   
         return view('graficos.tempo',compact('data_inicial','data_final','coordenacao','coordenacaos','processos','filtroProc','tipo_relatorio'));
        // $coordenacaos = null;
        // return view('coordenacao.listagem')->with('coordenacaos', $coordenacaos);
@@ -182,12 +186,15 @@ class HomeController extends Controller
             $processos = Processo::orderby('nome')->get();
         }    
         if(isset($request->data_inicial)){
+            /*$krr    = explode('/',  $request->data_inicial);
+            $data_inicial = $krr[2]."/".$krr[1]."/".$krr[0];
+            $krr    = explode('/',  $request->data_final);
+            $data_final = $krr[2]."/".$krr[1]."/".$krr[0];*/
             $data_inicial = $request->data_inicial;
             $data_final = $request->data_final;
         }else{
-            //$data_inicial = date('d/m/Y', strtotime('-15 day', strtotime(date('m/d/Y'))));
-            $data_inicial = date('d/m/Y', strtotime('-15 day', strtotime(date('m/d/Y'))));
-            $data_final = date('d/m/Y', strtotime('0 day', strtotime(date('m/d/Y'))));
+            $data_inicial = date('Y-m-d', strtotime('-15 day', strtotime(date('Y/m/d'))));
+            $data_final = date('Y-m-d', strtotime('0 day', strtotime(date('Y/m/d'))));
         }    
         return view('graficos.indicador',compact('data_inicial','data_final','coordenacao','coordenacaos','processos','filtroProc','tipo_relatorio'));
        // $coordenacaos = null;
